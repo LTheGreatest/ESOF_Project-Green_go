@@ -37,7 +37,7 @@ Other problem is the lack of incentive to participate in those activities.
 - **Leaderboard.** A leaderboard system that shows the top community members in terms of points. The members in the top of the leaderboard may receive some prizes.
 
 
-- **Listing of existent activities.** A list of existence activities with their description, points that they give as reward for participating and some other useful information(depending on the activity).
+- **Listing of existing activities.** A list of existing activities with their description, points that they give as reward for participating and some other useful information(depending on the activity).
 
 
 
