@@ -7,7 +7,9 @@ The app will try to encourage the FEUP community to have better practises regard
 Developed by:
 
  - **Lucas Faria** (up202207540)
-> Insert here your name and number
+ - **Pedro Borges** (up202207552)
+ - **Manuel Mo** (up202205000)
+ - **Rafael Campeao** (up202207553)
 
 ### Product Vision
 
