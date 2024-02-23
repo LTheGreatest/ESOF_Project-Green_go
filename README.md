@@ -10,6 +10,7 @@ Developed by:
  - **Pedro Borges** (up202207552)
  - **Manuel Mo** (up202205000)
  - **Rafael Campeao** (up202207553)
+ - **Alexandre Lopes** (up202207015)
 
 ### Product Vision
 
