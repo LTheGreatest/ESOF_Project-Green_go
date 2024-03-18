@@ -22,27 +22,20 @@ To learn more about how to write a good product vision, please see also:
 
 `Esta é a Product Vision que estava no README inicial, aproveitar o que der`
 
-* **Target Group.**  The academic/FEUP community.
-
-* **Needs.**  The various initiatives regarding sustainable development don´t have a organized way of transmitting information. Because of this,
-many members of the community don´t have the knowledge of their existence or don´t have enough information about what they are tying to promote.
-Other problem is the lack of incentive to participate in those activities.
-
-* **Product.** Solves the misleading and confusing information of the various initiatives regarding sustainable development. All the information will be in organized in a more organized manner. It will also encourage the community to participate in those initiatives.
-
-* **Benefits.** Improves the enrollment in FEUP's activities related to sustainable development. It also encourages the academic community to actively promote good habits regarding sustainability.
+The product targets the academic/FEUP community by encouraging the use of more sustaibable mobility. This is achieve using a gamification strategy (point system) that rewards the user when he uses public transports or other sustainable means of transport.
 
 ## Main Features
 
-* **Point System** - A system that rewards the user with points when they participate in the activities promoted by FEUP regarding sustainable development.
+* **Point System** - A system that rewards the user when he uses sustainable means of transport.
 
 * **Leaderboard** - A leaderboard system that shows the top community members in terms of points. The members in the top of the leaderboard may receive some prizes.
 
-* **Listing of existing activities** - A list of existing activities with their description, points that they give as reward for participating and some other useful information(depending on the activity).
+* **Selection of transports** - The user can select some diferent means of transport to start counting the points/reveive the points.
+
+* **Verification** - The user may need to give some informations to the system so that it can verify if the travel was made using sustainable means of transport.
 
 ## Assumptions and dependencies
 
 Indicate an  initial/tentative list of assumptions and dependencies
 
-* Student timetable from UMaia website
-*
+* Information about bus stops

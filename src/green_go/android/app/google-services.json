@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "601154102015",
+    "project_id": "green-go-ba24b",
+    "storage_bucket": "green-go-ba24b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601154102015:android:bc07eeb525e51ca9ade2ca",
+        "android_client_info": {
+          "package_name": "com.example.green_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFMQ4MFb8_IILl5PCj8Aitbx6-U_UMREg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
