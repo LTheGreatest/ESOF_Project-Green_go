@@ -2,7 +2,7 @@
 
 ## Release
 
-[Latest Release](https://github.com/UMaia-ES-23-24/templates)
+[Latest Release](https://github.com/FEUP-LEIC-ES-2023-24/templates)
 
 ## Sprint Retrospective
 
@@ -27,8 +27,8 @@
 
 ### Beginning of the sprint
 
-![Iteration Board](/images/iteration1boardbegin.png)
+![Iteration Board](/images/iterationXboardbegin.png)
 
 ### End of the sprint
 
-![Iteration Board](/images/iteration1boardend.png)
+![Iteration Board](/images/iterationXboardend.png)
