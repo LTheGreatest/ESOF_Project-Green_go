@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
 
-  class locationService {
+  class LocationService {
 
   late StreamSubscription<Position> _positionStream;
   double currentLongitude = 0;
