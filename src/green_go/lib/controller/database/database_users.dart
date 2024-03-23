@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:green_go/firebase_options.dart';
 
 class DataBaseUsers {
+
   static final CollectionReference userCollection = FirebaseFirestore.instance.collection("users");
+
 
   Future addUser(String uid, String username) async{
     return await userCollection.doc(uid).set({
@@ -25,6 +28,10 @@ class DataBaseUsers {
     
     userCollection.doc(uid).update({'points': pointsInDB + points});
 
+  }
+
+  Future getAllData() async{
+    return userCollection.get();
   }
   
 }

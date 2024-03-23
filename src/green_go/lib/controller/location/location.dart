@@ -8,7 +8,7 @@ import 'package:geolocator/geolocator.dart';
   double currentLatitude = 0;
 
 
-  Future<Position> _determinePosition() async {
+  Future<Position> determinePosition() async {
     // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -99,7 +99,7 @@ Future<bool> requestLocationPermission() async {
       });
   }
   void stopListening() {
-    _positionStream?.cancel();
+    _positionStream.cancel();
   }
 
   double calculateDistance(double startLatitude, double startLongitude, double endLatitude, double endLongitude) {

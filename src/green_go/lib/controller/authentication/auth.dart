@@ -42,6 +42,7 @@ class AuthService {
     } catch (e) {
       return e.toString();
     }
+    return null;
   }
 
 
