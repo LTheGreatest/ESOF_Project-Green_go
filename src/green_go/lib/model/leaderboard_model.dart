@@ -1,5 +1,3 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:green_go/controller/database/database_users.dart';
 
 class LeaderboardModel{

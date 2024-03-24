@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/leaderboard_page.dart';
 import 'package:green_go/view/pages/main_page.dart';
+import 'package:green_go/view/pages/trip_page.dart';
 
 class CustomMenuBar extends StatelessWidget{
   const CustomMenuBar({super.key});
@@ -33,7 +34,12 @@ class CustomMenuBar extends StatelessWidget{
               ///bus
               IconButton(
                 onPressed: (){
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                          builder: (context) => const TripPage(), 
+                        ),
+                  );
                 },
                  icon: const Icon(Icons.bus_alert),
               ),
