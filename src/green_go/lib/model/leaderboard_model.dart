@@ -6,16 +6,13 @@ class LeaderboardModel{
   DataBaseUsers db = DataBaseUsers();
   List<List<String>> userScore = [];
 
-  LeaderboardModel(){
-    db.getAllData().then((querySnapshot) {
+  Future<List<List<String>>> getDataForLeaderboard() async{
+    await db.getAllData().then((querySnapshot) {
       for(var docSnapshot in querySnapshot.docs){
           userScore.add([docSnapshot['username'], docSnapshot["points"]]);
       }
     }
     );
-  }
-
-  List<List<String>> getUserScore(){
     return userScore;
   }
 

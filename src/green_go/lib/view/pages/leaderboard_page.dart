@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/model/leaderboard_model.dart';
+import 'package:green_go/view/widgets/menu_bar.dart';
 
 class LeaderboardPage extends StatefulWidget{
   const LeaderboardPage({super.key});
@@ -9,8 +10,16 @@ class LeaderboardPage extends StatefulWidget{
 }
 
 class _LeaderboardPageState extends State<LeaderboardPage>{
-      List<List<String>> userScore = LeaderboardModel().getUserScore();
+      late Future<List<List<String>>> userScore;
+      LeaderboardModel leaderboardModel = LeaderboardModel();
 
+      @override
+      void initState() {
+      super.initState();
+      userScore = leaderboardModel.getDataForLeaderboard();
+  }
+
+      ///Builds the page title
       Widget buildTitle(BuildContext context){
         return const Text(
           "Leaderboard", 
@@ -21,32 +30,46 @@ class _LeaderboardPageState extends State<LeaderboardPage>{
         );
       }
 
-      Widget buildLeaderboardTable(BuildContext context){
+      ///Builds the leaderboard table
+      Widget buildLeaderboardTable(BuildContext context) {
         return Expanded(
-                child: ListView.builder(
-                itemCount: userScore.length,
-                itemBuilder: (BuildContext context, int index){
-                  return Padding(
-                      padding: const EdgeInsets.all(5),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 2,
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.elliptical(10, 10)),
-                        ),
-                          child: Row(
-                          children: [
-                            Padding(
+                child: FutureBuilder( ///used because we need to wait the data to arrive from the DB
+                  future: userScore,
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      List<List<String>>? userScoreData = snapshot.data; 
+                      return ListView.builder( ///List with the data from the leaderboard
+                        itemCount: userScoreData?.length,
+                        itemBuilder: (BuildContext context, int index){
+                          return Padding(
                               padding: const EdgeInsets.all(5),
-                            child: Text(userScore.elementAt(index).first),),
-                            Text(userScore.elementAt(index).last),
-                          ],
-                        ),
-                      ),
-                  );
-                },
-              ),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2,
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.elliptical(10, 10)),
+                                ),
+                                  child: Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(5),
+                                    child: Text(userScoreData!.elementAt(index).first),),
+                                    Text(userScoreData.elementAt(index).last),
+                                  ],
+                                ),
+                              ),
+                          );
+                        },
+                      );
+                    }
+                    else{
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
         );
       }
 
@@ -58,6 +81,7 @@ class _LeaderboardPageState extends State<LeaderboardPage>{
               const Padding(padding: EdgeInsets.all(20),),
               buildTitle(context),
               buildLeaderboardTable(context),
+              const CustomMenuBar(),
           ],
         ),
         );

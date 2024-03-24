@@ -31,7 +31,7 @@ class DataBaseUsers {
   }
 
   Future getAllData() async{
-    return userCollection.get();
+    return await userCollection.get();
   }
   
 }
