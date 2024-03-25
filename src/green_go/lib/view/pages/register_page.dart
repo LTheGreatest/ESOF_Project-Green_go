@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
@@ -89,7 +90,6 @@ class RegisterPageViewState extends State<RegisterPage>{
                 String email = emailController.text.trim();
                 String password = passwordController.text;
                 String confirmPassword = confPasswordController.text;
-
                 if (password != confirmPassword) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
@@ -102,7 +102,8 @@ class RegisterPageViewState extends State<RegisterPage>{
                 String? signUpResult = await authService.signUp(email, password);
                 if (signUpResult == null) {
                   // Registration successful, navigate to login page
-                  dataBaseUsers.addUser(email, username);
+                  String uid = authService.getCurrentUserID() as String;
+                  dataBaseUsers.addUser(uid, username);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()),
