@@ -19,7 +19,7 @@ class RegisterPageViewState extends State<RegisterPage>{
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confPasswordController = TextEditingController();
   final AuthService authService = AuthService();
-  final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  DataBaseUsers dataBaseUsers = DataBaseUsers();
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -102,12 +102,13 @@ class RegisterPageViewState extends State<RegisterPage>{
                 String? signUpResult = await authService.signUp(email, password);
                 if (signUpResult == null) {
                   // Registration successful, navigate to login page
-                  String uid = authService.getCurrentUserID() as String;
-                  dataBaseUsers.addUser(uid, username);
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
+                  User? user = authService.getCurrentUserID();
+                  String? uid = user?.uid;
+                  dataBaseUsers.addUser(uid!, username);
                 } else {
                   // Registration failed, show error message
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -129,9 +130,4 @@ class RegisterPageViewState extends State<RegisterPage>{
     );
   }
 
-  Widget usernameInput(BuildContext context) {
-    return TextFormField(
-      controller: TextEditingController(),
-    );
-  }
 }
