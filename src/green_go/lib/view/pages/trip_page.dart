@@ -4,17 +4,17 @@ import 'package:green_go/controller/location/location.dart';
 import 'package:green_go/view/pages/take_picture_screen.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
-class TripPage extends StatefulWidget{
+class TripPage extends StatefulWidget {
   const TripPage({super.key});
 
   @override
-  _TripPage createState() => _TripPage();
+  TripPageState createState() => TripPageState();
 }
 
-class _TripPage extends State<TripPage> {
+class TripPageState extends State<TripPage> {
   Future<Position>? location;
 
-  void showLocation(){
+  void showLocation() {
     setState(() {
       LocationService().requestLocationPermission();
       location = LocationService().determinePosition();
@@ -81,12 +81,11 @@ class _TripPage extends State<TripPage> {
                   return const Text("No location");
                 }
               }
-                ),
+            ),
           ),   
         ],
       ),
       bottomSheet: const CustomMenuBar(),
     );
   }
-  
 }

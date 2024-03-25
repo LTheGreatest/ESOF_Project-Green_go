@@ -103,9 +103,6 @@ Future<bool> requestLocationPermission() async {
   }
 
   double calculateDistance(double startLatitude, double startLongitude, double endLatitude, double endLongitude) {
-
-    double distanceInMeters = Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
-
-    return distanceInMeters;
+    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
   }
 }

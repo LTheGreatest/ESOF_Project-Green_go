@@ -6,10 +6,10 @@ class LeaderboardPage extends StatefulWidget{
   const LeaderboardPage({super.key});
 
   @override
-  _LeaderboardPageState  createState() => _LeaderboardPageState();
+  LeaderboardPageState  createState() => LeaderboardPageState();
 }
 
-class _LeaderboardPageState extends State<LeaderboardPage>{
+class LeaderboardPageState extends State<LeaderboardPage>{
       late Future<List<List<String>>> userScore;
       LeaderboardModel leaderboardModel = LeaderboardModel();
 

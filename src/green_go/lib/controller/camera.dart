@@ -19,23 +19,17 @@ class CameraService {
   }
 
   Future<void> toggleCameraLens() async {
-  // get current lens direction (front / rear)
-  final lensDirection =  cameraController.description.lensDirection;
-  CameraDescription newDescription;
-  if(lensDirection == CameraLensDirection.front){
-      newDescription = camerasList.firstWhere((description) => description.lensDirection == CameraLensDirection.back);
-  }
-  else{
-      newDescription = camerasList.firstWhere((description) => description.lensDirection == CameraLensDirection.front);
-  }
-
-    if(newDescription != null){
-      camera = newDescription;
-      cameraController = CameraController(camera!, ResolutionPreset.high);
-      await cameraController.initialize();
+    // get current lens direction (front / rear)
+    final lensDirection =  cameraController.description.lensDirection;
+    CameraDescription newDescription;
+    if (lensDirection == CameraLensDirection.front){
+        newDescription = camerasList.firstWhere((description) => description.lensDirection == CameraLensDirection.back);
     }
-    else{
-      print('Asked camera not available');
+    else {
+        newDescription = camerasList.firstWhere((description) => description.lensDirection == CameraLensDirection.front);
     }
-  }
+    camera = newDescription;
+    cameraController = CameraController(camera!, ResolutionPreset.high);
+    await cameraController.initialize();
+    }
 }

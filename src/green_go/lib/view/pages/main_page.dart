@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 import 'package:green_go/view/widgets/score_main.dart';

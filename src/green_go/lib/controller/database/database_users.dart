@@ -1,24 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DataBaseUsers {
-
   static final CollectionReference userCollection = FirebaseFirestore.instance.collection("users");
 
-
-  Future addUser(String uid, String username) async{
+  Future addUser(String uid, String username) async {
     return await userCollection.doc(uid).set({
       'username': username,
       'points': 0
     });
   }
-
-  Future updateUsername(String uid, String username) async{
+  Future updateUsername(String uid, String username) async {
      return await userCollection.doc(uid).set({
       'username': username
      });
   }
-
-  Future updateUserPoints(String uid, int points) async{
+  Future updateUserPoints(String uid, int points) async {
     int pointsInDB = 0;
 
     DocumentSnapshot doc = await userCollection.doc(uid).get();
@@ -27,9 +23,7 @@ class DataBaseUsers {
     userCollection.doc(uid).update({'points': pointsInDB + points});
 
   }
-
-  Future getAllData() async{
+  Future getAllData() async {
     return await userCollection.get();
   }
-  
 }
