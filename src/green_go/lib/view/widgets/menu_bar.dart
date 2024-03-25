@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/leaderboard_page.dart';
 import 'package:green_go/view/pages/main_page.dart';
+import 'package:green_go/view/pages/mission_page.dart';
+import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
 class CustomMenuBar extends StatelessWidget{
@@ -59,7 +61,11 @@ class CustomMenuBar extends StatelessWidget{
               ///missions
               IconButton(
                 onPressed: (){
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const MissionsPage()),
+                  );
                 }, 
                 icon: const Icon(Icons.search),
               ),
@@ -67,7 +73,11 @@ class CustomMenuBar extends StatelessWidget{
               ///profile
               IconButton(
                 onPressed: (){
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfilePage()),
+                  );
                 },
                  icon: const Icon(Icons.people),
               ),
