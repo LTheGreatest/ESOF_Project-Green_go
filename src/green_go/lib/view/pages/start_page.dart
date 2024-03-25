@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/view/pages/main_page.dart';
+import 'package:green_go/view/pages/register_page.dart';
+import 'package:green_go/view/pages/login_page.dart';
 
 class StartPage extends StatelessWidget{
   const StartPage({super.key});
@@ -19,7 +21,7 @@ class StartPage extends StatelessWidget{
                     ),
                     onPressed: () {
                       Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const MainPage())
+                      MaterialPageRoute(builder: (context) => const RegisterPage())
                       );
                       // Ação do primeiro botão
                     },
@@ -32,7 +34,7 @@ class StartPage extends StatelessWidget{
                   ),
                   onPressed: () {
                     Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const MainPage())
+                    MaterialPageRoute(builder: (context) => const LoginPage())
                     );
                     // Ação do segundo botão
                   },
