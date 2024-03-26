@@ -124,7 +124,7 @@ The camera and the GPS is for the validation of his mission. For example, if he 
 
 ### Other diagrams
 
-* SequenceDiagram:
+* Sequence Diagram:
 
 <img src="docs/uml/extra/sequenceDiagram.png" alt="Sequence Diagram" style="width:300px">
 
@@ -177,14 +177,14 @@ so that i can receive points.
 
   <img src="docs/images/Prototype/trip_page.jpg" alt="Sequence Diagram" style="width:300px">
 
-* **Menu Bar**
+* **Menu Bar:**
   - **User Story:** As a user I want to have a menu so that I can go see my profile, the leaderboard, all the missions, the main page and the bus page.
   - **Implementation:** The menu bar is fully functional but the visuals aren't what we expect for the final version.
   - **Screenshot:**
 
   <img src="docs/images/Prototype/Menu_bar.jpg" alt="Sequence Diagram" style="width:300px">
 
-* **Search Missions page**
+* **Search Missions page:**
   - **User Story:** As a user I want to be able to search for specifics missions/mission types to be able to more effectively gain points
   - **Implementation:** The page only has the title and the menu bar already enables the user to access this page. However it doesn't have any of the main features implemented.
   - **Screenshot:**
