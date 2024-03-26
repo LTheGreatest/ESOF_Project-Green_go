@@ -59,7 +59,7 @@ For feup students who need an incentive to use transports in a sustainable way t
 
 * **Missions** - Users can complete some missions that will reward them with some extra points.
 
-* **Customizable Profile** - Users can customaze their profile (username, date of birth, ...)
+* **Customizable Profile** - Users can customise their profile (username, date of birth, ...)
 
 * **Mission History** - Users can see their completed missions.
 
