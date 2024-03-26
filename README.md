@@ -43,7 +43,7 @@ Thank you!
 
 ### Product Vision
 
-An app to encourage the public to use sustainable mobility by turning the process into a game.
+For feup students who need an incentive to use transports in a sustainable way the GreenGo is an smartphone app that turns sustainabel mobility into a game. Unlike our competitors this product gives users rewards for their efforts while helping them build good habits.
 
 ### Features and Assumptions
 
