@@ -16,12 +16,10 @@ class DataBaseUsers {
   }
   Future updateUserPoints(String uid, int points) async {
     int pointsInDB = 0;
-
     DocumentSnapshot doc = await userCollection.doc(uid).get();
     pointsInDB = doc['points'];
     
     userCollection.doc(uid).update({'points': pointsInDB + points});
-
   }
   Future getAllData() async {
     return await userCollection.get();

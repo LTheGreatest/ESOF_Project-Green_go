@@ -1,11 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
-
   const DisplayPictureScreen({super.key, required this.imagePath});
 
   @override

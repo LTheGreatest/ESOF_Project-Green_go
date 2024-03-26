@@ -11,14 +11,12 @@ class AuthService {
     try {
       UserCredential result = await auth.signInWithEmailAndPassword(email: email, password: password);
       return null;
-      
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         return 'No user found for that email.';
       } else if (e.code == 'wrong-password')
         // ignore: curly_braces_in_flow_control_structures
         return 'Wrong password provided for that user.';
-
       return e.code;
     }
 
@@ -27,7 +25,6 @@ class AuthService {
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(email: email, password: password);
       return null;
-
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         return 'The password provided is too weak.';

@@ -7,28 +7,26 @@ class MainPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-    return  const Scaffold(
-
+    return Scaffold(
       body: Column(
-          children: [
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(35),
-                  child: ScoreMain(),
-                ),
-              ),
-
-              ///only to ocupy the rest of the space while there is nothing to put
-              Padding(
-                padding:EdgeInsets.all(250)
-              ),
-              
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: CustomMenuBar(),
-              ),
-          ],
-        ),
+        children: [
+          const Padding(padding: EdgeInsets.all(35)),
+          Image.asset('images/GreenGo.png'),
+          const Expanded(
+            child: Padding(
+              padding: EdgeInsets.all(35),
+              child: ScoreMain(),
+            ),
+          ),
+          /// Only to occupy the rest of the space while there is nothing to put
+          const Padding(padding:EdgeInsets.all(250)
+          ),
+          const Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomMenuBar(),
+          ),
+        ],
+      ),
     );
   }
 }

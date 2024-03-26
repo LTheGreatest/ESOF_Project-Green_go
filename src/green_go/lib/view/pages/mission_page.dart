@@ -17,7 +17,7 @@ class MissionsPage extends StatelessWidget{
             style: TextStyle(
               fontSize: 40,
             ),
-                  ),
+            ),
           ),
         ),
       bottomSheet: CustomMenuBar(),

@@ -41,31 +41,32 @@ class TripPageState extends State<TripPage> {
               "This page will contain a selection of sustainable transports to choose and start getting points. For now you can try the system that will be used to verify the trips and calculate the points (the pictures and the location).",
               style: TextStyle(
                 color: Color.fromARGB(100, 239, 0, 0),
-              ) ,) ,
+              ),
+            ) ,
            ),
           Padding(
             padding: const EdgeInsets.all(35),
             child: Center(
               child: ElevatedButton(
-                onPressed: (){
+                onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                        builder: (context) => const TakePictureScreen(), 
-                      ),
+                    builder: (context) => const TakePictureScreen(),
+                  ),
                 );
-              },
-              child: const Text("Take a Picture"),),
+                },
+                child: const Text("Take a Picture"),),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(35),
             child: Center(
               child: ElevatedButton(
-                    onPressed: (){
-                      showLocation();
-                    },
-                    child: const Text("Show Location"),
+                onPressed: () {
+                  showLocation();
+                  },
+                child: const Text("Show Location"),
               ),
             ),
           ),
@@ -74,7 +75,7 @@ class TripPageState extends State<TripPage> {
             child: FutureBuilder(
               future: location, 
               builder:(context, snapshot) {
-                if(snapshot.hasData){
+                if (snapshot.hasData) {
                   return Text(snapshot.data.toString());
                 }
                 else{

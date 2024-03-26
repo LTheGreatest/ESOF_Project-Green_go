@@ -1,4 +1,4 @@
-class UserModel{
+class UserModel {
   String username = "";
   String uid = "";
   int points = 0;
@@ -6,6 +6,6 @@ class UserModel{
   String password = "";
   String email = "";
 
-  //constructor
+  // Constructor
   UserModel(this.uid, this.username, this.points, this.password, this.email);
 }

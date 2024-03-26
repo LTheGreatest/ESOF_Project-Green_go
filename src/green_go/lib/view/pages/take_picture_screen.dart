@@ -58,13 +58,10 @@ class TakePictureScreenState extends State<TakePictureScreen> {
           try {
             // Ensure that the camera is initialized.
             await _initializeControllerFuture;
-
             // Attempt to take a picture and get the file `image`
             // where it was saved.
             final image = await cameraService.cameraController.takePicture();
-
             if (!context.mounted) return;
-
             // If the picture was taken, display it on a new screen.
             await Navigator.of(context).push(
               MaterialPageRoute(

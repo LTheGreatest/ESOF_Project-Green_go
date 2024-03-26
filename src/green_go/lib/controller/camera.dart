@@ -1,12 +1,11 @@
 import 'package:camera/camera.dart';
 
 class CameraService {
-
   late List<CameraDescription> camerasList;
   CameraDescription? camera;
   late CameraController cameraController;
 
-  Future<void> initializeDefaultCamera() async{
+  Future<void> initializeDefaultCamera() async {
     camerasList = await availableCameras();
     final firstCamera = camerasList.first;
     camera = firstCamera;
@@ -14,7 +13,7 @@ class CameraService {
     await cameraController.initialize();
   }
 
-  Future<void> disposeController() async{
+  Future<void> disposeController() async {
     cameraController.dispose();
   }
 
@@ -22,10 +21,9 @@ class CameraService {
     // get current lens direction (front / rear)
     final lensDirection =  cameraController.description.lensDirection;
     CameraDescription newDescription;
-    if (lensDirection == CameraLensDirection.front){
+    if (lensDirection == CameraLensDirection.front) {
         newDescription = camerasList.firstWhere((description) => description.lensDirection == CameraLensDirection.back);
-    }
-    else {
+    } else {
         newDescription = camerasList.firstWhere((description) => description.lensDirection == CameraLensDirection.front);
     }
     camera = newDescription;

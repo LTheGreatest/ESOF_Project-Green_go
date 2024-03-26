@@ -14,10 +14,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
   
   // This widget is the root of the application.
   @override
@@ -26,11 +24,10 @@ class MyApp extends StatelessWidget {
       title: 'Green Go',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: primaryColor),
+        colorScheme: ColorScheme.fromSeed(seedColor: lightGreen),
         useMaterial3: true,
       ),
       home: const StartPage(),
     );
   }
 }
-

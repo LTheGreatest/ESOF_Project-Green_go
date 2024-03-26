@@ -13,7 +13,7 @@ class CustomMenuBar extends StatelessWidget{
   Widget build(BuildContext context){
       return Container(
         decoration: const BoxDecoration(
-          color: primaryColor,
+          color: lightGreen,
           borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
         ),
         child: Row(
@@ -30,58 +30,53 @@ class CustomMenuBar extends StatelessWidget{
                 );
               },
                icon: const Icon(Icons.favorite,)
-
-              ),
-
-              ///bus
-              IconButton(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                          builder: (context) => const TripPage(), 
-                        ),
-                  );
-                },
-                 icon: const Icon(Icons.bus_alert),
-              ),
-              
-              ///main page
-              IconButton(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MainPage()),
-                  );
-                },
-                icon: const Icon(Icons.home),
-              ),
-
-              ///missions
-              IconButton(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const MissionsPage()),
-                  );
-                }, 
-                icon: const Icon(Icons.search),
-              ),
-
-              ///profile
-              IconButton(
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage()),
-                  );
-                },
-                 icon: const Icon(Icons.people),
-              ),
-        ],
+            ),
+            ///bus
+            IconButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                        builder: (context) => const TripPage(),
+                      ),
+                );
+              },
+               icon: const Icon(Icons.bus_alert),
+            ),
+            ///main page
+            IconButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MainPage()),
+                );
+              },
+              icon: const Icon(Icons.home),
+            ),
+            ///missions
+            IconButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const MissionsPage()),
+                );
+              },
+              icon: const Icon(Icons.search),
+            ),
+            ///profile
+            IconButton(
+              onPressed: (){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProfilePage()),
+                );
+              },
+               icon: const Icon(Icons.people),
+            ),
+          ],
         ),
       );
   }
