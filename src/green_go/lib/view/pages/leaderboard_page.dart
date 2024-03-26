@@ -10,7 +10,7 @@ class LeaderboardPage extends StatefulWidget{
 }
 
 class LeaderboardPageState extends State<LeaderboardPage>{
-      late Future<List<List<String>>> userScore;
+      late Future<List<List<dynamic>>> userScore;
       LeaderboardModel leaderboardModel = LeaderboardModel();
 
       @override
@@ -37,7 +37,7 @@ class LeaderboardPageState extends State<LeaderboardPage>{
                   future: userScore,
                   builder: (context, snapshot){
                     if(snapshot.hasData){
-                      List<List<String>>? userScoreData = snapshot.data; 
+                      List<List<dynamic>>? userScoreData = snapshot.data; 
                       return ListView.builder( ///List with the data from the leaderboard
                         itemCount: userScoreData?.length,
                         itemBuilder: (BuildContext context, int index){
@@ -55,7 +55,7 @@ class LeaderboardPageState extends State<LeaderboardPage>{
                                     Padding(
                                       padding: const EdgeInsets.all(5),
                                     child: Text(userScoreData!.elementAt(index).first),),
-                                    Text(userScoreData.elementAt(index).last),
+                                    Text(userScoreData.elementAt(index).last.toString()),
                                   ],
                                 ),
                               ),
