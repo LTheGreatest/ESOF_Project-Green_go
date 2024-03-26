@@ -120,25 +120,41 @@ In this section you should start by briefly describing the overall components of
 
 ### Logical architecture
 
-The purpose of this subsection is to document the high-level logical structure of the code (Logical View), using a UML diagram with logical packages, without the worry of allocating to components, processes or machines.
+The GreenGo App relies on several external dependencies to enhance user experience and functionality. These include verification protocols for completed missions, GPS integration for precise point calculation, camera access to capture images for specific tasks, and a robust database system to securely store both user and mission data.
 
-It can be beneficial to present the system in a horizontal decomposition, defining layers and implementation concepts, such as the user interface, business logic and concepts.
+![image](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/assets/133124561/b8421577-d688-4515-8c2d-36ec0af54734)
 
-Example of _UML package diagram_ showing a _logical view_ of the Electronic Ticketing System (to be accompanied by a short description of each package):
-
-![LogicalView](https://user-images.githubusercontent.com/9655877/160585416-b1278ad7-18d7-463c-b8c6-afa4f7ac7639.png)
 
 ### Physical architecture
 
-The goal of this subsection is to document the high-level physical structure of the software system (machines, connections, software components installed, and their dependencies) using UML deployment diagrams (Deployment View) or component diagrams (Implementation View), separate or integrated, showing the physical structure of the system.
+The user enters the GreenGo app through his smartphone. In the app he can see the leaderboard, profile, missions, he can use even the camera and turn on the GPS. When the user wants to see some data, like his profile. The "User Controller" goes to the database server and enters the "User Database" to find the data about his profile. The same goes to if the user wishes to view the leaderboard or the missions to complete. 
 
-It should describe also the technologies considered and justify the selections made. Examples of technologies relevant for ESOF are, for example, frameworks for mobile applications (such as Flutter).
+The camera and the GPS is for the validation of his mission. For example, if he is doing a mission that is making a trip with public transport, he uses the GPS and the "GPS Controller" sends the data of the GPS to the "Backend Server" to verify if is valid. The same goes to the camera. The user takes pictures to prove the completion of the mission and then the "Camera Controller" Sends it to the "Verification" sector. Also this two components are allowed to be used in the app because of the "Smatphone Controller" which enables all functions.
 
-Example of _UML deployment diagram_ showing a _deployment view_ of the Electronic Ticketing System (please notice that, instead of software components, one should represent their physical/executable manifestations for deployment, called artifacts in UML; the diagram should be accompanied by a short description of each node and artifact):
+![image](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/assets/133124561/53239480-3e58-4eae-93ee-19e41655d2cd)
 
-![DeploymentView](https://user-images.githubusercontent.com/9655877/160592491-20e85af9-0758-4e1e-a704-0db1be3ee65d.png)
+### Other diagrams
 
-### Vertical prototype
+
+* Class diagram:
+
+<img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/assets/133124561/a2ea3ac5-0c67-4f1d-9032-15cd6b877c90" alt="Class Diagram" style="width:300px">
+
+* SequenceDiagram:
+
+<img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/assets/133124561/f83cca47-d0fb-42da-8168-d05bc6729e96" alt="Sequence Diagram" style="width:300px">
+
+* State Diagram:
+
+<img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/assets/133124561/fa8c5b7d-1df4-4c37-9819-0bd1b8d1b1f4" alt="State Diagram" style="width:300px">
+
+* Activity Diagram:
+
+<img src="https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/assets/133124561/188e89f4-7987-4cea-9c30-308823bcb146" alt="Activity Diagram" style="width:300px">
+
+
+
+#### Vertical prototype
 
 To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system integrating as much technologies we can.
 
