@@ -82,6 +82,10 @@ Take a look at the following links to learn some techniques:
 
 ## Requirements
 
+### User Stories
+
+The user stories can be seen in our [Github Projects board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/82).
+
 ### Domain model
 
 To better understand the context of the software system, it is very useful to have a simple UML class diagram with all the key concepts (names, attributes) and relationships involved of the problem domain addressed by your module.
