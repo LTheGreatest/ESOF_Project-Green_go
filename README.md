@@ -194,7 +194,7 @@ so that i can receive points.
 
 
 * **Profile Page:**
-  - **User Story:** 
+  - **User Story:** As a user I want to access my user profile so that i can check my personal information. 
   - **Implementation:** The page only has the title and the menu bar already enables the user to access this page. However it doesn't have any of the main features implemented.
   - **Screenshot:**
 
