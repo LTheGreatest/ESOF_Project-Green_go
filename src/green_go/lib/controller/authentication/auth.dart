@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-///import 'package:green_go/model/user_model.dart';
 
 class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;

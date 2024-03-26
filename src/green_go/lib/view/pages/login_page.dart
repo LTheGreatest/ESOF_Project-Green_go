@@ -18,10 +18,10 @@ class LoginPageViewState extends State<LoginPage>{
   Widget build(BuildContext context){
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(35),
+        padding: const EdgeInsets.all(35),
         child: Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.topCenter,
               child: Text(
                 "Login",
@@ -30,8 +30,8 @@ class LoginPageViewState extends State<LoginPage>{
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.all(35)),
-            Align(
+            const Padding(padding: EdgeInsets.all(35)),
+            const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "E-mail:",
@@ -41,8 +41,8 @@ class LoginPageViewState extends State<LoginPage>{
               ),
             ),
             TextFormField(controller: emailController,),
-            Padding(padding: EdgeInsets.all(20)),
-            Align(
+            const Padding(padding: EdgeInsets.all(20)),
+            const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "Password:",
@@ -52,27 +52,29 @@ class LoginPageViewState extends State<LoginPage>{
               ),
             ),
             TextFormField(controller: passwordController, obscureText: true,),
-            Padding(padding: EdgeInsets.all(35)),
+            const Padding(padding: EdgeInsets.all(35)),
             ElevatedButton(
               style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(const Size(200, 150)),
               ),
               onPressed: () async {
-                String? signInResult = await authService.signIn(
+                await authService.signIn(
                   emailController.text,
                   passwordController.text,
-                );
-                if (signInResult == null) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const MainPage())
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(signInResult),
-                    ),
-                  );
-                }
+                ).then((signInResult) {
+                   if (signInResult == null) {
+                    Navigator.pushAndRemoveUntil(context,
+                        MaterialPageRoute(builder: (context) => const MainPage()),
+                        (Route<dynamic> route) => false);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(signInResult),
+                      ),
+                    );
+                  }
+                });
+               
               },
               child: const Text(
                 'Login',

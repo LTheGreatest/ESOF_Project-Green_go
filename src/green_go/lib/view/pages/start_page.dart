@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:green_go/view/pages/main_page.dart';
 import 'package:green_go/view/pages/register_page.dart';
 import 'package:green_go/view/pages/login_page.dart';
 

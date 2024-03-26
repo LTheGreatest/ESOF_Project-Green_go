@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:green_go/view/constants.dart';
-import 'package:green_go/view/pages/leaderboard_page.dart';
 import 'package:green_go/view/pages/start_page.dart';
 import 'firebase_options.dart';
 

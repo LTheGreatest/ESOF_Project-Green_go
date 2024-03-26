@@ -4,7 +4,6 @@ import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 
 import 'login_page.dart';
-import 'main_page.dart';
 
 class RegisterPage extends StatefulWidget{
   const RegisterPage({super.key});
@@ -24,10 +23,10 @@ class RegisterPageViewState extends State<RegisterPage>{
   Widget build(BuildContext context){
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(35),
+        padding: const EdgeInsets.all(35),
         child: Column(
           children: [
-            Align(
+            const Align(
               alignment: Alignment.topCenter,
               child: Text(
                 "Register",
@@ -36,8 +35,8 @@ class RegisterPageViewState extends State<RegisterPage>{
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.all(35)),
-            Align(
+            const Padding(padding: EdgeInsets.all(35)),
+            const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "Username:",
@@ -47,8 +46,8 @@ class RegisterPageViewState extends State<RegisterPage>{
               ),
             ),
             TextFormField(controller: usernameController,),
-            Padding(padding: EdgeInsets.all(20)),
-            Align(
+            const Padding(padding: EdgeInsets.all(20)),
+            const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "E-mail:",
@@ -58,8 +57,8 @@ class RegisterPageViewState extends State<RegisterPage>{
               ),
             ),
             TextFormField(controller: emailController,),
-            Padding(padding: EdgeInsets.all(20)),
-            Align(
+            const Padding(padding: EdgeInsets.all(20)),
+            const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "Password:",
@@ -69,8 +68,8 @@ class RegisterPageViewState extends State<RegisterPage>{
               ),
             ),
             TextFormField(controller: passwordController, obscureText: true,),
-            Padding(padding: EdgeInsets.all(20)),
-            Align(
+            const Padding(padding: EdgeInsets.all(20)),
+            const Align(
               alignment: Alignment.topLeft,
               child: Text(
                 "Confirm password:",
@@ -80,7 +79,7 @@ class RegisterPageViewState extends State<RegisterPage>{
               ),
             ),
             TextFormField(controller: confPasswordController, obscureText: true,),
-            Padding(padding: EdgeInsets.all(35)),
+            const Padding(padding: EdgeInsets.all(35)),
             ElevatedButton(
               style: ButtonStyle(
                 minimumSize: MaterialStateProperty.all(const Size(200, 150)),
@@ -92,31 +91,34 @@ class RegisterPageViewState extends State<RegisterPage>{
                 String confirmPassword = confPasswordController.text;
                 if (password != confirmPassword) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Passwords do not match.'),
                     ),
                   );
                   return;
                 }
 
-                String? signUpResult = await authService.signUp(email, password);
-                if (signUpResult == null) {
-                  // Registration successful, navigate to login page
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
-                  );
-                  User? user = authService.getCurrentUserID();
-                  String? uid = user?.uid;
-                  dataBaseUsers.addUser(uid!, username);
-                } else {
-                  // Registration failed, show error message
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(signUpResult),
-                    ),
-                  );
-                }
+                await authService.signUp(email, password)
+                .then((signUpResult){
+                  if (signUpResult == null) {
+                    // Registration successful, navigate to login page
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
+                    );
+                    User? user = authService.getCurrentUserID();
+                    String? uid = user?.uid;
+                    dataBaseUsers.addUser(uid!, username);
+                  } else {
+                    // Registration failed, show error message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(signUpResult),
+                      ),
+                    );
+                  }
+                });
+                
               },
               child: const Text(
                   'Register',
