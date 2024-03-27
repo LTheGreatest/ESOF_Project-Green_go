@@ -1,12 +1,12 @@
 # _GreenGo_ Development Report
 
-Welcome to the documentation pages of the _GreenGo_!
+Welcome to the documentation pages of _GreenGo_!
 
-You can find here details about the _GreenGo_, from a high-level vision to low-level implementation decisions, a kind of Software Development Report, organized by type of activities:
+You can find here details about _GreenGo_, from a high-level vision to low-level implementation decisions, a kind of Software Development Report, organized by type of activities:
 
 This project is part of the Software Engineering UC.
-The main goal is to build a mobile app that addresses the sustainable development in the context of hte academic community.
-The app will try to encourage the FEUP community to have better practises regarding sustainable development.
+The main goal is to build a mobile app that addresses the sustainable development in the context of the academic community.
+The app will try to encourage the FEUP community to have better practices regarding sustainable development.
 
 * [Business modeling](#business-modelling)
   * [Product Vision](#product-vision)
@@ -43,7 +43,7 @@ Thank you!
 
 ### Product Vision
 
-For feup students who need an incentive to use transports in a sustainable way the GreenGo is an smartphone app that turns sustainabel mobility into a game. Unlike our competitors this product gives users rewards for their efforts while helping them build good habits.
+For FEUP students who need an incentive to use transports in a sustainable way, GreenGo is a smartphone app that turns sustainable mobility into a game. Unlike our competitors this product gives users rewards for their efforts while helping them build good habits.
 
 ### Features and Assumptions
 
@@ -95,11 +95,11 @@ Also provide a short textual description of each concept (domain class).
 
 **Mission** Describes a mission/objective on the app used to receive extra points.
 
-**Status** Decribes the status of a especific misson for a specific user (if the user completed that misson or not).
+**Status** Decribes the status of a specific misson for a specific user (if the user completed that misson or not).
 
 **Ranking** User's position in the app's leaderboard.
 
-**Leaderboard** List of users ordered by their pointuations.
+**Leaderboard** List of users ordered by their scores.
 
 ![Domain Model](docs/images/uml/classDiagram.png)
 
@@ -113,9 +113,9 @@ The GreenGo App relies on several external dependencies to enhance user experien
 
 ### Physical architecture
 
-The user enters the GreenGo app through his smartphone. In the app he can see the leaderboard, profile, missions, he can use even the camera and turn on the GPS. When the user wants to see some data, like his profile. The "User Controller" goes to the database server and enters the "User Database" to find the data about his profile. The same goes to if the user wishes to view the leaderboard or the missions to complete.
+The user accesses the GreenGo app through his smartphone. Within the app they can view the leaderboard, their profile, missions, and can even use the camera and turn on the GPS. When the user wants to see some data, like their profile, the "User Controller" queries the "User Database" on the database server to retrieve the relevant information. The same process occurs if the user wishes to view the leaderboard or the missions to complete.
 
-The camera and the GPS is for the validation of his mission. For example, if he is doing a mission that is making a trip with public transport, he uses the GPS and the "GPS Controller" sends the data of the GPS to the "Backend Server" to verify if is valid. The same goes to the camera. The user takes pictures to prove the completion of the mission and then the "Camera Controller" Sends it to the "Verification" sector. Also this two components are allowed to be used in the app because of the "Smatphone Controller" which enables all functions.
+The camera and GPS are used for validating missions. For instance, if a user is doing a mission that involves making a trip using public transport, they utilize the GPS. The "GPS Controller" then sends the GPS data to the "Backend Server" for validation. The same goes to the camera. The user takes pictures to prove the completion of the mission and then the "Camera Controller" sends it to the "Verification" sector. Both of these components are allowed to be used in the app because of the "Smatphone Controller", which enables all functions.
 
 ![Physical architecture](docs/images/uml/deploymentDiagram.png)
 
@@ -145,21 +145,21 @@ In the vertical prototype we implemented the following features:
     <img src="docs/images/Prototype/Login.jpg" alt="Sequence Diagram" style="width:300px">
 
 * **Register Page:**
-  * **User Story:** As a new user I want to sign up for the app so that i can participate in the challenges.
+  * **User Story:** As a new user I want to sign up for the app so that I can participate in the challenges.
   * **Implementation:** This feature is basically completed. Only some minor visual enhancements could be made for the final version.
-  * **Screenchot:**
+  * **Screenshot:**
   
     <img src="docs/images/Prototype/Register.jpg" alt="Sequence Diagram" style="width:300px">
 
 * **Start Page:**
-  * **User Story:** As a new user I want to sign up for the app so that i can participate in the challenges. As a user that has already signed up I want to login in my account so that I can access it and the app's contents.
+  * **User Story:** As a new user I want to sign up for the app so that I can participate in the challenges. As a user that has already signed up I want to login in my account so that I can access it and the app's contents.
   * **Implementation:** This feature is basically completed (we can access the login and register). Only some minor visual enhancements could be made for the final version.
   * **Screenshot:**
 
     <img src="docs/images/Prototype/Start_Page.jpg" alt="Sequence Diagram" style="width:300px">
 
 * **Leaderboard:**
-  * **User Story**: As a user I want to check the leaderboard so that i can see my current position in it along with the points of other users.
+  * **User Story**: As a user I want to check the leaderboard so that I can see my current position in it along with the points of other users.
   * **Implementation:** The system already connects with the Firebase Firestore database and fetches the users data. However, the users aren't ordered by the number of points and the visuals are different from what we expect for the final version.
   * **Screenshot:**
 
@@ -167,7 +167,7 @@ In the vertical prototype we implemented the following features:
 
 * **Trip Page:**
   * **User Story:** As a user I want to check a trip using public transports
-so that i can receive points.
+so that I can receive points.
   * **Implementation:** In this prototype, this page is only used to demonstrate the technologies that will be used to verify the trips (GPS location and camera pictures).
   * **Screenshot:**
 
@@ -188,7 +188,7 @@ so that i can receive points.
     <img src="docs/images/Prototype/Missions.jpg" alt="Sequence Diagram" style="width:300px">
 
 * **Profile Page:**
-  * **User Story:** As a user I want to access my user profile so that i can check my personal information.
+  * **User Story:** As a user I want to access my user profile so that I can check my personal information.
   * **Implementation:** The page only has the title and the menu bar already enables the user to access this page. However it doesn't have any of the main features implemented.
   * **Screenshot:**
 
