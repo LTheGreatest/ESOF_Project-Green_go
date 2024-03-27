@@ -201,11 +201,6 @@ so that I can receive points.
 
     <img src="docs/images/Prototype/Main_Page.jpg" alt="Sequence Diagram" style="width:300px">
 
-To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system integrating as much technologies we can.
-
-In this subsection please describe which feature, or part of it, you have implemented, and how, together with a snapshot of the user interface, if applicable.
-
-At this phase, instead of a complete user story, you can simply implement a small part of a feature that demonstrates they you can use the technology, for example, show a screen with the app credits (name and authors).
 
 ## Project management
 
