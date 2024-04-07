@@ -207,6 +207,7 @@ class RegisterPageViewState extends State<RegisterPage>{
                     ),
                 ),
               ),
+              const Padding(padding: EdgeInsets.all(20)),
             ],
           ),
         ),
