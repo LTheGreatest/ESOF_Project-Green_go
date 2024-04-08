@@ -29,34 +29,24 @@ class TripPageState extends State<TripPage> {
 
   void selectBus() {
     setState(() {
-      selectedBus = true;
+      selectedBus = !selectedBus;
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(35),
-              child: Text(
-                "Sustainable Transports",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold
-                ),
-              ),
-             ),
-             const Padding(
-              padding: EdgeInsets.all(15),
-              child: Text(
-                "Pick your transports and start earning points",
-              ) ,
-             ),
-              Padding(
+  void selectMetro(){
+    setState(() {
+      selectedMetro = !selectedMetro;
+    });
+  }
+
+  void selectWalk(){
+    setState(() {
+      selectedWalk = !selectedWalk;
+    });
+  }
+
+  Widget buildBusWidget(){
+    	return Padding(
                 padding: const EdgeInsets.fromLTRB(15,5,15,15),
                 child: AnimatedContainer(
                   duration: Durations.medium1,
@@ -95,14 +85,12 @@ class TripPageState extends State<TripPage> {
                         child: Align(
                           alignment: Alignment.topRight,
                           child: IconButton(
-                            icon: !selectedBus ? Icon(Icons.arrow_circle_right) : Icon(Icons.arrow_circle_down),
+                            icon: !selectedBus ? const Icon(Icons.arrow_circle_right) : const Icon(Icons.arrow_circle_down),
                             style: const ButtonStyle(
                               iconSize: MaterialStatePropertyAll(40),
                             ),
                           onPressed: () {
-                              setState(() {
-                                selectedBus = !selectedBus;
-                              });
+                              selectBus();
                               },
                           ),
                         ),
@@ -130,32 +118,35 @@ class TripPageState extends State<TripPage> {
                     ],
                   ) ,
                 ),
-              ),
-              Padding(
+              );
+  }
+
+  Widget buildMetroWidget() {
+    return Padding(
                 padding: const EdgeInsets.fromLTRB(15,15,15,15),
                 child: AnimatedContainer(
                   duration: Durations.medium1,
-                  height: 90,
+                  height: !selectedMetro ? 90 : 150,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
                     color: lightGray,
                   ),
-                  child: const Stack(
+                  child: Stack(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
+                      const Padding(
+                        padding:  EdgeInsets.fromLTRB(8,20,8,8),
                         child: Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.topLeft,
                           child: Icon(
                             Icons.bus_alert,
                             size: 40,
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.fromLTRB(8,20,8,8),
                         child: Align(
-                          alignment: Alignment.center,
+                          alignment: Alignment.topCenter,
                           child: Text(
                             "Metro",
                             style: TextStyle(
@@ -166,44 +157,72 @@ class TripPageState extends State<TripPage> {
                           ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding:  const EdgeInsets.fromLTRB(8,20,8,8),
                         child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.arrow_circle_right,
-                            size: 40,
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: !selectedMetro ? const Icon(Icons.arrow_circle_right) : const Icon(Icons.arrow_circle_down),
+                            style: const ButtonStyle(
+                              iconSize: MaterialStatePropertyAll(40),
+                            ),
+                          onPressed: () {
+                              selectMetro();
+                              },
                           ),
                         ),
+                      ),
+                      selectedMetro? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: TextButton(
+                            onPressed: (){},
+                            style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Color.fromARGB(249, 94, 226, 76)),
+                              minimumSize: MaterialStatePropertyAll(Size(150,50))
+                            ),
+                             child: const Text(
+                              "Start",
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                              )
+                            ),
+                        ),
                       )
+                      : const Padding(padding: EdgeInsets.zero),
                     ],
                   ) ,
                 ),
-              ),
-              Padding(
+              );
+  }
+
+  Widget buildWalkWidget(){
+    return Padding(
                 padding: const EdgeInsets.fromLTRB(15,15,15,5),
                 child: AnimatedContainer(
                   duration: Durations.medium1,
-                  height: 90,
+                  height: !selectedWalk ? 90 : 150,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
                     color: lightGray,
                   ),
-                  child: const Stack(
+                  child:  Stack(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
+                      const Padding(
+                        padding:  EdgeInsets.fromLTRB(8,20,8,8),
                         child: Align(
-                          alignment: Alignment.centerLeft,
+                          alignment: Alignment.topLeft,
                           child: Icon(
                             Icons.bus_alert,
                             size: 40
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
+                      const Padding(
+                        padding:  EdgeInsets.fromLTRB(8,20,8,8),
                         child: Align(
-                          alignment: Alignment.center,
+                          alignment: Alignment.topCenter,
                           child: Text(
                             "Walk",
                             style: TextStyle(
@@ -214,65 +233,84 @@ class TripPageState extends State<TripPage> {
                           ),
                       ),
                       Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: const  EdgeInsets.fromLTRB(8,20,8,8),
                         child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Icon(
-                            Icons.arrow_circle_right,
-                            size: 40,
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: !selectedWalk ? const Icon(Icons.arrow_circle_right) : const Icon(Icons.arrow_circle_down),
+                            style: const ButtonStyle(
+                              iconSize: MaterialStatePropertyAll(40),
+                            ),
+                          onPressed: () {
+                              selectWalk();
+                              },
                           ),
                         ),
+                      ),
+                      selectedWalk? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: TextButton(
+                            onPressed: (){},
+                            style: const ButtonStyle(
+                              backgroundColor: MaterialStatePropertyAll(Color.fromARGB(249, 94, 226, 76)),
+                              minimumSize: MaterialStatePropertyAll(Size(150,50))
+                            ),
+                             child: const Text(
+                              "Start",
+                              style: TextStyle(
+                                color: Colors.white
+                              ),
+                              )
+                            ),
+                        ),
                       )
+                      : const Padding(padding: EdgeInsets.zero),
                     ],
                   ) ,
                 ),
-              ),
-             /*
-            Padding(
-              padding: const EdgeInsets.all(35),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TakePictureScreen(),
-                    ),
-                  );
-                  },
-                  child: const Text("Take a Picture"),),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(35),
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    showLocation();
-                    },
-                  child: const Text("Show Location"),
+              );
+  }
+
+  Widget buildTitle(){
+    return  const Padding(
+              padding: EdgeInsets.all(35),
+              child: Text(
+                "Sustainable Transports",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(35),
-              child: FutureBuilder(
-                future: location, 
-                builder:(context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Text(snapshot.data.toString());
-                  }
-                  else{
-                    return const Text("No location");
-                  }
-                }
-              ),
-            ), 
-            */  
+             );
+  }
+
+  Widget buildSubtitle(){
+    return const Padding(
+              padding: EdgeInsets.all(15),
+              child: Text(
+                "Pick your transports and start earning points",
+              ) ,
+             );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+              buildTitle(),
+              buildSubtitle(),
+              buildBusWidget(),
+              buildMetroWidget(),
+              buildWalkWidget(),
           ],
         ),
       ),
-      bottomSheet: CustomMenuBar(),
+      bottomSheet: const CustomMenuBar(),
     );
   }
 }
