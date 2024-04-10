@@ -3,9 +3,9 @@ import 'package:green_go/model/transport_model.dart';
 
 class TransportsFetcher{
   DataBaseTransports db = DataBaseTransports();
-  late List<TransportModel> transports;
+  List<TransportModel> transports = [];
 
-  Future<List<TransportModel>> getTransport() async{
+  Future<List<TransportModel>> getTransports() async{
     await db.getAllData().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         try{
