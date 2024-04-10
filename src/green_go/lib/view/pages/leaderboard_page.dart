@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:green_go/model/leaderboard_model.dart';
+import 'package:green_go/controller/fetchers/user_score_fetcher.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
 class LeaderboardPage extends StatefulWidget {
@@ -11,12 +11,12 @@ class LeaderboardPage extends StatefulWidget {
 
 class LeaderboardPageState extends State<LeaderboardPage> {
   late Future<List<List<dynamic>>> userScore;
-  LeaderboardModel leaderboardModel = LeaderboardModel();
+  UserScoreFetcher userScoreFetcher = UserScoreFetcher();
 
   @override
   void initState() {
     super.initState();
-    userScore = leaderboardModel.getDataForLeaderboard();
+    userScore = userScoreFetcher.getDataForLeaderboard();
   }
   ///Builds the page title
   Widget buildTitle(BuildContext context) {

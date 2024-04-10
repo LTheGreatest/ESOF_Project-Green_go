@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:green_go/controller/camera.dart';
+import 'package:green_go/controller/camera/camera.dart';
 import 'package:green_go/view/pages/display_pictures_screen.dart';
 
 class TakePictureScreen extends StatefulWidget {

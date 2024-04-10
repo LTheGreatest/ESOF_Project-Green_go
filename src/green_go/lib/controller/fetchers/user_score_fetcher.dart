@@ -1,6 +1,6 @@
 import 'package:green_go/controller/database/database_users.dart';
 
-class LeaderboardModel {
+class UserScoreFetcher {
   DataBaseUsers db = DataBaseUsers();
   List<List<dynamic>> userScore = [];
 
