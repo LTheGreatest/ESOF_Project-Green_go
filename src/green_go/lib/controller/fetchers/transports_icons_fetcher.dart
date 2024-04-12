@@ -7,10 +7,13 @@ class TransportsIconsFetcher{
   CloudStorage storage = CloudStorage();
 
   Future<List<List<dynamic>>> getTransportsIcons(List<TransportModel> transports) async{
+
     for(int i = 0; i < transports.length; i++){
+
       String path = "icons/${transports[i].getName()}.png";
       Future<String> futureURL = storage.dowloadFileURL(path);
       String url = "";
+
       try{
         await futureURL.then((value) => url = value);
         Image img = Image.network(url, fit: BoxFit.scaleDown);
@@ -18,6 +21,7 @@ class TransportsIconsFetcher{
       } catch(e) {
         print("Failed with error '${e.toString()}'");
       }
+      
     }
     return transportIcons;
   }

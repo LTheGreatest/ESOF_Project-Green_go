@@ -3,6 +3,7 @@ import 'package:green_go/controller/fetchers/transports_fetcher.dart';
 import 'package:green_go/controller/fetchers/transports_icons_fetcher.dart';
 import 'package:green_go/model/transport_model.dart';
 import 'package:green_go/view/constants.dart';
+import 'package:green_go/view/pages/take_picture_screen.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
 class TripPage extends StatefulWidget {
@@ -117,7 +118,13 @@ class TripPageState extends State<TripPage> {
                         child: Align(
                           alignment: Alignment.bottomCenter,
                           child: TextButton(
-                            onPressed: (){},
+                            onPressed: (){
+                              Navigator.push(
+                                context, 
+                                MaterialPageRoute(
+                                  builder: (context) => const TakePictureScreen())
+                              );
+                            },
                             style: const ButtonStyle(
                               backgroundColor: MaterialStatePropertyAll(Color.fromARGB(249, 94, 226, 76)),
                               minimumSize: MaterialStatePropertyAll(Size(150,50))
@@ -151,7 +158,7 @@ class TripPageState extends State<TripPage> {
                 itemBuilder: (context, index) {
                   Image? imgIcon = findIcon(transports[index].getName());
                   if(imgIcon == null){
-                    return const Text("Error while loading the widget");
+                    return const Text("Error while loading the widget. Please verify your internet connection");
                   }
                   else{
                     return transportWidget(context, transports.elementAt(index), index, imgIcon);
