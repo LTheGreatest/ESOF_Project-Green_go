@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/fetchers/transports_fetcher.dart';
+import 'package:green_go/controller/fetchers/transports_icons_fetcher.dart';
 import 'package:green_go/model/transport_model.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
@@ -14,13 +15,21 @@ class TripPage extends StatefulWidget {
 class TripPageState extends State<TripPage> {
   late List<bool> selectionList;
   TransportsFetcher transportsFetcher = TransportsFetcher();
+  TransportsIconsFetcher transportsIconsFetcher = TransportsIconsFetcher();
   late Future<List<TransportModel>> transportsFuture;
+  late List<TransportModel> transports;
+  late List<List<dynamic>> transportsIcons;
 
   @override
   void initState() {
     super.initState();
     transportsFuture = transportsFetcher.getTransports();
     initializeSelectionList();
+    getIcons();
+  }
+
+  Future<void> getTransports() async{
+    await transportsFuture.then((value) => transports = value);
   }
 
   Future<void> initializeSelectionList() async{
@@ -29,13 +38,30 @@ class TripPageState extends State<TripPage> {
     selectionList = List.filled(length, false);
   }
 
+  Future<void> getIcons() async{
+    List<TransportModel> transports = [];
+    await transportsFuture.then((value) => transports = value);
+    Future<List<List<dynamic>>> transportsIconsFuture = transportsIconsFetcher.getTransportsIcons(transports);
+    await transportsIconsFuture.then((value) => transportsIcons = value);
+  }
+
+  Image? findIcon(String transportName){
+    Image? img;
+    for(int i = 0; i < transportsIcons.length; i++){
+      if(transportsIcons[i][1] == transportName){
+        img = transportsIcons[i][0];
+      }
+    }
+    return img;
+  }
+
   void selectElement(int idx){
     setState(() {
       selectionList[idx] = !selectionList.elementAt(idx); 
     });
   }
 
-  Widget transportWidget(BuildContext context, TransportModel transportModel, int idx){
+  Widget transportWidget(BuildContext context, TransportModel transportModel, int idx, Image img){
     return Padding(
                 padding: const EdgeInsets.fromLTRB(15,5,15,15),
                 child: AnimatedContainer(
@@ -47,15 +73,16 @@ class TripPageState extends State<TripPage> {
                   ),
                   child: Stack(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(8,20,8,8),
-                        child: Align(
-                          alignment: Alignment.topLeft,
-                          child: Icon(
-                            Icons.bus_alert,
-                            size: 40
-                          ),
-                        ),
+                       Padding(
+                        padding: const EdgeInsets.fromLTRB(15,20,8,8),
+                        child: SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: Align(
+                              alignment:Alignment.topLeft ,
+                              child: img
+                              ),
+                            ),
                       ),
                        Padding(
                         padding: const EdgeInsets.fromLTRB(8,20,8,8),
@@ -114,16 +141,24 @@ class TripPageState extends State<TripPage> {
   Widget transportWidgetList(BuildContext context){
     return Expanded(
       child: FutureBuilder(
-        future: transportsFuture,
+        future: Future.wait([getTransports(), getIcons()]),
         builder: (context, snapshot) {
           if(snapshot.hasData) {
-            List<TransportModel>? transports = snapshot.data;
-            return ListView.builder(
-              itemCount: transports?.length,
-              itemBuilder: (context, index) {
-                return transportWidget(context, transports!.elementAt(index), index);
-              },
-              
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 45.0),
+              child: ListView.builder(
+                itemCount: transports.length,
+                itemBuilder: (context, index) {
+                  Image? imgIcon = findIcon(transports![index].getName());
+                  if(imgIcon == null){
+                    return const Text("Error while loading the widget");
+                  }
+                  else{
+                    return transportWidget(context, transports.elementAt(index), index, imgIcon);
+                  }
+                },
+                
+              ),
             );
           }
 
