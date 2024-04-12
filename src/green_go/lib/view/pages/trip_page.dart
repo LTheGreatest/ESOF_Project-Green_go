@@ -149,7 +149,7 @@ class TripPageState extends State<TripPage> {
               child: ListView.builder(
                 itemCount: transports.length,
                 itemBuilder: (context, index) {
-                  Image? imgIcon = findIcon(transports![index].getName());
+                  Image? imgIcon = findIcon(transports[index].getName());
                   if(imgIcon == null){
                     return const Text("Error while loading the widget");
                   }
