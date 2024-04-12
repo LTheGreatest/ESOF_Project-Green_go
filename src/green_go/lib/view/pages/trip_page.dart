@@ -8,10 +8,10 @@ class TripPage extends StatefulWidget {
   const TripPage({super.key});
 
   @override
-  _TripPageState createState() => _TripPageState();
+  TripPageState createState() => TripPageState();
 }
 
-class _TripPageState extends State<TripPage> {
+class TripPageState extends State<TripPage> {
   late List<bool> selectionList;
   TransportsFetcher transportsFetcher = TransportsFetcher();
   late Future<List<TransportModel>> transportsFuture;

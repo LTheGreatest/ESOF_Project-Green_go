@@ -123,18 +123,23 @@ class LoginPageViewState extends State<LoginPage>{
                   passwordController.text,
                 );
                 if (!mounted) return; // Add this line to check if the widget is still in the tree
-                if (signInResult == null) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const MainPage())
+                if (signInResult == 'Successfully logged in') {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage())
                   );
+                } else if (signInResult == 'User not found: Double check your email') {
+                  emailController.clear();
+                } else if (signInResult == 'Wrong password, try again'){
+                  passwordController.clear();
                 } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(signInResult),
-                    ),
-                  );
+                  emailController.clear();
+                  passwordController.clear();
                 }
-              },
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(signInResult!),
+                  ),
+                );
+                },
               child: const Text(
                 'Login',
                 style: TextStyle(

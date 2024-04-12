@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
@@ -171,34 +170,59 @@ class RegisterPageViewState extends State<RegisterPage>{
                   String email = emailController.text.trim();
                   String password = passwordController.text;
                   String confirmPassword = confPasswordController.text;
+                  if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Please fill in all fields.'),
+                      ),
+                    );
+                    return;
+                  }
+                  if (!email.contains('@') || !email.contains('.')) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Invalid email address.'),
+                      ),
+                    );
+                    emailController.clear();
+                    return;
+                  }
                   if (password != confirmPassword) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Passwords do not match.'),
                       ),
                     );
+                    passwordController.clear();
+                    confPasswordController.clear();
                     return;
                   }
-                  await authService.signUp(email, password)
-                      .then((signUpResult) {
-                    if (signUpResult == null) {
+                  await authService.signUp(email, password, username).then((signUpResult) {
+                    if (signUpResult == 'Successfully registered') {
                       // Registration successful, navigate to login page
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(builder: (context) => const MainPage()),
                       );
-                      User? user = authService.getCurrentUserID();
-                      String? uid = user?.uid;
-                      dataBaseUsers.addUser(uid!, username);
+                    } else if (signUpResult == 'Email is already in use') {
+                      emailController.clear();
+                    } else if (signUpResult == 'Password is too weak') {
+                      passwordController.clear();
+                      confPasswordController.clear();
                     } else {
-                      // Registration failed, show error message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(signUpResult),
-                        ),
-                      );
+                      usernameController.clear();
+                      emailController.clear();
+                      passwordController.clear();
+                      confPasswordController.clear();
                     }
-                  });
+                    // Registration failed, show error message
+                    ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(signUpResult!),
+                    ),
+                    );
+                  }
+                  );
                 },
                 child: const Text(
                     'Register',
