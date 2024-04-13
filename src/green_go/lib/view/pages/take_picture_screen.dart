@@ -1,12 +1,15 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/camera/camera.dart';
+import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/display_pictures_screen.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     super.key,
+    required this.isStarting
   });
+  final bool isStarting;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -15,6 +18,7 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   late CameraService cameraService;
   late Future<void> _initializeControllerFuture;
+
 
   @override
   void initState() {
@@ -31,53 +35,142 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+  Widget buildTitle(BuildContext context){
+    return const Padding(
+          padding: EdgeInsets.fromLTRB(35, 35, 35, 15),
+          child: Text(
+            "Verification",
+            style: TextStyle(
+              fontSize: 40,
+              fontWeight: FontWeight.w600
+            ),
+          ),
+        );
+  }
+
+  Widget buildSubtitle(BuildContext context){
+    return widget.isStarting? 
+          const Text(
+            "Take a Picture of your starting location",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500
+              ),
+          ) 
+          : const Text(
+            "Take a Picture of your finnishing location",
+            style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w500
+              ),
+            );
+  }
+
+  Widget buildCameraFeed(BuildContext context){
+    return Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: MediaQuery.of(context).size.height / 1.5,
+            decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
+                      color: lightGray,
+                ),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: CameraPreview(cameraService.cameraController),
+            )),
+        );
+  }
+
+  Widget cameraSwitchButton(BuildContext context){
+    return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            width: 120,
+            decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
+                  color: lightGray,
+            ),
+            child: IconButton(
+              onPressed: () {},
+                icon: const Icon(
+                Icons.cameraswitch_outlined,
+                size: 40,
+                ))
+          ),
+        );
+  }
+
+  Widget takePictureButton(BuildContext context){
+    return Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            width: 120,
+            decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
+                  color: lightGray,
+            ),
+            child: IconButton(
+              onPressed: () async{
+                try {
+                  // Ensure that the camera is initialized.
+                  await _initializeControllerFuture;
+                  // Attempt to take a picture and get the file `image`
+                  // where it was saved.
+                  final image = await cameraService.cameraController.takePicture();
+                  if (!context.mounted) return;
+                  // If the picture was taken, display it on a new screen.
+                  await Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => DisplayPictureScreen(
+                        // Pass the automatically generated path to
+                        // the DisplayPictureScreen widget.
+                        imagePath: image.path,
+                      ),
+                    ),
+                  );
+                } catch (e) {
+                  // If an error occurs, log the error to the console.
+                  print(e);
+                }
+              },
+                icon: const Icon(
+                Icons.camera_alt,
+                size: 40 
+                ))
+          ),
+        );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Take a picture')),
-      // You must wait until the controller is initialized before displaying the
-      // camera preview. Use a FutureBuilder to display a loading spinner until the
-      // controller has finished initializing.
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
-            return CameraPreview(cameraService.cameraController);
+            return Column(
+              children: [
+                buildTitle(context),
+                buildSubtitle(context),
+                buildCameraFeed(context),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:[
+                    cameraSwitchButton(context),
+                    takePictureButton(context),
+                  ]
+                )
+              ],
+            );
           } else {
             // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());
           }
         },
-      ),
-      floatingActionButton: FloatingActionButton(
-        // Provide an onPressed callback.
-        onPressed: () async {
-          // Take the Picture in a try / catch block. If anything goes wrong,
-          // catch the error.
-          try {
-            // Ensure that the camera is initialized.
-            await _initializeControllerFuture;
-            // Attempt to take a picture and get the file `image`
-            // where it was saved.
-            final image = await cameraService.cameraController.takePicture();
-            if (!context.mounted) return;
-            // If the picture was taken, display it on a new screen.
-            await Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => DisplayPictureScreen(
-                  // Pass the automatically generated path to
-                  // the DisplayPictureScreen widget.
-                  imagePath: image.path,
-                ),
-              ),
-            );
-          } catch (e) {
-            // If an error occurs, log the error to the console.
-            print(e);
-          }
-        },
-        child: const Icon(Icons.camera_alt),
       ),
     );
   }
