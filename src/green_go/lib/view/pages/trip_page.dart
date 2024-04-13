@@ -122,7 +122,7 @@ class TripPageState extends State<TripPage> {
                               Navigator.push(
                                 context, 
                                 MaterialPageRoute(
-                                  builder: (context) => TakePictureScreen(isStarting: true,))
+                                  builder: (context) => const TakePictureScreen(isStarting: true,))
                               );
                             },
                             style: const ButtonStyle(
