@@ -123,15 +123,15 @@ The camera and GPS are used for validating missions. For instance, if a user is 
 
 * Sequence Diagram:
 
-![Sequence Diagram](docs/images/uml/extra/sequenceDiagram.png)
+<img src="docs/images/uml/extra/sequenceDiagram.png" alt="Sequence Diagram" style="width:300px">
 
 * State Diagram:
 
-![State Diagram](docs/images/uml/extra/stateDiagram.png)
+<img src="docs/images/uml/extra/stateDiagram.png" alt="State Diagram" style="width:300px">
 
 * Activity Diagram:
 
-![Activity Diagram](docs/images/uml/extra/activityDiagram.png)
+<img src="docs/images/uml/extra/activityDiagram.png" alt="Activity Diagram" style="width:300px">
 
 #### Vertical prototype
 
