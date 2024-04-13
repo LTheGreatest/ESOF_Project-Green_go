@@ -4,24 +4,25 @@ import 'package:green_go/view/pages/trip_page.dart';
 
 class OngoingTripPage extends StatelessWidget{
   const OngoingTripPage({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return  Scaffold(
-      body: Column(
-        children:[
-          const Padding(
-            padding: EdgeInsets.all(35),
-            child: Text(
-              "Ongoing Trip",
-              textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold
-                  ),
-              ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(15),
+
+
+  Widget buildTitle(BuildContext context){
+    return  const Padding(
+          padding: EdgeInsets.all(35),
+          child: Text(
+            "Ongoing Trip",
+            textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold
+                ),
+            ),
+        );
+  }
+
+  Widget buildSubtitle(BuildContext context){
+    return const Padding(
+            padding: EdgeInsets.all(30),
             child: Text(
               "Your Trip Has Started",
                textAlign: TextAlign.center,
@@ -30,18 +31,11 @@ class OngoingTripPage extends StatelessWidget{
                   fontWeight: FontWeight.w500
                 ),
               ),
-          ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(15,20,15,5),
-            child: Text(
-              "Tap The Stop Button When You Finnish",
-               textAlign: TextAlign.center,
-                style: TextStyle(
-                      fontSize: 15,
-                    ),
-              ),
-          ),
-          Padding(
+          );
+  }
+
+  Widget stopButton(BuildContext context){
+    return Padding(
             padding: const EdgeInsets.all(20),
             child: TextButton(
               onPressed: () {
@@ -64,18 +58,11 @@ class OngoingTripPage extends StatelessWidget{
                 ),
                 ),
             ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(20),
-            child: Text(
-              "Tap The Cancel Button If you want to cancel the trip",
-              textAlign: TextAlign.center,
-                style: TextStyle(
-                      fontSize: 15,
-                    ),
-              ),
-          ),
-          Padding(
+          );
+  }
+
+  Widget cancelButton(BuildContext context){
+    return  Padding(
             padding: const EdgeInsets.all(20),
             child: TextButton(
               onPressed: () {
@@ -98,7 +85,38 @@ class OngoingTripPage extends StatelessWidget{
                 ),
                 ),
             ),
+          );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return  Scaffold(
+      body: Column(
+        children:[
+          buildTitle(context),
+          buildSubtitle(context),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(15,100,15,5),
+            child: Text(
+              "Tap The Stop Button When You Finnish",
+               textAlign: TextAlign.center,
+                style: TextStyle(
+                      fontSize: 15,
+                    ),
+              ),
           ),
+         stopButton(context),
+          const Padding(
+            padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+            child: Text(
+              "Tap The Cancel Button If you want to cancel the trip",
+              textAlign: TextAlign.center,
+                style: TextStyle(
+                      fontSize: 15,
+                    ),
+              ),
+          ),
+          cancelButton(context),
         ]
       )
     );
