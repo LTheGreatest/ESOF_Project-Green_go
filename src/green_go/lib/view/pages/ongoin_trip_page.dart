@@ -1,11 +1,37 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:green_go/controller/location/location.dart';
 import 'package:green_go/view/pages/take_picture_screen.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
-class OngoingTripPage extends StatelessWidget{
+class OngoingTripPage extends StatefulWidget{
   const OngoingTripPage({super.key});
 
+ @override
+  OngoingTripPageState createState() => OngoingTripPageState();
+}
 
+class OngoingTripPageState extends State<OngoingTripPage>{
+  LocationService locationService = LocationService();
+  Position? initialLocation;
+  Position? finalLocation;
+
+
+  Future<void> getInitialPosition() async{
+    await locationService.determinePosition().then((value) => initialLocation = value);
+  }
+
+  Future<void> getFinalPosition() async{
+    await locationService.determinePosition().then((value) => finalLocation = value);
+  }
+
+  double calculateDistance(Position first, Position second){
+    return locationService.calculateDistance(first.latitude, first.longitude, second.latitude, second.longitude);
+  }
+
+  
   Widget buildTitle(BuildContext context){
     return  const Padding(
           padding: EdgeInsets.all(35),
@@ -38,7 +64,9 @@ class OngoingTripPage extends StatelessWidget{
     return Padding(
             padding: const EdgeInsets.all(20),
             child: TextButton(
-              onPressed: () {
+              onPressed: () async{
+                await getFinalPosition();
+                double distance = calculateDistance(initialLocation!, finalLocation!);
                 Navigator.pushReplacement(
                   context, 
                   MaterialPageRoute(
@@ -91,34 +119,70 @@ class OngoingTripPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      body: Column(
-        children:[
-          buildTitle(context),
-          buildSubtitle(context),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(15,100,15,5),
-            child: Text(
-              "Tap The Stop Button When You Finnish",
-               textAlign: TextAlign.center,
-                style: TextStyle(
-                      fontSize: 15,
-                    ),
-              ),
-          ),
-         stopButton(context),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-            child: Text(
-              "Tap The Cancel Button If you want to cancel the trip",
-              textAlign: TextAlign.center,
-                style: TextStyle(
-                      fontSize: 15,
-                    ),
-              ),
-          ),
-          cancelButton(context),
-        ]
-      )
+      body: FutureBuilder(
+        future: Future.wait([getInitialPosition()]),
+        builder:  (context, snapshot) {
+          if(snapshot.hasData) {
+            if(initialLocation != null){
+            return  Column(
+                children:[
+                  buildTitle(context),
+                  buildSubtitle(context),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(15,100,15,5),
+                    child: Text(
+                      "Tap The Stop Button When You Finnish",
+                      textAlign: TextAlign.center,
+                        style: TextStyle(
+                              fontSize: 15,
+                            ),
+                      ),
+                  ),
+                stopButton(context),
+                  const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                    child: Text(
+                      "Tap The Cancel Button If you want to cancel the trip",
+                      textAlign: TextAlign.center,
+                        style: TextStyle(
+                              fontSize: 15,
+                            ),
+                      ),
+                  ),
+                  cancelButton(context),
+                ]
+              );
+            }
+
+            else{
+              return Column(
+                  children: [
+                    buildTitle(context),
+                    buildSubtitle(context),
+                    const Padding(
+                    padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                    child: Text(
+                      "The trip cannot be verified without the GPS Location",
+                      textAlign: TextAlign.center,
+                        style: TextStyle(
+                              fontSize: 15,
+                            ),
+                      ),
+                  ),
+                  cancelButton(context),
+
+                  ]
+              );
+
+            }
+          }
+          else{
+            return const Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        }
+      ),
     );
   }
 
