@@ -109,7 +109,7 @@ Also provide a short textual description of each concept (domain class).
 
 The GreenGo App relies on several external dependencies to enhance user experience and functionality. These include verification protocols for completed missions, GPS integration for precise point calculation, camera access to capture images for specific tasks, and a robust database system to securely store both user and mission data.
 
-![Logical architecture](docs/images/uml/packageDiagram.jpg)
+![Logical architecture](docs/images/uml/packageDiagram.png)
 
 ### Physical architecture
 
