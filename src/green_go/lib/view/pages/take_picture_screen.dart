@@ -35,6 +35,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     super.dispose();
   }
 
+
   Widget buildTitle(BuildContext context){
     return const Padding(
           padding: EdgeInsets.fromLTRB(35, 35, 35, 15),
@@ -49,6 +50,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 
   Widget buildSubtitle(BuildContext context){
+    //the subtitle may be different depending on the context
     return widget.isStarting? 
           const Text(
             "Take a Picture of your starting location",
@@ -69,34 +71,52 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget buildCameraFeed(BuildContext context){
     return Padding(
           padding: const EdgeInsets.all(8.0),
+
+          //container containing the camera feed
           child: Container(
+            //the height is defined accordingly to the screen size
             height: MediaQuery.of(context).size.height / 1.5,
+
             decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
                       color: lightGray,
                 ),
+
             child: Padding(
               padding: const EdgeInsets.all(15),
+              //calls the camera preview
               child: CameraPreview(cameraService.cameraController),
-            )),
+            )
+          ),
         );
   }
 
   Widget cameraSwitchButton(BuildContext context){
     return Padding(
           padding: const EdgeInsets.all(20),
+
           child: Container(
             width: 120,
             decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
                   color: lightGray,
             ),
+
             child: IconButton(
-              onPressed: () {},
+              onPressed: () async {
+
+                //toggles camera lens and redraws the screen
+                await cameraService.toggleCameraLens();
+                setState(() {});
+
+              },
+
+                //switch camera icon
                 icon: const Icon(
                 Icons.cameraswitch_outlined,
                 size: 40,
-                ))
+                )
+              ),
           ),
         );
   }
@@ -104,12 +124,14 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget takePictureButton(BuildContext context){
     return Padding(
           padding: const EdgeInsets.all(20),
+
           child: Container(
             width: 120,
             decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
                   color: lightGray,
             ),
+            //button to take the picture
             child: IconButton(
               onPressed: () async{
                 try {
@@ -120,7 +142,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   final image = await cameraService.cameraController.takePicture();
                   if (!context.mounted) return;
                   // If the picture was taken, display it on a new screen.
-                  await Navigator.of(context).push(
+                  await Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => DisplayPictureScreen(
                         // Pass the automatically generated path to
@@ -134,10 +156,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   print(e);
                 }
               },
+              //camera icon
                 icon: const Icon(
-                Icons.camera_alt,
-                size: 40 
-                ))
+                  Icons.camera_alt,
+                  size: 40 
+                )
+              ),
           ),
         );
   }
