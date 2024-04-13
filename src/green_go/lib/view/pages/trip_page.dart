@@ -119,7 +119,7 @@ class TripPageState extends State<TripPage> {
                           alignment: Alignment.bottomCenter,
                           child: TextButton(
                             onPressed: (){
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context, 
                                 MaterialPageRoute(
                                   builder: (context) => const TakePictureScreen(isStarting: true,))
