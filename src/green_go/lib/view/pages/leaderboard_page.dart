@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:green_go/controller/fetchers/user_score_fetcher.dart';
+import 'package:green_go/controller/fetchers/user_fetcher.dart';
+import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
 class LeaderboardPage extends StatefulWidget {
@@ -10,8 +11,8 @@ class LeaderboardPage extends StatefulWidget {
 }
 
 class LeaderboardPageState extends State<LeaderboardPage> {
-  late Future<List<List<dynamic>>> userScore;
-  UserScoreFetcher userScoreFetcher = UserScoreFetcher();
+  late Future<List<UserModel>> userScore;
+  UserFetcher userScoreFetcher = UserFetcher();
 
   @override
   void initState() {
@@ -35,7 +36,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
         future: userScore,
         builder: (context, snapshot){
           if (snapshot.hasData) {
-            List<List<dynamic>>? userScoreData = snapshot.data;
+            List<UserModel>? userScoreData = snapshot.data;
             return ListView.builder( ///List with the data from the leaderboard
               itemCount: userScoreData?.length,
               itemBuilder: (BuildContext context, int index){
@@ -52,8 +53,8 @@ class LeaderboardPageState extends State<LeaderboardPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.all(5),
-                          child: Text(userScoreData!.elementAt(index).first),),
-                        Text(userScoreData.elementAt(index).last.toString()),
+                          child: Text(userScoreData!.elementAt(index).username),),
+                        Text(userScoreData.elementAt(index).totalPoints.toString()),
                       ],
                     ),
                   ),

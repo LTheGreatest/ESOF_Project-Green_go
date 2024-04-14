@@ -6,7 +6,7 @@ class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final DataBaseUsers dataBaseUsers = DataBaseUsers();
 
-  User? getCurrentUserID() {
+  User? getCurrentUser() {
     return auth.currentUser;
   }
   Future<String?> signIn(String email, String password) async {
@@ -25,7 +25,7 @@ class AuthService {
   Future<String?> signUp(String email, String password, String username) async {
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(email: email, password: password);
-      await dataBaseUsers.addUser(UserModel(result.user!.uid, username, email));
+      await dataBaseUsers.addUser(UserModel(result.user!.uid, username));
       return "Successfully registered";
     } on FirebaseAuthException catch (e) {
       auth.currentUser!.delete();

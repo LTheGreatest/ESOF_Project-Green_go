@@ -7,9 +7,11 @@ import 'package:green_go/view/pages/display_pictures_screen.dart';
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     super.key,
-    required this.isStarting
+    required this.isStarting,
+    required this.distance
   });
   final bool isStarting;
+  final double distance;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -150,6 +152,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         key: null,
                         imagePath: image.path,
                         isStarting: widget.isStarting,
+                        distance: widget.distance,
 
                       ),
                     ),

@@ -66,11 +66,11 @@ class OngoingTripPageState extends State<OngoingTripPage>{
             child: TextButton(
               onPressed: () async{
                 await getFinalPosition();
-                double distance = calculateDistance(initialLocation!, finalLocation!);
+                double dist = calculateDistance(initialLocation!, finalLocation!);
                 Navigator.pushReplacement(
                   context, 
                   MaterialPageRoute(
-                    builder: (context) => const TakePictureScreen(isStarting: false,))
+                    builder: (context) => TakePictureScreen(isStarting: false, distance: dist,))
                 );
               },
               style: const ButtonStyle(

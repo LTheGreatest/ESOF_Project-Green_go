@@ -8,7 +8,8 @@ import 'package:green_go/view/pages/trip_page.dart';
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   final bool isStarting;
-  const DisplayPictureScreen({super.key, required this.imagePath, required this.isStarting});
+  final double distance;
+  const DisplayPictureScreen({super.key, required this.imagePath, required this.isStarting, required this.distance});
   
   Widget buildTitle(BuildContext context){
     return const Padding(
@@ -54,7 +55,7 @@ class DisplayPictureScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TakePictureScreen(isStarting: isStarting,), 
+                  builder: (context) => TakePictureScreen(isStarting: isStarting, distance: distance,), 
                 ),
               );
             }, child: const Text(

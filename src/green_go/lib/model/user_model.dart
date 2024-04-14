@@ -1,5 +1,4 @@
 class UserModel {
-  String email;
   String username;
   String uid;
 
@@ -17,5 +16,5 @@ class UserModel {
   bool firstTime = true;
 
   // Constructor
-  UserModel(this.uid, this.username, this.email);
+  UserModel(this.uid, this.username);
 }
