@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
@@ -22,19 +23,20 @@ class UserFetcher {
           user.monthlyPoints = monthlyPoints;
           users.add(user);
         } catch(e) {
-          print("Failed with error '${e.toString()}'");
+          if (kDebugMode) {
+            print("Failed with error '${e.toString()}'");
+          }
         }
       }
     });
     return users;
   }
 
-  Future<UserModel> getCurrentUserData() async{
+  Future<UserModel> getCurrentUserData() async {
     UserModel user = UserModel(AuthService().getCurrentUser()!.uid, "notDefined");
     dynamic querySnapshot;
     await db.getUserData(AuthService().getCurrentUser()!.uid).then((value) => querySnapshot = value);
-    
-        try{
+        try {
           String username = querySnapshot['username'] ;
 
           String photoUrl = querySnapshot['photoUrl'];                                     
@@ -63,7 +65,9 @@ class UserFetcher {
           user.firstTime = firstTime;
 
         } catch (e){
-          print("Failed with error '${e.toString()}'");
+          if (kDebugMode) {
+            print("Failed with error '${e.toString()}'");
+          }
         }
       return user;
   }

@@ -1,11 +1,10 @@
-class TransportModel{
+class TransportModel {
   String name;
   double pointsPerDist;
 
-  String getName(){
+  String getName() {
     return name;
     }
 
   TransportModel(this.name, this.pointsPerDist);
-
 }

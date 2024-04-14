@@ -82,146 +82,127 @@ class TripPageState extends State<TripPage> {
   Widget startButton(BuildContext context,TransportModel transportModel){
     //button used to start a trip
     return TextButton(
-            onPressed: (){
-              Navigator.pushReplacement(
-                context, 
-                MaterialPageRoute(
-                  builder: (context) => TakePictureScreen(isStarting: true, distance: 0, pointsPerDist: transportModel.pointsPerDist,))
-              );
-            },
-
-            style: const ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Color.fromARGB(249, 94, 226, 76)),
-              minimumSize: MaterialStatePropertyAll(Size(150,50))
-            ),
-
-            child: const Text(
-              "Start",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),
-            )
-          );
+        onPressed: (){
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => TakePictureScreen(isStarting: true, distance: 0, pointsPerDist: transportModel.pointsPerDist,)));
+          },
+        style: const ButtonStyle(
+            backgroundColor: MaterialStatePropertyAll(Color.fromARGB(249, 94, 226, 76)),
+            minimumSize: MaterialStatePropertyAll(Size(150,50))
+        ),
+        child: const Text("Start",
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+              fontWeight: FontWeight.bold
+          ),
+        )
+    );
   }
-
-  Widget arrowButton(BuildContext context, int idx){
+  Widget arrowButton(BuildContext context, int idx) {
     //Arrow bottom used to select a transport
     return IconButton(
-              icon: !selectionList[idx] ? const Icon(Icons.arrow_circle_right) : const Icon(Icons.arrow_circle_down),
-              style: const ButtonStyle(
-                iconSize: MaterialStatePropertyAll(40),
-              ),
-
-            onPressed: () {
-                selectElement(idx);
-                },
-          );
+      icon: !selectionList[idx] ? const Icon(Icons.arrow_circle_right) : const Icon(Icons.arrow_circle_down),
+      style: const ButtonStyle(
+        iconSize: MaterialStatePropertyAll(40),
+      ),
+      onPressed: () {
+        selectElement(idx);
+        },
+    );
   }
 
-  Widget transportNameText(BuildContext context, TransportModel transportModel){
+  Widget transportNameText(BuildContext context, TransportModel transportModel) {
     //transport name
-    return Text(
-            transportModel.getName(),
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w600
-            ),
-          );
+    return Text(transportModel.getName(),
+      style: const TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.w600
+      ),
+    );
   }
 
-  Widget transportIconImage(BuildContext context, Image img){
+  Widget transportIconImage(BuildContext context, Image img) {
     //transport icon
     return SizedBox(
-            width: 60,
-            height: 60,
-            child: Align(
-              alignment:Alignment.topLeft ,
-              child: img
-              ),
-            );
+      width: 60,
+      height: 60,
+      child: Align(
+          alignment:Alignment.topLeft ,
+          child: img
+      ),
+    );
   }
 
-  Widget transportWidget(BuildContext context, TransportModel transportModel, int idx, Image img){
+  Widget transportWidget(BuildContext context, TransportModel transportModel, int idx, Image img) {
     return Padding(
-                padding: const EdgeInsets.fromLTRB(15,5,15,15),
-                child: AnimatedContainer(
-                  duration: Durations.medium1,
-                  height: !selectionList[idx] ? 90 : 150,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-                    color: lightGray,
-                  ),
-                  child: Stack(
-                    children: [
-
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15,20,8,8),
-                        child: transportIconImage(context, img),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8,20,8,8),
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: transportNameText(context, transportModel),
-                        ),
-                      ),
-
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8,20,8,8),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: arrowButton(context, idx),
-                        ),
-                      ),
-
-                      //if the arrow button has selected, the container expands and a start button appears 
-                      selectionList[idx]? Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Align(
-                          alignment: Alignment.bottomCenter,
-                          child: startButton(context, transportModel),
-                        ),
-                      )
-                      : const Padding(padding: EdgeInsets.zero),
-                    ],
-                  ) ,
-                ),
-              );
+      padding: const EdgeInsets.fromLTRB(15,5,15,15),
+      child: AnimatedContainer(
+        duration: Durations.medium1,
+        height: !selectionList[idx] ? 90 : 150,
+        decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
+          color: lightGray,
+        ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15,20,8,8),
+              child: transportIconImage(context, img),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8,20,8,8),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: transportNameText(context, transportModel),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8,20,8,8),
+              child: Align(
+                alignment: Alignment.topRight,
+                child: arrowButton(context, idx),
+              ),
+            ),
+            //if the arrow button has selected, the container expands and a start button appears
+            selectionList[idx] ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: startButton(context, transportModel),
+              ),
+            )
+            : const Padding(padding: EdgeInsets.zero),
+          ],
+        ) ,
+      ),
+    );
   }
-
-  Widget transportWidgetList(BuildContext context){
+  Widget transportWidgetList(BuildContext context) {
     //The list of transport containers available to start a trip
     return Expanded(
       child: FutureBuilder(
         future: Future.wait([getTransports(), getIcons()]),
         builder: (context, snapshot) {
-          if(snapshot.hasData) {
-
+          if (snapshot.hasData) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 45.0),
-
               child: ListView.builder(
                 itemCount: transports.length,
                 itemBuilder: (context, index) {
-
                   Image? imgIcon = findIcon(transports[index].getName());
-                  if(imgIcon == null){
+                  if (imgIcon == null) {
                     return const Text("Error while loading the widget. Please verify your internet connection");
                   }
-                  else{
+                  else {
                     return transportWidget(context, transports.elementAt(index), index, imgIcon);
                   }
                 },
-                
               ),
             );
           }
-
-          else{
-             return hasWaitedTooLong? const ProblemWidget(text: "Error while loading the data from the database. Please confirm that you have a internet connection or try to contact us.") 
+          else {
+             return hasWaitedTooLong ? const ProblemWidget(text: "Error while loading the data from the database. Please confirm that you have a internet connection or try to contact us.")
              : const Center(
                 child: CircularProgressIndicator(),
               );
@@ -230,28 +211,22 @@ class TripPageState extends State<TripPage> {
       ),
     );
   }
-
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Column(
           children: [
-
               const Padding(
                 padding: EdgeInsets.all(35),
                 child: TitleWidget(text: "Sustainable Transports"),
               ),
-
               const Padding(
                 padding: EdgeInsets.all(15),
                 child: SubtitleWidget(text: "Pick your transports and start earning points"),
               ),
-
               transportWidgetList(context),
           ],
       ),
-
       bottomSheet: const CustomMenuBar(),
     );
   }
