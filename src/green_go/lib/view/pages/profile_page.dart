@@ -5,6 +5,8 @@ import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/view//constants.dart';
+import 'package:green_go/controller/authentication/auth.dart';
+import 'package:green_go/view/pages/start_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -15,11 +17,13 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   Future<DocumentSnapshot<Object?>> doc = DataBaseUsers().getUserData(FirebaseAuth.instance.currentUser!.uid);
+  final AuthService authService = AuthService();
   String? photoUrl;
   String? name;
   String? nationality;
   int? age;
   String? job;
+  String? uid;
 
   @override
   void initState() {
@@ -39,6 +43,7 @@ class ProfilePageState extends State<ProfilePage> {
     nationality = data['nationality'];
     job = data['job'];
     age = (DateTime.now().year - (data['birthDate'] as Timestamp).toDate().year);
+    uid = data['uid'];
   }
 
   @override
@@ -87,8 +92,16 @@ class ProfilePageState extends State<ProfilePage> {
                           foregroundColor: MaterialStateProperty.all(Colors.black),
                           backgroundColor: MaterialStateProperty.all(Colors.red),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           // Implement delete account functionality
+                          String? result = await authService.deleteUser();
+                          if(result == "Delete successful"){
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const StartPage()),
+                            );
+                          }
+
                         },
                         child: const Text('Delete Account'),
                       ),
