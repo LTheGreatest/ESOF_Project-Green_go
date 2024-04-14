@@ -5,6 +5,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:green_go/controller/location/location.dart';
 import 'package:green_go/view/pages/take_picture_screen.dart';
 import 'package:green_go/view/pages/trip_page.dart';
+import 'package:green_go/view/widgets/problem_widget.dart';
+import 'package:green_go/view/widgets/subtitle_widget.dart';
+import 'package:green_go/view/widgets/title_widget.dart';
 
 class OngoingTripPage extends StatefulWidget{
   const OngoingTripPage({super.key, required this.pointsPerDist});
@@ -21,54 +24,35 @@ class OngoingTripPageState extends State<OngoingTripPage>{
 
 
   Future<void> getInitialPosition() async{
+    //Calls the location service to determine the initial location
     await locationService.determinePosition().then((value) => initialLocation = value);
   }
 
   Future<void> getFinalPosition() async{
+    //Calls the location service to determine the final location
     await locationService.determinePosition().then((value) => finalLocation = value);
   }
 
   double calculateDistance(Position first, Position second){
+    //Calls the location service to calculate the distance
     return locationService.calculateDistance(first.latitude, first.longitude, second.latitude, second.longitude);
   }
 
   
-  Widget buildTitle(BuildContext context){
-    return  const Padding(
-          padding: EdgeInsets.all(35),
-          child: Text(
-            "Ongoing Trip",
-            textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold
-                ),
-            ),
-        );
-  }
-
-  Widget buildSubtitle(BuildContext context){
-    return const Padding(
-            padding: EdgeInsets.all(30),
-            child: Text(
-              "Your Trip Has Started",
-               textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500
-                ),
-              ),
-          );
-  }
-
   Widget stopButton(BuildContext context){
-    return Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextButton(
+    //button to stop the trip
+    return TextButton(
               onPressed: () async{
+                //gets the user's final position 
                 await getFinalPosition();
+
+                //Only continues if the context is mounted
                 if (!context.mounted) return;
+
+                //calculates the distance of the trip
                 double dist = calculateDistance(initialLocation!, finalLocation!);
+
+                //Redirects the user to take the final foto
                 await Navigator.of(context).pushReplacement( 
                   MaterialPageRoute(
                     builder: (context) => TakePictureScreen(isStarting: false, distance: dist, pointsPerDist: widget.pointsPerDist,))
@@ -79,6 +63,7 @@ class OngoingTripPageState extends State<OngoingTripPage>{
                 backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 189, 53, 32)),
                 minimumSize: MaterialStatePropertyAll(Size(150,50))
               ),
+
               child: const Text(
                 "Stop",
                 style: TextStyle(
@@ -87,14 +72,12 @@ class OngoingTripPageState extends State<OngoingTripPage>{
                       fontWeight: FontWeight.bold
                 ),
                 ),
-            ),
           );
   }
 
   Widget cancelButton(BuildContext context){
-    return  Padding(
-            padding: const EdgeInsets.all(20),
-            child: TextButton(
+    //button to cancel the trip
+    return  TextButton(
               onPressed: () {
                 Navigator.pushReplacement(
                   context, 
@@ -102,19 +85,20 @@ class OngoingTripPageState extends State<OngoingTripPage>{
                     builder: (context) => const TripPage())
                 );
               },
+
               style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 82, 83, 85)),
                 minimumSize: MaterialStatePropertyAll(Size(150,50))
               ),
+
               child: const Text(
                 "Cancel",
                 style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
                       fontWeight: FontWeight.bold
+                  ),
                 ),
-                ),
-            ),
           );
   }
 
@@ -126,10 +110,20 @@ class OngoingTripPageState extends State<OngoingTripPage>{
         builder:  (context, snapshot) {
           if(snapshot.hasData) {
             if(initialLocation != null){
+
             return  Column(
                 children:[
-                  buildTitle(context),
-                  buildSubtitle(context),
+
+                  const Padding(
+                    padding: EdgeInsets.all(35),
+                    child: TitleWidget(text: "Ongoing Trip"),
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.all(30),
+                    child: SubtitleWidget(text: "Your Trip Has Started"),
+                  ),
+
                   const Padding(
                     padding: EdgeInsets.fromLTRB(15,100,15,5),
                     child: Text(
@@ -140,7 +134,12 @@ class OngoingTripPageState extends State<OngoingTripPage>{
                             ),
                       ),
                   ),
-                stopButton(context),
+
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: stopButton(context),
+                ),
+
                   const Padding(
                     padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
                     child: Text(
@@ -151,7 +150,12 @@ class OngoingTripPageState extends State<OngoingTripPage>{
                             ),
                       ),
                   ),
-                  cancelButton(context),
+
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: cancelButton(context),
+                  ),
+
                 ]
               );
             }
@@ -159,19 +163,25 @@ class OngoingTripPageState extends State<OngoingTripPage>{
             else{
               return Column(
                   children: [
-                    buildTitle(context),
-                    buildSubtitle(context),
+                    const Padding(
+                    padding: EdgeInsets.all(35),
+                    child: TitleWidget(text: "Ongoing Trip"),
+                  ),
+
+                  const Padding(
+                    padding: EdgeInsets.all(30),
+                    child: SubtitleWidget(text: "Your Trip Has Started"),
+                  ),
+
                     const Padding(
                     padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                    child: Text(
-                      "The trip cannot be verified without the GPS Location",
-                      textAlign: TextAlign.center,
-                        style: TextStyle(
-                              fontSize: 15,
-                            ),
-                      ),
+                    child: ProblemWidget(text: "The trip cannot be verified without the GPS Location"),
                   ),
-                  cancelButton(context),
+
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: cancelButton(context),
+                  ),
 
                   ]
               );

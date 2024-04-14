@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:green_go/controller/camera/camera.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/display_pictures_screen.dart';
+import 'package:green_go/view/pages/trip_page.dart';
+import 'package:green_go/view/widgets/problem_widget.dart';
+import 'package:green_go/view/widgets/subtitle_widget.dart';
+import 'package:green_go/view/widgets/title_widget.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
@@ -22,6 +26,7 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   late CameraService cameraService;
   late Future<void> _initializeControllerFuture;
+  bool hasWaitedTooLong = false;
 
 
   @override
@@ -30,6 +35,9 @@ class TakePictureScreenState extends State<TakePictureScreen> {
     ///initializes the camera services (return future)
     cameraService = CameraService();
     _initializeControllerFuture = cameraService.initializeDefaultCamera();
+     Future.delayed(const Duration(seconds: 10),(){
+        hasWaitedTooLong = true;
+    });
   }
 
   @override
@@ -40,44 +48,16 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 
 
-  Widget buildTitle(BuildContext context){
-    return const Padding(
-          padding: EdgeInsets.fromLTRB(35, 35, 35, 15),
-          child: Text(
-            "Verification",
-            style: TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.w600
-            ),
-          ),
-        );
-  }
 
   Widget buildSubtitle(BuildContext context){
     //the subtitle may be different depending on the context
     return widget.isStarting? 
-          const Text(
-            "Take a Picture of your starting location",
-              style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500
-              ),
-          ) 
-          : const Text(
-            "Take a Picture of your finnishing location",
-            style: TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500
-              ),
-            );
+          const SubtitleWidget(text: "Take a Picture of your starting location") : 
+          const SubtitleWidget(text:  "Take a Picture of your finnishing location");
   }
 
   Widget buildCameraFeed(BuildContext context){
-    return Padding(
-          padding: const EdgeInsets.all(8.0),
-
-          //container containing the camera feed
-          child: Container(
+    return Container(
             //the height is defined accordingly to the screen size
             height: MediaQuery.of(context).size.height / 1.5,
 
@@ -91,15 +71,12 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               //calls the camera preview
               child: CameraPreview(cameraService.cameraController),
             )
-          ),
-        );
+          );
   }
 
   Widget cameraSwitchButton(BuildContext context){
-    return Padding(
-          padding: const EdgeInsets.all(20),
-
-          child: Container(
+    //button to switch camera lens
+    return Container(
             width: 120,
             decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
@@ -121,20 +98,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 size: 40,
                 )
               ),
-          ),
         );
   }
 
   Widget takePictureButton(BuildContext context){
-    return Padding(
-          padding: const EdgeInsets.all(20),
-
-          child: Container(
+    //Button to take the picture
+    return Container(
             width: 120,
             decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
                   color: lightGray,
             ),
+
             //button to take the picture
             child: IconButton(
               onPressed: () async{
@@ -171,8 +146,42 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                   size: 40 
                 )
               ),
-          ),
         );
+  }
+
+  Widget waitedTooLong(BuildContext context){
+    //Widget that appears if the 
+    return Center(
+      child: Column(
+        children: [
+          const ProblemWidget(text: "Cannot initialize your camera. Please verify that you have the right permissions to access the camera."),
+          Padding(
+            padding: const EdgeInsets.all(50),
+            child: TextButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context, 
+                      MaterialPageRoute(
+                        builder: (context) => const TripPage())
+                    );
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 82, 83, 85)),
+                    minimumSize: MaterialStatePropertyAll(Size(150,50))
+                  ),
+                  child: const Text(
+                    "Cancel",
+                    style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold
+                    ),
+                    ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
 
@@ -187,21 +196,37 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             // If the Future is complete, display the preview.
             return Column(
               children: [
-                buildTitle(context),
+
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(35, 35, 35, 15),
+                  child: TitleWidget(text:"Verification"),
+                ),
+
                 buildSubtitle(context),
-                buildCameraFeed(context),
+
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: buildCameraFeed(context),
+                ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children:[
-                    cameraSwitchButton(context),
-                    takePictureButton(context),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: cameraSwitchButton(context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: takePictureButton(context),
+                    ),
                   ]
                 )
               ],
             );
           } else {
-            // Otherwise, display a loading indicator.
-            return const Center(child: CircularProgressIndicator());
+            // Otherwise, display a loading indicator. If the future takes to long to complete a error message appears on the screen
+            return hasWaitedTooLong? waitedTooLong(context): const Center(child: CircularProgressIndicator());
           }
         },
       ),
