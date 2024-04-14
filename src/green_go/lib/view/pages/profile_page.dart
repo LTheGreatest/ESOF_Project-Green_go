@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/view//constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/view/pages/start_page.dart';
+import 'package:green_go/view/pages/profile_edit_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -84,6 +85,11 @@ class ProfilePageState extends State<ProfilePage> {
                         ),
                         onPressed: () {
                           // Implement edit profile functionality
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const EditPage()),
+                          );
+
                         },
                         child: const Text('Edit Profile'),
                       ),
