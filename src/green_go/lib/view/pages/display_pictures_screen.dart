@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/ongoin_trip_page.dart';
+import 'package:green_go/view/pages/points_earned_page.dart';
 import 'package:green_go/view/pages/take_picture_screen.dart';
-import 'package:green_go/view/pages/trip_page.dart';
 
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
@@ -68,7 +68,7 @@ class DisplayPictureScreen extends StatelessWidget {
             );
   }
 
-  Widget sendImageButton(BuildContext context){
+  Widget sendImageButton(BuildContext context, double distance){
     return ElevatedButton(
           style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(lightGray),
@@ -79,7 +79,7 @@ class DisplayPictureScreen extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => isStarting? const OngoingTripPage() : const TripPage(), 
+                builder: (context) => isStarting? const OngoingTripPage() : PointsEarnedPage(distance: distance,), 
               ),
             );
           }, child: const Text(
@@ -107,7 +107,7 @@ class DisplayPictureScreen extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(20),
-                child: sendImageButton(context),
+                child: sendImageButton(context, distance),
               ),              
             ],
           ),
