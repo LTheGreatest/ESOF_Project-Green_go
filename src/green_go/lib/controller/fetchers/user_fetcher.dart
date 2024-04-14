@@ -31,14 +31,16 @@ class UserFetcher {
 
   Future<UserModel> getCurrentUserData() async{
     UserModel user = UserModel(AuthService().getCurrentUser()!.uid, "notDefined");
-    await db.getUserData(AuthService().getCurrentUser()!.uid).then((querySnapshot){
+    dynamic querySnapshot;
+    await db.getUserData(AuthService().getCurrentUser()!.uid).then((value) => querySnapshot = value);
+    
         try{
           String username = querySnapshot['username'] ;
 
           String photoUrl = querySnapshot['photoUrl'];                                     
           String nationality = querySnapshot['nationality'];                          
           String job = querySnapshot['job']; 
-          DateTime birthDate = querySnapshot['birthDate'];
+          Timestamp birthDate = querySnapshot['birthDate'];
 
           int totalPoints = querySnapshot['totalPoints'];
           int weeklyPoints = querySnapshot['weeklyPoints'];
@@ -52,7 +54,7 @@ class UserFetcher {
           user.photoUrl = photoUrl;
           user.nationality = nationality;
           user.job = job;
-          user.birthDate = birthDate;
+          user.birthDate = birthDate.toDate();
           user.totalPoints = totalPoints;
           user.weeklyPoints = weeklyPoints;
           user.monthlyPoints = monthlyPoints;
@@ -63,7 +65,6 @@ class UserFetcher {
         } catch (e){
           print("Failed with error '${e.toString()}'");
         }
-    } );
       return user;
   }
 }

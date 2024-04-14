@@ -9,7 +9,8 @@ class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   final bool isStarting;
   final double distance;
-  const DisplayPictureScreen({super.key, required this.imagePath, required this.isStarting, required this.distance});
+  final double pointsPerDist;
+  const DisplayPictureScreen({super.key, required this.imagePath, required this.isStarting, required this.distance, required this.pointsPerDist});
   
   Widget buildTitle(BuildContext context){
     return const Padding(
@@ -55,7 +56,7 @@ class DisplayPictureScreen extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => TakePictureScreen(isStarting: isStarting, distance: distance,), 
+                  builder: (context) => TakePictureScreen(isStarting: isStarting, distance: distance, pointsPerDist: pointsPerDist,), 
                 ),
               );
             }, child: const Text(
@@ -79,7 +80,7 @@ class DisplayPictureScreen extends StatelessWidget {
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => isStarting? const OngoingTripPage() : PointsEarnedPage(distance: distance,), 
+                builder: (context) => isStarting? OngoingTripPage(pointsPerDist: pointsPerDist) : PointsEarnedPage(distance: distance,pointsPerDist: pointsPerDist, ), 
               ),
             );
           }, child: const Text(

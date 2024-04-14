@@ -7,7 +7,8 @@ import 'package:green_go/view/pages/take_picture_screen.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
 class OngoingTripPage extends StatefulWidget{
-  const OngoingTripPage({super.key});
+  const OngoingTripPage({super.key, required this.pointsPerDist});
+  final double pointsPerDist;
 
  @override
   OngoingTripPageState createState() => OngoingTripPageState();
@@ -66,12 +67,13 @@ class OngoingTripPageState extends State<OngoingTripPage>{
             child: TextButton(
               onPressed: () async{
                 await getFinalPosition();
+                if (!context.mounted) return;
                 double dist = calculateDistance(initialLocation!, finalLocation!);
-                Navigator.pushReplacement(
-                  context, 
+                await Navigator.of(context).pushReplacement( 
                   MaterialPageRoute(
-                    builder: (context) => TakePictureScreen(isStarting: false, distance: dist,))
+                    builder: (context) => TakePictureScreen(isStarting: false, distance: dist, pointsPerDist: widget.pointsPerDist,))
                 );
+
               },
               style: const ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 189, 53, 32)),

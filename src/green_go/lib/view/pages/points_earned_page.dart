@@ -1,20 +1,22 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
+import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
 class PointsEarnedPage extends StatefulWidget{
   final double distance;
-  const PointsEarnedPage({super.key, required this.distance});
+  final double pointsPerDist;
+  const PointsEarnedPage({super.key, required this.distance, required this.pointsPerDist});
 
 
 @override
 PointsEarnedPageState createState() => PointsEarnedPageState();
 
-  
 }
 
 class PointsEarnedPageState extends State<PointsEarnedPage>{
@@ -28,9 +30,12 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
   }
 
   int calculatePoints(double distance){
-    return (distance * 10).toInt();
+    return (distance * widget.pointsPerDist).toInt();
   }
 
+  Future<void> updatePoints() async {
+   await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance));
+  }
   Widget buildTitle(BuildContext context){
     return const Padding(
       padding: EdgeInsets.fromLTRB(15,40,15,35),
@@ -64,9 +69,9 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
       );
   }
 
-  Widget weelklyPoints(BuildContext context){
+  Widget weelklyPoints(BuildContext context, int points){
     return Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                     width: 2,
@@ -76,7 +81,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
+                  const Text(
                     "Weekly",
                     style: TextStyle(
                     fontSize: 20,
@@ -84,14 +89,14 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
                   ),
                     ),
                   Text(
-                    "4500",
-                     style: TextStyle(
+                    "$points",
+                     style: const TextStyle(
                     fontSize: 20,
                     ),
                   ),
                   Text(
-                    "+1000",
-                     style: TextStyle(
+                    "+${calculatePoints(widget.distance)}",
+                     style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(249, 94, 226, 76),
@@ -102,9 +107,9 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
             );
   }
   
-  Widget monthlyPoints(BuildContext context){
+  Widget monthlyPoints(BuildContext context, int points){
     return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   width: 2,
@@ -114,7 +119,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:[
-                Text(
+                const Text(
                   "Monthly",
                   style: TextStyle(
                     fontSize: 20,
@@ -122,14 +127,14 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
                   ),
                   ),
                   Text(
-                    "7000",
-                    style: TextStyle(
+                    "$points",
+                    style: const TextStyle(
                       fontSize: 20,
                       ),
                     ),
                   Text(
-                    "+1000",
-                    style: TextStyle(
+                    "+${calculatePoints(widget.distance)}",
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(249, 94, 226, 76),
@@ -140,9 +145,9 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
           );
   }
 
-  Widget totalPoints(BuildContext context){
+  Widget totalPoints(BuildContext context, int points){
     return Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               border: Border(
                 bottom: BorderSide(
                   width: 2,
@@ -152,7 +157,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
               child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children:[
-                Text(
+                const Text(
                   "Total",
                   style: TextStyle(
                     fontSize: 20,
@@ -160,14 +165,14 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
                   ),
                   ),
                   Text(
-                    "40000",
-                    style: TextStyle(
+                    "$points",
+                    style: const TextStyle(
                       fontSize: 20,
                       ),
                     ),
                   Text(
-                    "+1000",
-                    style: TextStyle(
+                    "+${calculatePoints(widget.distance)}",
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Color.fromARGB(249, 94, 226, 76),
@@ -178,7 +183,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
           );
   }
 
-  Widget pointsContainer(BuildContext context){
+  Widget pointsContainer(BuildContext context, UserModel user){
     return Container(
             decoration: BoxDecoration(
               border: Border.all(
@@ -190,15 +195,15 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
               children: [
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20,50,20,25),
-                  child: weelklyPoints(context),
+                  child: weelklyPoints(context, user.weeklyPoints + calculatePoints(widget.distance)),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20,25,20,25),
-                  child: monthlyPoints(context),
+                  child: monthlyPoints(context, user.monthlyPoints + calculatePoints(widget.distance)),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20,25,20,50),
-                  child: totalPoints(context),
+                  child: totalPoints(context, user.totalPoints + calculatePoints(widget.distance)),
                 ),
               ],
             ),
@@ -211,7 +216,9 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
               backgroundColor: MaterialStatePropertyAll(lightGray),
               minimumSize: MaterialStatePropertyAll(Size(150,50))
             ) ,
-            onPressed: (){
+            onPressed: () async{
+                await updatePoints();
+                if(!context.mounted) return;
                 Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -247,7 +254,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10),
-                          child: pointsContainer(context),
+                          child: pointsContainer(context, snapshot.data!),
                         ),
 
                         Padding(
@@ -260,7 +267,10 @@ class PointsEarnedPageState extends State<PointsEarnedPage>{
                   else{
                       return Column(
                         children: [
-                          verificationText(context),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20,20,20,50),
+                            child: verificationText(context),
+                          ),
                           const Center(child: CircularProgressIndicator()),
                         ],
                       );

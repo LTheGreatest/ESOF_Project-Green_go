@@ -8,10 +8,12 @@ class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     super.key,
     required this.isStarting,
-    required this.distance
+    required this.distance,
+    required this.pointsPerDist,
   });
   final bool isStarting;
   final double distance;
+  final double pointsPerDist;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -153,6 +155,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                         imagePath: image.path,
                         isStarting: widget.isStarting,
                         distance: widget.distance,
+                        pointsPerDist: widget.pointsPerDist,
 
                       ),
                     ),
