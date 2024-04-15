@@ -4,8 +4,6 @@ import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import '../../controller/fetchers/user_fetcher.dart';
 import '../../model/user_model.dart';
-import 'package:flutter/cupertino.dart';
-
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
@@ -89,7 +87,7 @@ class EditPageViewer extends State<EditPage> {
             TextField(
               readOnly: true,
               controller: TextEditingController(text: birthDate.toString().split(' ')[0]),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 icon: Icon(Icons.calendar_today),
                 labelText: 'Date of Birth',
               ),
