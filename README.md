@@ -66,6 +66,7 @@ For FEUP students seeking to contribute to environmental sustainability, but are
 #### Dependencies
 
 * Firebase FireStore for storing users and missions data
+* Firebase Storage for storing user profile pictures and other images and icons used in the app
 * Firebase Authentication for user authentication and registration
 * GPS location (Flutter Geolocator Plugin) for trip verification
 * Camera (Flutter Camera Plugin) for trip verification
