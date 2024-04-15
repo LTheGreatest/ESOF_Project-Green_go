@@ -43,7 +43,7 @@ Thank you!
 
 ### Product Vision
 
-For FEUP students who need an incentive to use transports in a sustainable way, GreenGo is a smartphone app that turns sustainable mobility into a game. Unlike our competitors this product gives users rewards for their efforts while helping them build good habits.
+For FEUP students seeking to contribute to environmental sustainability, but are to too attached to their personal vehicles and need an incentive to use transports in a sustainable way, GreenGo is a smartphone app that turns sustainable mobility into a game. Unlike our competitors this product gives users rewards for their efforts while helping them build good habits.
 
 ### Features and Assumptions
 
