@@ -121,7 +121,6 @@ class EditPageViewer extends State<EditPage> {
               readOnly: true,
               controller: TextEditingController(text: birthDate.toString().split(' ')[0]),
               decoration: const InputDecoration(
-                icon: Icon(Icons.calendar_today),
                 labelText: 'Date of Birth',
               ),
               onTap: () async {
