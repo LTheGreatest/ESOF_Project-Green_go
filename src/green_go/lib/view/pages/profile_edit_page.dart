@@ -45,7 +45,7 @@ class EditPageViewer extends State<EditPage>{
                   child: const Text('back'),
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(left: 30),
+                  padding: EdgeInsets.only(left:40),
                   child :  Text(
                     'Edit Profile',
                     style:  TextStyle(
