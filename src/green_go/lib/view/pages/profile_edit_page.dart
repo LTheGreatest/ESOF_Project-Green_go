@@ -4,9 +4,11 @@ import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import '../../controller/fetchers/user_fetcher.dart';
 import '../../model/user_model.dart';
+import 'package:flutter/cupertino.dart';
+
 
 class EditPage extends StatefulWidget {
-  const EditPage({Key? key}) : super(key: key);
+  const EditPage({super.key});
 
   @override
   State<StatefulWidget> createState() => EditPageViewer();
@@ -84,14 +86,26 @@ class EditPageViewer extends State<EditPage> {
               controller: jobController,
             ),
             const Text('Date of birth'),
-            InputDatePickerFormField(
-              initialDate: birthDate,
-              firstDate: DateTime(1850),
-              lastDate: DateTime.now(),
-              onDateSubmitted: (date) {
-                setState(() {
-                  birthDate = date;
-                });
+            TextField(
+              readOnly: true,
+              controller: TextEditingController(text: birthDate.toString().split(' ')[0]),
+              decoration: InputDecoration(
+                icon: Icon(Icons.calendar_today),
+                labelText: 'Date of Birth',
+              ),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: birthDate,
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
+
+                if (pickedDate != null && pickedDate != birthDate) {
+                  setState(() {
+                    birthDate = pickedDate;
+                  });
+                }
               },
             ),
             ElevatedButton(
