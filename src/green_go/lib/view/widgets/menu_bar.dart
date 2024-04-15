@@ -11,72 +11,102 @@ class CustomMenuBar extends StatelessWidget{
 
   @override
   Widget build(BuildContext context){
-      return Container(
-        decoration: const BoxDecoration(
-          color: lightGreen,
-          borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ///leaderboard
-            IconButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const LeaderboardPage(), 
+      //custom menu bar used in the main app pages
+      return  Padding(
+        padding: const EdgeInsets.all(2),
+        child: Container(
+            decoration: const BoxDecoration(
+              color: lightGreen,
+              borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
+            ),
+
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+
+                ///leaderboard
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LeaderboardPage(), 
+                        ),
+                      );
+                    },
+                     icon: Image.asset("assets/Leaderboard.png"),
                   ),
-                );
-              },
-               icon: const Icon(Icons.favorite,)
+                ),
+
+                ///bus
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                              builder: (context) => const TripPage(),
+                            ),
+                      );
+                    },
+                     icon: Image.asset("assets/Bus.png"),
+                  ),
+                ),
+
+                ///main page
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MainPage()),
+                      );
+                    },
+                    icon: Image.asset("assets/Home.png"),
+                  ),
+                ),
+
+                ///missions
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MissionsPage()),
+                      );
+                    },
+                    icon: Image.asset("assets/Search.png"),
+                  ),
+                ),
+
+                ///profile
+                SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: IconButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ProfilePage()),
+                      );
+                    },
+                     icon: Image.asset("assets/Profile.png"),
+                  ),
+                ),
+              ],
             ),
-            ///bus
-            IconButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                        builder: (context) => const TripPage(),
-                      ),
-                );
-              },
-               icon: const Icon(Icons.bus_alert),
-            ),
-            ///main page
-            IconButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MainPage()),
-                );
-              },
-              icon: const Icon(Icons.home),
-            ),
-            ///missions
-            IconButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const MissionsPage()),
-                );
-              },
-              icon: const Icon(Icons.search),
-            ),
-            ///profile
-            IconButton(
-              onPressed: (){
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ProfilePage()),
-                );
-              },
-               icon: const Icon(Icons.people),
-            ),
-          ],
         ),
       );
   }
