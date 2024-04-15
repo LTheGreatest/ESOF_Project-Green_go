@@ -1,37 +1,53 @@
-import 'package:green_go/view/pages/profile_page.dart';
 import 'package:flutter/material.dart';
+import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
+import '../../controller/fetchers/user_fetcher.dart';
+import '../../model/user_model.dart';
 
-class EditPage extends StatefulWidget{
+class EditPage extends StatefulWidget {
   const EditPage({super.key});
+
   @override
   State<StatefulWidget> createState() => EditPageViewer();
-
 }
 
-class EditPageViewer extends State<EditPage>{
+class EditPageViewer extends State<EditPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
-  final TextEditingController dateController = TextEditingController();
   final TextEditingController jobController = TextEditingController();
   DateTime birthDate = DateTime(DateTime.now().year - 18);
-  String newName="";
-  String newNationality="";
-  String job="";
 
   DataBaseUsers dataBaseUsers = DataBaseUsers();
   AuthService auth = AuthService();
 
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  void fetchUserData() async {
+    // Fetch current user data
+    UserModel userData = await UserFetcher().getCurrentUserData();
+
+    // Autofill the fields with user data
+    setState(() {
+      usernameController.text = userData.username;
+      nationalityController.text = userData.nationality;
+      jobController.text = userData.job;
+      birthDate = userData.birthDate;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body : Padding(padding: const EdgeInsets.only(left:15,top: 30),
+      body: Padding(
+        padding: const EdgeInsets.only(left: 15, top: 30),
         child: Column(
           children: [
             Row(
-          
               children: [
                 IconButton(onPressed: (){
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
@@ -41,11 +57,11 @@ class EditPageViewer extends State<EditPage>{
                   padding: EdgeInsets.only(left:65),
                   child :  Text(
                     'Edit Profile',
-                    style:  TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                     ),
-                  )
+                  ),
                 )
               ],
             ),
@@ -78,7 +94,6 @@ class EditPageViewer extends State<EditPage>{
             ),
             TextFormField(
               controller: nationalityController,
-
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
@@ -101,40 +116,52 @@ class EditPageViewer extends State<EditPage>{
                 ),
               ),
             ),
-            InputDatePickerFormField(
-              
-              firstDate: DateTime(1000,1,1), 
-              lastDate: DateTime(3000,1,1),
-              
-              onDateSubmitted: (date) {
-                birthDate=date;
-              },
-
-            ),
             
-            Padding(
-              padding: const EdgeInsets.only(top:90),
-              child:ElevatedButton(
-              onPressed : () {
-                newName=usernameController.text.trim();
-                newNationality=nationalityController.text.trim();
-                job=jobController.text.trim();
-                dataBaseUsers.updateUserProfile(auth.getCurrentUser()!.uid, 
-                newName,
-                newNationality, 
-                job, 
-                birthDate);
-              },
-              child:const Text(
-                'Save Changes' ,
+            TextField(
+              readOnly: true,
+              controller: TextEditingController(text: birthDate.toString().split(' ')[0]),
+              decoration: const InputDecoration(
+                icon: Icon(Icons.calendar_today),
+                labelText: 'Date of Birth',
               ),
-            )
-            )
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: birthDate,
+                  firstDate: DateTime(1900),
+                  lastDate: DateTime.now(),
+                );
 
+                if (pickedDate != null && pickedDate != birthDate) {
+                  setState(() {
+                    birthDate = pickedDate;
+                  });
+                }
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 90),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Save changes to the database
+                  String newName = usernameController.text.trim();
+                  String newNationality = nationalityController.text.trim();
+                  String newJob = jobController.text.trim();
+                  dataBaseUsers.updateUserProfile(
+                    auth.getCurrentUser()!.uid,
+                    newName,
+                    newNationality,
+                    newJob,
+                    birthDate,
+                  );
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+                },
+                child: const Text('Save Changes'),
+              )
+            )
           ],
         ),
-      )
+      ),
     );
   }
-
 }
