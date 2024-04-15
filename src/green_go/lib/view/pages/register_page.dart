@@ -21,6 +21,151 @@ class RegisterPageViewState extends State<RegisterPage>{
   final AuthService authService = AuthService();
   DataBaseUsers dataBaseUsers = DataBaseUsers();
 
+    Widget registerText(BuildContext context){
+    return const Text(
+          "Register",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+        );
+  }
+
+  Widget labelText(BuildContext context, String text){
+    //label of the input forms
+    return Text(
+            text,
+            style: const TextStyle(
+              fontSize: 20,
+            ),
+          );
+  }
+
+  Widget inputForm(BuildContext context, TextEditingController controller, bool obscure){
+    //Where the user enter it's credentials
+    return TextFormField(
+        textAlign: TextAlign.center,
+        controller: controller,
+        obscureText: obscure ,
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10.0)
+          ),
+        ),
+      );
+  }
+
+  Widget haveAccountText(BuildContext context){
+    //Text that informs the user that if he as already an account, he should login
+    return RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: <TextSpan>[
+                const TextSpan(
+                    text: 'Already have an account? Login ',
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.black,
+                      decoration: TextDecoration.none,
+                    ),
+                ),
+                TextSpan(
+                  text: 'Here',
+                  style: const TextStyle(
+                    color: Colors.blue,
+                    decoration: TextDecoration.underline,
+                    decorationColor: Colors.blue,
+                    fontSize: 10,
+                  ),
+                  recognizer: TapGestureRecognizer()
+                    ..onTap = () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                    },
+                ),
+              ],
+            ),
+          );
+  }
+
+  Widget registerButton(BuildContext context){
+    return ElevatedButton(
+          style: ButtonStyle(
+            minimumSize: MaterialStateProperty.all(const Size(100, 60)),
+            backgroundColor: MaterialStateProperty.all(lightGreen),
+            foregroundColor: MaterialStateProperty.all(Colors.black),
+          ),
+          onPressed: () async {
+            String username = usernameController.text.trim();
+            String email = emailController.text.trim();
+            String password = passwordController.text;
+            String confirmPassword = confPasswordController.text;
+            if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Please fill in all fields.'),
+                ),
+              );
+              return;
+            }
+            if (!email.contains('@') || !email.contains('.')) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Invalid email address.'),
+                ),
+              );
+              emailController.clear();
+              return;
+            }
+            if (password != confirmPassword) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text('Passwords do not match.'),
+                ),
+              );
+              passwordController.clear();
+              confPasswordController.clear();
+              return;
+            }
+            await authService.signUp(email, password, username).then((signUpResult) {
+              if (signUpResult == 'Successfully registered') {
+                // Registration successful, navigate to login page
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const MainPage()),
+                );
+              } else if (signUpResult == 'Email is already in use') {
+                emailController.clear();
+              } else if (signUpResult == 'Password is too weak') {
+                passwordController.clear();
+                confPasswordController.clear();
+              } else {
+                usernameController.clear();
+                emailController.clear();
+                passwordController.clear();
+                confPasswordController.clear();
+              }
+              // Registration failed, show error message
+              ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(signUpResult!),
+              ),
+              );
+            }
+            );
+          },
+          child: const Text(
+              'Register',
+              style: TextStyle(
+                fontSize: 30,
+              ),
+          ),
+        );
+  }
+
   @override
   Widget build(BuildContext context){
     return Scaffold(

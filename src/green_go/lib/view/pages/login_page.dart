@@ -37,7 +37,7 @@ class LoginPageViewState extends State<LoginPage>{
           );
   }
 
-  Widget inputForm(BuildContext context, TextEditingController controller, bool obscure ){
+  Widget inputForm(BuildContext context, TextEditingController controller, bool obscure){
     //Where the user enter it's credentials
     return TextFormField(
         textAlign: TextAlign.center,
