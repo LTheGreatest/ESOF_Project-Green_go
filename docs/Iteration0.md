@@ -1,4 +1,4 @@
-# Iteration X Log
+# Iteration 0 Log
 
 ## Release
 

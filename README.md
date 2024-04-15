@@ -88,18 +88,15 @@ The user stories can be seen in our [Github Projects board](https://github.com/o
 
 ### Domain model
 
-To better understand the context of the software system, it is very useful to have a simple UML class diagram with all the key concepts (names, attributes) and relationships involved of the problem domain addressed by your module.
-Also provide a short textual description of each concept (domain class).
-
 **User:** Describes a user of the app (his profile), for example, his name, email, etc...
 
 **Mission** Describes a mission/objective on the app used to receive extra points.
 
-**Status** Decribes the status of a specific misson for a specific user (if the user completed that misson or not).
+**UserMisson** Decribes the status of a specific misson for a specific user (if the user completed that misson or not).
 
-**Ranking** User's position in the app's leaderboard.
+**Trip** Describes the trips made by the user with some of the most important things related to them.
 
-**Leaderboard** List of users ordered by their scores.
+**Transport** List of transports such as metro, bus, walk and train.
 
 ![Domain Model](docs/images/uml/classDiagram.png)
 
@@ -207,7 +204,7 @@ so that I can receive points.
 You can find below information and references related with the project management in our team:
 
 * Backlog management: Product backlog and Sprint backlog in a [Github Projects board](https://github.com/orgs/FEUP-LEIC-ES-2023-24/projects/82);
-* Release management: [v0](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/releases/tag/v0.0.1-vertical-prototype), [v1](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/releases/tag/v0.1.0), [v2](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/releases/tag/v0.2.0), [v3](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/releases/tag/v0.3.0), v...;
+* Release management: [v0](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/releases/tag/v0.0.1-vertical-prototype),
 * Sprint planning and retrospectives:
-  * plans: screenshots of Github Projects board at begin and end of each iteration;
-  * retrospectives: meeting notes in a document in the repository;
+  * [Iteration 0](docs/Iteration0.md)
+  * [Iteration 1](docs/Iteration1.md)
