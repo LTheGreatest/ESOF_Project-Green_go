@@ -70,6 +70,7 @@ class RegisterPageViewState extends State<RegisterPage>{
                       decoration: TextDecoration.none,
                     ),
                 ),
+                
                 TextSpan(
                   text: 'Here',
                   style: const TextStyle(
@@ -92,17 +93,23 @@ class RegisterPageViewState extends State<RegisterPage>{
   }
 
   Widget registerButton(BuildContext context){
+    //button to register a new account
     return ElevatedButton(
+
           style: ButtonStyle(
             minimumSize: MaterialStateProperty.all(const Size(100, 60)),
             backgroundColor: MaterialStateProperty.all(lightGreen),
             foregroundColor: MaterialStateProperty.all(Colors.black),
           ),
+
+
           onPressed: () async {
             String username = usernameController.text.trim();
             String email = emailController.text.trim();
             String password = passwordController.text;
             String confirmPassword = confPasswordController.text;
+
+            //verifies if the user filled every input box
             if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -111,6 +118,8 @@ class RegisterPageViewState extends State<RegisterPage>{
               );
               return;
             }
+
+            //verifies if the email inserted is in fact an email
             if (!email.contains('@') || !email.contains('.')) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -120,6 +129,8 @@ class RegisterPageViewState extends State<RegisterPage>{
               emailController.clear();
               return;
             }
+
+            //verifies if the user inserted the password correctly in the confirmation
             if (password != confirmPassword) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -130,24 +141,30 @@ class RegisterPageViewState extends State<RegisterPage>{
               confPasswordController.clear();
               return;
             }
+
+            //Verifies if the signup was successfull
             await authService.signUp(email, password, username).then((signUpResult) {
               if (signUpResult == 'Successfully registered') {
-                // Registration successful, navigate to login page
+                // Registration and login successful, navigate to Main page
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => const MainPage()),
                 );
+
               } else if (signUpResult == 'Email is already in use') {
                 emailController.clear();
+
               } else if (signUpResult == 'Password is too weak') {
                 passwordController.clear();
                 confPasswordController.clear();
+
               } else {
                 usernameController.clear();
                 emailController.clear();
                 passwordController.clear();
                 confPasswordController.clear();
               }
+
               // Registration failed, show error message
               ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -174,208 +191,59 @@ class RegisterPageViewState extends State<RegisterPage>{
         child: SingleChildScrollView(
           child: Column(
             children: [
+
+              //app logo
               Image.asset('images/GreenGo.png'),
-              const Align(
+
+              //register text
+              Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  "Register",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
+                child: registerText(context),
               ),
+
+              //name label and input
               const Padding(padding: EdgeInsets.all(10)),
-              const Align(
+              Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  "Name:",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                child: labelText(context, "Name:")
               ),
               const Padding(padding: EdgeInsets.all(5)),
-              TextFormField(
-                textAlign: TextAlign.center,
-                  controller: usernameController,
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0)
-                    ),
-                  ),
-              ),
+              inputForm(context, usernameController, false),
+              
+              //email label and input
               const Padding(padding: EdgeInsets.all(15)),
-              const Align(
+              Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  "E-mail:",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                child: labelText(context, "E-mail:")
               ),
               const Padding(padding: EdgeInsets.all(5)),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: emailController,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)
-                  ),
-                ),
-              ),
+              inputForm(context, emailController, false),
+              
+              //password label and input
               const Padding(padding: EdgeInsets.all(15)),
-              const Align(
+              Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  "Password:",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                child: labelText(context, "Password:"),
               ),
               const Padding(padding: EdgeInsets.all(5)),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)
-                  ),
-                ),
-              ),
+              inputForm(context, passwordController, true),
+              
+              //confirmation of the password
               const Padding(padding: EdgeInsets.all(15)),
-              const Align(
+              Align(
                 alignment: Alignment.topLeft,
-                child: Text(
-                  "Confirm password:",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
+                child: labelText(context, "Confirm Password:"),
               ),
               const Padding(padding: EdgeInsets.all(5)),
-              TextFormField(
-                textAlign: TextAlign.center,
-                controller: confPasswordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)
-                  ),
-                ),
-              ),
+              inputForm(context, confPasswordController, true),
               const Padding(padding: EdgeInsets.all(20)),
-              RichText(
-                text: TextSpan(
-                  style: DefaultTextStyle.of(context).style,
-                  children: <TextSpan>[
-                    const TextSpan(
-                        text: 'Already have an account? Login ',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.black,
-                          decoration: TextDecoration.none,
-                        ),
-                    ),
-                    TextSpan(
-                      text: 'Here',
-                      style: const TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.blue,
-                        fontSize: 10,
-                      ),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LoginPage()),
-                          );
-                        },
-                    ),
-                  ],
-                ),
-              ),
+
+              //have account text (informs the user that if he already has an account he doesn´t need to register)
+              haveAccountText(context),
+              
+              //register button
               const Padding(padding: EdgeInsets.all(5)),
-              ElevatedButton(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(const Size(100, 60)),
-                  backgroundColor: MaterialStateProperty.all(lightGreen),
-                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                ),
-                onPressed: () async {
-                  String username = usernameController.text.trim();
-                  String email = emailController.text.trim();
-                  String password = passwordController.text;
-                  String confirmPassword = confPasswordController.text;
-                  if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Please fill in all fields.'),
-                      ),
-                    );
-                    return;
-                  }
-                  if (!email.contains('@') || !email.contains('.')) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Invalid email address.'),
-                      ),
-                    );
-                    emailController.clear();
-                    return;
-                  }
-                  if (password != confirmPassword) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Passwords do not match.'),
-                      ),
-                    );
-                    passwordController.clear();
-                    confPasswordController.clear();
-                    return;
-                  }
-                  await authService.signUp(email, password, username).then((signUpResult) {
-                    if (signUpResult == 'Successfully registered') {
-                      // Registration successful, navigate to login page
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const MainPage()),
-                      );
-                    } else if (signUpResult == 'Email is already in use') {
-                      emailController.clear();
-                    } else if (signUpResult == 'Password is too weak') {
-                      passwordController.clear();
-                      confPasswordController.clear();
-                    } else {
-                      usernameController.clear();
-                      emailController.clear();
-                      passwordController.clear();
-                      confPasswordController.clear();
-                    }
-                    // Registration failed, show error message
-                    ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(signUpResult!),
-                    ),
-                    );
-                  }
-                  );
-                },
-                child: const Text(
-                    'Register',
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
-                ),
-              ),
+              registerButton(context),
               const Padding(padding: EdgeInsets.all(20)),
             ],
           ),
