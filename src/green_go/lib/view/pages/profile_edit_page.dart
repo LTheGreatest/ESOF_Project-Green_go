@@ -82,7 +82,7 @@ class EditPageViewer extends State<EditPage>{
               firstDate: DateTime(1000,1,1), 
               lastDate: DateTime(3000,1,1),
               
-              onDateSaved: (date) {
+              onDateSubmitted: (date) {
                 birthDate=date;
               },
 
