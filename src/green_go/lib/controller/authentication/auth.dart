@@ -46,14 +46,12 @@ class AuthService {
       return e.code;
     }
   }
-
   Future deleteUser() async{
-    try{
+    try {
       dataBaseUsers.deleteUser(auth.currentUser!.uid);
       await auth.currentUser!.delete();
       return "Delete successful";
-    }
-    catch(e){
+    } catch(e) {
       return "Invalid deletion";
     }
   }

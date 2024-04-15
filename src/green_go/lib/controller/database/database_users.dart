@@ -58,8 +58,7 @@ class DataBaseUsers {
   Future<DocumentSnapshot<Object?>> getUserData(String uid) async {
     return await userCollection.doc(uid).get();
   }
-
-  void deleteUser(String uid){
+  void deleteUser(String uid) {
     userCollection.doc(uid).delete();
   }
 }

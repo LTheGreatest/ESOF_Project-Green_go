@@ -6,5 +6,4 @@ class DataBaseTransports{
   Future getAllData() async {
     return await transportsCollection.get();
   }
-
 }
