@@ -24,7 +24,6 @@ class EditPageViewer extends State<EditPage>{
   AuthService auth = AuthService();
 
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,18 +33,12 @@ class EditPageViewer extends State<EditPage>{
             Row(
           
               children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(Colors.black),
-                    backgroundColor: MaterialStateProperty.all(Colors.amber),
-                  ),
-                  onPressed: () {
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
-                  },
-                  child: const Text('back'),
-                ),
+                IconButton(onPressed: (){
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+                }, 
+                icon: const Icon(Icons.arrow_back)),
                 const Padding(
-                  padding: EdgeInsets.only(left:40),
+                  padding: EdgeInsets.only(left:65),
                   child :  Text(
                     'Edit Profile',
                     style:  TextStyle(
@@ -56,26 +49,57 @@ class EditPageViewer extends State<EditPage>{
                 )
               ],
             ),
-            const Text(
-              'Name:'
+            CircleAvatar(
+              radius: MediaQuery.of(context).size.width * 0.2,
+              //backgroundImage: NetworkImage(photoUrl!),
+            ),
+            
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
+              child:  Align(
+                alignment: Alignment.topLeft,
+                child:  Text(
+                  "Name:"
+                ),
+              ),
             ),
             TextFormField(
               controller: usernameController,
 
             ),
-            const Text(
-              'Nationality:'
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
+              child:  Align(
+                alignment: Alignment.topLeft,
+                child:  Text(
+                  "Nationality:"
+                ),
+              ),
             ),
             TextFormField(
               controller: nationalityController,
 
             ),
-            const Text('Job'),
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
+              child:  Align(
+                alignment: Alignment.topLeft,
+                child:  Text(
+                  "Job:"
+                ),
+              ),
+            ),
             TextFormField(
               controller: jobController,
             ),
-            const Text(
-              'Date of birth'
+            const Padding(
+              padding: EdgeInsets.only(top: 30),
+              child:  Align(
+                alignment: Alignment.topLeft,
+                child:  Text(
+                  "Date of birth:"
+                ),
+              ),
             ),
             InputDatePickerFormField(
               
@@ -88,7 +112,9 @@ class EditPageViewer extends State<EditPage>{
 
             ),
             
-            ElevatedButton(
+            Padding(
+              padding: const EdgeInsets.only(top:90),
+              child:ElevatedButton(
               onPressed : () {
                 newName=usernameController.text.trim();
                 newNationality=nationalityController.text.trim();
@@ -102,6 +128,7 @@ class EditPageViewer extends State<EditPage>{
               child:const Text(
                 'Save Changes' ,
               ),
+            )
             )
 
           ],
