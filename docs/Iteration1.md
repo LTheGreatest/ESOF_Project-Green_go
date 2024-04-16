@@ -18,7 +18,7 @@
 ### What still puzzles me?
 
 - The flutter tests (unit tests) have caused a lot of problems. We couldn't find out how to run the test with some of the dependencies we use.
-- The accpetance tests couldn't be automated.
+- The acceptance tests couldn't be automated.
 
 ## Project Board
 
