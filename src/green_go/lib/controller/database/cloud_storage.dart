@@ -9,7 +9,7 @@ class CloudStorage{
     return storageRef.child(path).putFile(file);
   }
 
-  Future<String> dowloadFileURL(String path) async{
+  Future<String> downloadFileURL(String path) async{
     return await storageRef.child(path).getDownloadURL();
   }
 }

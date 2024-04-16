@@ -38,8 +38,8 @@ class DataBaseUsers {
   Future updateUserProfile(String uid, String username, String nationality, String job, DateTime birthDate) async {
     return await userCollection.doc(uid).update({'username': username,  'nationality': nationality, 'job': job, 'birthDate': birthDate});
   }
-  Future updateUserPhoto(String uid,String path) async{
-    return await userCollection.doc(uid).update({'photoUrl': path});
+  Future updateUserPicture(String uid, String photoUrl) async {
+    return await userCollection.doc(uid).update({'photoUrl': photoUrl});
   }
   Future resetWeeklyPoints() async {
     QuerySnapshot querySnapshot = await userCollection.get();
