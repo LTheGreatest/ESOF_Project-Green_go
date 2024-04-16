@@ -91,6 +91,7 @@ class EditPageViewer extends State<EditPage> {
                   right: 0,
                   child: IconButton(
                     onPressed: (){
+                      saveChangesAndUpdateProfile(context);
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfileTakePictureScreen(),),);
                     },
                     icon: const Icon(Icons.camera_alt),

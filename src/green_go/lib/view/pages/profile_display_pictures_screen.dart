@@ -3,10 +3,33 @@ import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/profile_take_picture_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:green_go/controller/database/database_users.dart';
+import '../../controller/authentication/auth.dart';
 
-class ProfileDisplayPictureScreen extends StatelessWidget {
+class ProfileDisplayPictureScreen extends StatefulWidget {
   final String imagePath;
   const ProfileDisplayPictureScreen({super.key, required this.imagePath});
+
+  @override
+  State<ProfileDisplayPictureScreen> createState() => _ProfileDisplayPictureScreenState();
+}
+
+class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScreen> {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
+  DataBaseUsers dataBaseUsers = DataBaseUsers();
+
+  AuthService auth = AuthService();
+
+  Future<String> uploadImageToFirebaseStorage(String imagePath) async {
+    File imageFile = File(imagePath);
+    Reference ref = storage.ref().child('profile_pictures').child('profile_image.jpg');
+    UploadTask uploadTask = ref.putFile(imageFile);
+    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
+    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+    return downloadUrl;
+  }
 
   Widget buildTitle(BuildContext context){
     return const Padding(
@@ -33,7 +56,7 @@ class ProfileDisplayPictureScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(15),
           child: Image.file(
-            File(imagePath),
+            File(widget.imagePath),
             height: 400,
           ),
         ),
@@ -71,11 +94,10 @@ class ProfileDisplayPictureScreen extends StatelessWidget {
         backgroundColor: MaterialStateProperty.all(lightGray),
         minimumSize: MaterialStateProperty.all(const Size(150, 50)),
       ),
-      onPressed: () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const ProfilePage()),
-        );
+      onPressed: () async {
+        String imageUrl = await uploadImageToFirebaseStorage(widget.imagePath);
+        dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
       },
       child: const Text(
         "Send Image",
