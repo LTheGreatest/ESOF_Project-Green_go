@@ -44,7 +44,7 @@ class EditPageViewer extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(left: 15, top: 30),
+        padding: const EdgeInsets.only(left: 15, top: 30, right: 15),
         child: Column(
           children: [
             Row(
@@ -75,12 +75,21 @@ class EditPageViewer extends State<EditPage> {
               child:  Align(
                 alignment: Alignment.topLeft,
                 child:  Text(
-                  "Name:"
+                  "Name:",
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
                 ),
               ),
             ),
             TextFormField(
               controller: usernameController,
+              decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
+                ),
 
             ),
             const Padding(
@@ -88,31 +97,52 @@ class EditPageViewer extends State<EditPage> {
               child:  Align(
                 alignment: Alignment.topLeft,
                 child:  Text(
-                  "Nationality:"
+                  "Nationality:",
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
                 ),
               ),
             ),
             TextFormField(
               controller: nationalityController,
+              decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
+                ),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
               child:  Align(
                 alignment: Alignment.topLeft,
                 child:  Text(
-                  "Job:"
+                  "Job:",
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
                 ),
               ),
             ),
             TextFormField(
               controller: jobController,
+              decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
+                ),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
               child:  Align(
                 alignment: Alignment.topLeft,
                 child:  Text(
-                  "Date of birth:"
+                  "Date of birth:",
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
                 ),
               ),
             ),
@@ -120,8 +150,12 @@ class EditPageViewer extends State<EditPage> {
             TextField(
               readOnly: true,
               controller: TextEditingController(text: birthDate.toString().split(' ')[0]),
-              decoration: const InputDecoration(
-                labelText: 'Date of Birth',
+              decoration:  InputDecoration(
+                
+                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
               ),
               onTap: () async {
                 DateTime? pickedDate = await showDatePicker(
