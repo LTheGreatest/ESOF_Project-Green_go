@@ -5,7 +5,9 @@ class LocationService {
   late StreamSubscription<Position> _positionStream;
   double currentLongitude = 0;
   double currentLatitude = 0;
-
+  void setPositionStream(StreamSubscription<Position> pos_stream){
+    _positionStream = pos_stream;
+  }
   Future<Position> determinePosition() async {
     // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
