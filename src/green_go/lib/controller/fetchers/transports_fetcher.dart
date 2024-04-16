@@ -6,6 +6,10 @@ class TransportsFetcher {
   DataBaseTransports db = DataBaseTransports();
   List<TransportModel> transports = [];
 
+  void setDB(DataBaseTransports dbNew){
+    db = dbNew;
+  }
+
   Future<List<TransportModel>> getTransports() async {
     await db.getAllData().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
