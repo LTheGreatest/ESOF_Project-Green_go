@@ -1,13 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:green_go/controller/database/database_users.dart';
+import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/view//constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/view/pages/start_page.dart';
 import 'package:green_go/view/pages/profile_edit_page.dart';
+import 'package:green_go/controller/fetchers/user_fetcher.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -17,8 +17,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  Future<DocumentSnapshot<Object?>> doc = DataBaseUsers().getUserData(FirebaseAuth.instance.currentUser!.uid);
+  
+
   final AuthService authService = AuthService();
+  final DataBaseUsers dataBaseUsers = DataBaseUsers();
   String? photoUrl;
   String? name;
   String? nationality;
@@ -29,22 +31,22 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    fetchUserInfo();
+    initializeUserVariables();
   }
-  Future<void> fetchUserInfo() async {
-    DocumentSnapshot<Object?> docSnapshot = await doc;
-    Map<String, dynamic> data = docSnapshot.data() as Map<String, dynamic>;
+  Future<void> initializeUserVariables() async {
+    
+    UserModel userData = await UserFetcher().getCurrentUserData();
     String defaultPhotoUrl = await FirebaseStorage.instance.ref().child("icons/Default_pfp.png").getDownloadURL();
-    if (data['photoUrl'] != "") {
-      photoUrl = data['photoUrl'];
+    if (userData.photoUrl != "") {
+      photoUrl = userData.photoUrl;
     } else {
       photoUrl = defaultPhotoUrl;
     }
-    name = data['username'];
-    nationality = data['nationality'];
-    job = data['job'];
-    age = (DateTime.now().year - (data['birthDate'] as Timestamp).toDate().year);
-    uid = data['uid'];
+    name = userData.username;
+    nationality = userData.nationality;
+    job = userData.job;
+    age = calculateAge(userData.birthDate);
+    uid = userData.uid;
   }
 
   int calculateAge(DateTime birthDate) {
@@ -61,7 +63,7 @@ class ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: Future.wait([fetchUserInfo()]),
+          future: Future.wait([initializeUserVariables()]),
           builder: (context, snapshot) {
             if(snapshot.hasData) {
               return Center(

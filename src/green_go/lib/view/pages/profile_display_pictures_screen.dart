@@ -3,39 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/profile_take_picture_screen.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import '../../controller/authentication/auth.dart';
 import 'package:green_go/controller/database/cloud_storage.dart';
 
 class ProfileDisplayPictureScreen extends StatefulWidget {
   final String imagePath;
-  final AuthService auth = AuthService();
-  final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  
+  
   ProfileDisplayPictureScreen({super.key, required this.imagePath});
-  final CloudStorage cloudStorage = CloudStorage();
+  
 
   @override
   State<ProfileDisplayPictureScreen> createState() => _ProfileDisplayPictureScreenState();
 }
 
 class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScreen> {
-  final FirebaseStorage storage = FirebaseStorage.instance;
-
+  
+  final CloudStorage cloudStorage = CloudStorage();
   DataBaseUsers dataBaseUsers = DataBaseUsers();
 
   AuthService auth = AuthService();
-
-  Future<String> uploadImageToFirebaseStorage(String imagePath) async {
-    File imageFile = File(imagePath);
-    String newImagePath = 'profile_pictures/${DateTime.now()}.jpg';
-    Reference ref = storage.ref().child(newImagePath);
-    UploadTask uploadTask = ref.putFile(imageFile);
-    TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
-    String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-    return downloadUrl;
-  }
-
+  
   Widget buildTitle(BuildContext context){
     return const Padding(
         padding: EdgeInsets.all(35),
@@ -123,7 +112,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
         minimumSize: MaterialStateProperty.all(const Size(150, 50)),
       ),
       onPressed: () async {
-        String imageUrl = await uploadImageToFirebaseStorage(widget.imagePath);
+        String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(widget.imagePath);
         dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
       },
