@@ -3,7 +3,6 @@ import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/view/pages/profile_take_picture_screen.dart';
-import 'package:green_go/view/pages/take_picture_screen.dart';
 import '../../controller/fetchers/user_fetcher.dart';
 import '../../model/user_model.dart';
 import 'package:green_go/controller/camera/camera.dart';
@@ -90,7 +89,7 @@ class EditPageViewer extends State<EditPage> {
                 child:  Text(
                   "Name:",
                   style: TextStyle(
-                      fontSize: 20
+                    fontSize: 20
                   ),
                 ),
               ),
@@ -98,11 +97,11 @@ class EditPageViewer extends State<EditPage> {
             TextFormField(
               controller: usernameController,
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
                 ),
-              ),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
@@ -111,7 +110,7 @@ class EditPageViewer extends State<EditPage> {
                 child:  Text(
                   "Nationality:",
                   style: TextStyle(
-                      fontSize: 20
+                    fontSize: 20
                   ),
                 ),
               ),
@@ -119,11 +118,11 @@ class EditPageViewer extends State<EditPage> {
             TextFormField(
               controller: nationalityController,
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
                 ),
-              ),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
@@ -132,7 +131,7 @@ class EditPageViewer extends State<EditPage> {
                 child:  Text(
                   "Job:",
                   style: TextStyle(
-                      fontSize: 20
+                    fontSize: 20
                   ),
                 ),
               ),
@@ -140,11 +139,11 @@ class EditPageViewer extends State<EditPage> {
             TextFormField(
               controller: jobController,
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0)
+                  ),
                 ),
-              ),
             ),
             const Padding(
               padding: EdgeInsets.only(top: 30),
@@ -153,7 +152,7 @@ class EditPageViewer extends State<EditPage> {
                 child:  Text(
                   "Date of birth:",
                   style: TextStyle(
-                      fontSize: 20
+                    fontSize: 20
                   ),
                 ),
               ),
@@ -165,7 +164,7 @@ class EditPageViewer extends State<EditPage> {
               decoration:  InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0)
+                      borderRadius: BorderRadius.circular(10.0)
                   ),
               ),
               onTap: () async {

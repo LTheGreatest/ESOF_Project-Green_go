@@ -163,6 +163,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                                     ),
+                                    
                                   ],
                                 ),
                                 const Divider(thickness: 1, color: Colors.black,  ),
@@ -188,6 +189,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                                     ),
+                                    
                                   ],
                                 ),
                                 const Divider(thickness: 1, color: Colors.black,),
@@ -213,6 +215,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                       ),
                                     ),
+                                    
                                   ],
                                 ),
                                 const Divider(thickness: 1, color: Colors.black,),
