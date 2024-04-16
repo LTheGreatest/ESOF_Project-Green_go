@@ -49,23 +49,46 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
     );
   }
 
-  Widget buildImageContainer(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Container(
-        height: MediaQuery.of(context).size.height / 1.5,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-          color: lightGray,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Image.file(
-            File(widget.imagePath),
-            height: 400,
+  Widget buildImageContainer(BuildContext context) {
+    double circleOverlaySize = MediaQuery.of(context).size.width * 0.7;
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8),
+          // Container containing the image
+          child: Container(
+            height: MediaQuery.of(context).size.height / 1.5,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
+              color: lightGray,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: Image.file(
+                File(widget.imagePath),
+                height: 400,
+              ),
+            ),
           ),
         ),
-      ),
+        // Circular overlay in the middle
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: circleOverlaySize,
+              height: circleOverlaySize,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -48,26 +48,45 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
     );
   }
 
-  Widget buildCameraFeed(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-
-      //container containing the camera feed
-      child: Container(
-        //the height is defined accordingly to the screen size
-          height: MediaQuery.of(context).size.height / 1.5,
-
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-            color: lightGray,
+  Widget buildCameraFeed(BuildContext context) {
+    double circleOverlaySize = MediaQuery.of(context).size.width * 0.7;
+    return Stack(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          // Container containing the camera feed
+          child: Container(
+            // The height is defined according to the screen size
+            height: MediaQuery.of(context).size.height / 1.5,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
+              color: lightGray,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              // Calls the camera preview
+              child: CameraPreview(cameraService.cameraController),
+            ),
           ),
-
-          child: Padding(
-            padding: const EdgeInsets.all(15),
-            //calls the camera preview
-            child: CameraPreview(cameraService.cameraController),
-          )
-      ),
+        ),
+        // Circular overlay in the middle
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              width: circleOverlaySize,
+              height: circleOverlaySize,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 2,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
   Widget backButton(BuildContext context){
