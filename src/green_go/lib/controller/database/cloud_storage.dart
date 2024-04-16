@@ -7,7 +7,8 @@ class CloudStorage{
   UploadTask uploadFile(File file, String path) {
     return storageRef.child(path).putFile(file);
   }
-  Future<String> downloadFileURL(String path) async {
+
+  Future<String> downloadFileURL(String path) async{
     return await storageRef.child(path).getDownloadURL();
   }
 }

@@ -5,12 +5,13 @@ import 'package:green_go/model/user_model.dart';
 
 
 class AuthService {
-  late FirebaseAuth _firebaseAuth;
+  late FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
   DataBaseUsers dataBaseUsers = DataBaseUsers();
 
 
   void setFirebaseAuth(FirebaseAuth firebaseAuth) {
-    this._firebaseAuth = firebaseAuth;
+    _firebaseAuth = firebaseAuth;
+    
   }
 
   void setDataBaseUsers(DataBaseUsers dataBaseUsers) {

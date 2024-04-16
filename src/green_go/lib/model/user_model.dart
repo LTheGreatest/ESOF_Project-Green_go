@@ -3,7 +3,7 @@ class UserModel {
   String uid;
 
   String photoUrl = "";                                     // Default photo
-  String nationality = "Portugal";                          // Default nationality
+  String nationality = "Portuguese";                        // Default nationality
   String job = "Student";                                   // Default job
   DateTime birthDate = DateTime(DateTime.now().year - 18);  // Default 18 years old
 
