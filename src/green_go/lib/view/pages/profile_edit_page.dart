@@ -60,14 +60,18 @@ class EditPageViewer extends State<EditPage> {
         padding: const EdgeInsets.only(left: 15, top: 30, right: 15),
         child: Column(
           children: [
+
             Row(
               children: [
+
+                //back button
                 IconButton(
                     onPressed: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
                     },
                     icon: const Icon(Icons.arrow_back)
                 ),
+
                 const Padding(
                   padding: EdgeInsets.only(left:65),
                   child :  Text(
@@ -80,8 +84,11 @@ class EditPageViewer extends State<EditPage> {
                 )
               ],
             ),
+
             Stack(
               children: [
+
+                //Edit profile picture
                 CircleAvatar(
                   radius: MediaQuery.of(context).size.width * 0.2,
                   backgroundImage: NetworkImage(photoUrl),
@@ -99,6 +106,8 @@ class EditPageViewer extends State<EditPage> {
                 ),
               ],
             ),
+
+            //edit name
             const Padding(
               padding: EdgeInsets.only(top: 30),
               child:  Align(
@@ -120,6 +129,8 @@ class EditPageViewer extends State<EditPage> {
                   ),
                 ),
             ),
+
+            //edit nationality
             const Padding(
               padding: EdgeInsets.only(top: 30),
               child:  Align(
@@ -141,6 +152,8 @@ class EditPageViewer extends State<EditPage> {
                   ),
                 ),
             ),
+
+            //edit job
             const Padding(
               padding: EdgeInsets.only(top: 30),
               child:  Align(
@@ -162,6 +175,8 @@ class EditPageViewer extends State<EditPage> {
                   ),
                 ),
             ),
+
+            //edit date of birth
             const Padding(
               padding: EdgeInsets.only(top: 30),
               child:  Align(
@@ -174,7 +189,6 @@ class EditPageViewer extends State<EditPage> {
                 ),
               ),
             ),
-
             TextField(
               readOnly: true,
               controller: TextEditingController(text: birthDate.toString().split(' ')[0]),
@@ -198,6 +212,8 @@ class EditPageViewer extends State<EditPage> {
                 }
               },
             ),
+
+            //button to save the changes
             Padding(
                 padding: const EdgeInsets.only(top: 90),
                 child: ElevatedButton(

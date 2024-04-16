@@ -72,6 +72,8 @@ class ProfilePageState extends State<ProfilePage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+
+                      //profile picture
                       CircleAvatar(
                         radius: MediaQuery.of(context).size.width * 0.2,
                         backgroundImage: NetworkImage(photoUrl!),
@@ -85,11 +87,15 @@ class ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+
+                      //row with the buttons to edit the profile and delete the account
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            
+                            //button to edit the account
                             ElevatedButton(
                               style: ButtonStyle(
                                 foregroundColor: MaterialStateProperty.all(Colors.black),
@@ -105,6 +111,8 @@ class ProfilePageState extends State<ProfilePage> {
                               },
                               child: const Text('Edit Profile'),
                             ),
+
+                            //button to delete the account
                             ElevatedButton(
                               style: ButtonStyle(
                                 foregroundColor: MaterialStateProperty.all(Colors.black),
@@ -126,6 +134,8 @@ class ProfilePageState extends State<ProfilePage> {
                           ],
                         ),
                       ),
+                      
+                      //Box with the profile details
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: SizedBox(
@@ -143,6 +153,8 @@ class ProfilePageState extends State<ProfilePage> {
                                   ),
                                 ),
                                 const Padding(padding: EdgeInsets.only(top:50)),
+                                
+                                //nationality row
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
@@ -167,6 +179,8 @@ class ProfilePageState extends State<ProfilePage> {
                                     
                                   ],
                                 ),
+
+                                //Age row
                                 const Divider(thickness: 1, color: Colors.black,  ),
                                 const Padding(padding: EdgeInsets.only(top:30)),
                                 Row(
@@ -193,6 +207,8 @@ class ProfilePageState extends State<ProfilePage> {
                                     
                                   ],
                                 ),
+
+                                //Job row
                                 const Divider(thickness: 1, color: Colors.black,),
                                 const Padding(padding: EdgeInsets.only(top:30)),
                                 Row(
@@ -225,11 +241,15 @@ class ProfilePageState extends State<ProfilePage> {
                           ),
                         ),
                       ),
+
+                      //Rwo with the buttons to check the mission histoty and achivements
                       Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
+                            
+                            //mission histoy button
                             ElevatedButton(
                               style: ButtonStyle(
                                 foregroundColor: MaterialStateProperty.all(Colors.black),
@@ -240,6 +260,8 @@ class ProfilePageState extends State<ProfilePage> {
                               },
                               child: const Text('Mission History'),
                             ),
+                            
+                            //achievements button
                             ElevatedButton(
                               style: ButtonStyle(
                                 foregroundColor: MaterialStateProperty.all(Colors.black),
