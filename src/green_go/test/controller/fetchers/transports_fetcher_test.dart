@@ -1,5 +1,3 @@
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 
 import 'package:green_go/controller/database/database_transports.dart';
@@ -14,6 +12,7 @@ import 'transports_fetcher_test.mocks.dart';
 void main(){
 
   test("get transports", () async{
+    //given
     TransportsFetcher fetcher = TransportsFetcher();
     DataBaseTransports db = MockDataBaseTransports();
     final instance =  FakeFirebaseFirestore();
@@ -27,13 +26,13 @@ void main(){
       'pointsPerDist': 2.0
     }
     );
-
     when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('transports').get());
-
     fetcher.setDB(db);
 
+    //when
     final transports = await fetcher.getTransports();
 
+    //then
     expectLater(transports[0].name, 'bus');
     expectLater(transports[0].pointsPerDist, 1.5);
     expectLater(transports[1].name, 'train');
