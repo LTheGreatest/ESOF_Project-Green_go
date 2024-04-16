@@ -2,16 +2,27 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
 
+
+
 class AuthService {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  late FirebaseAuth _firebaseAuth;
+  DataBaseUsers dataBaseUsers = DataBaseUsers();
+
+
+  void setFirebaseAuth(FirebaseAuth firebaseAuth) {
+    this._firebaseAuth = firebaseAuth;
+  }
+
+  void setDataBaseUsers(DataBaseUsers dataBaseUsers) {
+    this.dataBaseUsers = dataBaseUsers;
+  }
 
   User? getCurrentUser() {
-    return auth.currentUser;
+    return _firebaseAuth.currentUser;
   }
   Future<String?> signIn(String email, String password) async {
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return "Successfully logged in";
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -24,11 +35,11 @@ class AuthService {
   }
   Future<String?> signUp(String email, String password, String username) async {
     try {
-      UserCredential result = await auth.createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       await dataBaseUsers.addUser(UserModel(result.user!.uid, username));
       return "Successfully registered";
     } on FirebaseAuthException catch (e) {
-      auth.currentUser!.delete();
+      _firebaseAuth.currentUser!.delete();
       if (e.code == 'weak-password') {
         return "Password is too weak";
       } else if (e.code == 'email-already-in-use') {
@@ -41,15 +52,15 @@ class AuthService {
   }
   Future signOut() async {
     try {
-      await auth.signOut();
+      await _firebaseAuth.signOut();
     } on FirebaseAuthException catch (e) {
       return e.code;
     }
   }
   Future deleteUser() async{
     try {
-      dataBaseUsers.deleteUser(auth.currentUser!.uid);
-      await auth.currentUser!.delete();
+      dataBaseUsers.deleteUser(_firebaseAuth.currentUser!.uid);
+      await _firebaseAuth.currentUser!.delete();
       return "Delete successful";
     } catch(e) {
       return "Invalid deletion";
