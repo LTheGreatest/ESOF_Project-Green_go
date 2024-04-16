@@ -141,45 +141,76 @@ class ProfilePageState extends State<ProfilePage> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                const Padding(padding: EdgeInsets.only(top:50)),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Nationality:'),
-                                    Text('$nationality'),
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 50),
+                                      child: Text(
+                                        'Nationality:',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 50),
+                                      child: Text(
+                                        '$nationality',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Divider(thickness: 1, color: Colors.black,  ),
+                                const Padding(padding: EdgeInsets.only(top:30)),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 50),
+                                      child: Text(
+                                        'Age:',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 50),
+                                      child: Text(
+                                        '$age',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 const Divider(thickness: 1, color: Colors.black,),
+                                const Padding(padding: EdgeInsets.only(top:30)),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text(
-                                      'Age:',
-                                      style: TextStyle(
-                                        fontSize: 18,
+                                    const Padding(
+                                      padding: EdgeInsets.only(left: 50),
+                                      child: Text(
+                                        'Job:',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      '$age',
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Divider(thickness: 1, color: Colors.black,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Text(
-                                      'Job:',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    Text(
-                                      '$job',
-                                      style: const TextStyle(
-                                        fontSize: 18,
+                                    Padding(
+                                      padding: const EdgeInsets.only(right: 50),
+                                      child: Text(
+                                        '$job',
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                        ),
                                       ),
                                     ),
                                   ],
