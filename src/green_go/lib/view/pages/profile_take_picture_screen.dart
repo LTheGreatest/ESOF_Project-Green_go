@@ -90,9 +90,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
     );
   }
   Widget backButton(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(20),
-      child: IconButton(
+    return IconButton(
         onPressed: (){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
         } ,
@@ -100,14 +98,10 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
           Icons.arrow_back,
           size: 30,
         )
-      ),
     );
   }
   Widget cameraSwitchButton(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(20),
-
-      child: Container(
+    return  Container(
         width: 120,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
@@ -129,15 +123,11 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
               size: 30,
             )
         ),
-      ),
     );
   }
 
   Widget takePictureButton(BuildContext context){
-    return Padding(
-      padding: const EdgeInsets.all(20),
-
-      child: Container(
+    return  Container(
         width: 120,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
@@ -175,7 +165,6 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
                 size: 30
             )
         ),
-      ),
     );
   }
 
@@ -196,9 +185,15 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children:[
-                      backButton(context),
-                      cameraSwitchButton(context),
-                      takePictureButton(context),
+                      //backButton(context),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: cameraSwitchButton(context),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: takePictureButton(context),
+                      ),
                     ]
                 )
               ],
