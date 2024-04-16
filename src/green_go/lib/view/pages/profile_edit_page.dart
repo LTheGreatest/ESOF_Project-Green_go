@@ -23,9 +23,9 @@ class EditPageViewer extends State<EditPage> {
   @override
   void initState() {
     super.initState();
-    fetchUserData();
+    initializeUserVariables();
   }
-  void fetchUserData() async {
+  void initializeUserVariables() async {
     // Fetch current user data
     UserModel userData = await UserFetcher().getCurrentUserData();
     // Autofill the fields with user data

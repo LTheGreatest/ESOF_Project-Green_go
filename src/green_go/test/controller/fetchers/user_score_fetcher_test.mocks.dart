@@ -120,7 +120,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
   _i4.Future<dynamic> updateUserProfile(
     String? uid,
     String? username,
-    String? photoUrl,
     String? nationality,
     String? job,
     DateTime? birthDate,
@@ -131,10 +130,26 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
           [
             uid,
             username,
-            photoUrl,
             nationality,
             job,
             birthDate,
+          ],
+        ),
+        returnValue: _i4.Future<dynamic>.value(),
+        returnValueForMissingStub: _i4.Future<dynamic>.value(),
+      ) as _i4.Future<dynamic>);
+
+  @override
+  _i4.Future<dynamic> updateUserPicture(
+    String? uid,
+    String? photoUrl,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateUserPicture,
+          [
+            uid,
+            photoUrl,
           ],
         ),
         returnValue: _i4.Future<dynamic>.value(),
