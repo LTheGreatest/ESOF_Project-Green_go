@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/profile_take_picture_screen.dart';
+import 'package:green_go/controller/database/cloud_storage.dart';
+import 'package:green_go/controller/database/database_users.dart';
+import 'package:green_go/controller/authentication/auth.dart';
 
 class ProfileDisplayPictureScreen extends StatelessWidget {
   final String imagePath;
-  const ProfileDisplayPictureScreen({super.key, required this.imagePath});
+  final AuthService auth = AuthService();
+  final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  ProfileDisplayPictureScreen({super.key, required this.imagePath});
+  final CloudStorage cloudStorage = CloudStorage();
 
   Widget buildTitle(BuildContext context){
     return const Padding(
@@ -72,6 +78,9 @@ class ProfileDisplayPictureScreen extends StatelessWidget {
         minimumSize: MaterialStateProperty.all(const Size(150, 50)),
       ),
       onPressed: () {
+        String newImagePath='users/${DateTime.now()}.jpg';
+        cloudStorage.uploadFile(File(imagePath), newImagePath);
+        dataBaseUsers.updateUserPhoto(auth.getCurrentUser()!.uid, newImagePath);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const ProfilePage()),

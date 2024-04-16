@@ -8,6 +8,7 @@ import 'package:green_go/view//constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/view/pages/start_page.dart';
 import 'package:green_go/view/pages/profile_edit_page.dart';
+import 'package:green_go/controller/database/cloud_storage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -19,12 +20,14 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   Future<DocumentSnapshot<Object?>> doc = DataBaseUsers().getUserData(FirebaseAuth.instance.currentUser!.uid);
   final AuthService authService = AuthService();
+  final CloudStorage cloudStorage = CloudStorage();
   String? photoUrl;
   String? name;
   String? nationality;
   int? age;
   String? job;
   String? uid;
+  Image? profile;
 
   @override
   void initState() {
@@ -37,8 +40,11 @@ class ProfilePageState extends State<ProfilePage> {
     String defaultPhotoUrl = await FirebaseStorage.instance.ref().child("icons/Default_pfp.png").getDownloadURL();
     if (data['photoUrl'] != "") {
       photoUrl = data['photoUrl'];
+      profile = cloudStorage.dowloadFileURL(photoUrl!) as Image?;
     } else {
+      
       photoUrl = defaultPhotoUrl;
+      profile = NetworkImage(photoUrl!) as Image?;
     }
     name = data['username'];
     nationality = data['nationality'];
