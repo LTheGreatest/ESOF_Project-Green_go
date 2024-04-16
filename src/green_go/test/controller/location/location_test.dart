@@ -67,3 +67,10 @@ void main() {
           _) async => LocationPermission.denied);
       when(mockGeolocator.requestPermission()).thenAnswer((
           _) async => LocationPermission.always);
+
+      final result = await locationService.requestLocationPermission();
+
+      expect(result, isTrue);
+    });
+  });
+}
