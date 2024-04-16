@@ -65,4 +65,5 @@ class DataBaseUsers {
   void deleteUser(String uid){
     userCollection.doc(uid).delete();
   }
+
 }

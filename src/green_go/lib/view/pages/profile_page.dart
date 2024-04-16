@@ -8,6 +8,7 @@ import 'package:green_go/view//constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/view/pages/start_page.dart';
 import 'package:green_go/view/pages/profile_edit_page.dart';
+import 'package:green_go/controller/database/cloud_storage.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});

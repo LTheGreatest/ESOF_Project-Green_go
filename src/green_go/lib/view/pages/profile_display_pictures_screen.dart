@@ -6,10 +6,14 @@ import 'package:green_go/view/pages/profile_take_picture_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import '../../controller/authentication/auth.dart';
+import 'package:green_go/controller/database/cloud_storage.dart';
 
 class ProfileDisplayPictureScreen extends StatefulWidget {
   final String imagePath;
-  const ProfileDisplayPictureScreen({super.key, required this.imagePath});
+  final AuthService auth = AuthService();
+  final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  ProfileDisplayPictureScreen({super.key, required this.imagePath});
+  final CloudStorage cloudStorage = CloudStorage();
 
   @override
   State<ProfileDisplayPictureScreen> createState() => _ProfileDisplayPictureScreenState();
@@ -24,7 +28,8 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
 
   Future<String> uploadImageToFirebaseStorage(String imagePath) async {
     File imageFile = File(imagePath);
-    Reference ref = storage.ref().child('profile_pictures').child('profile_image.jpg');
+    String newImagePath = 'profile_pictures/${DateTime.now()}.jpg';
+    Reference ref = storage.ref().child(newImagePath);
     UploadTask uploadTask = ref.putFile(imageFile);
     TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => null);
     String downloadUrl = await taskSnapshot.ref.getDownloadURL();
