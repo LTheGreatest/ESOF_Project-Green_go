@@ -11,7 +11,7 @@ class TransportsIconsFetcher{
     for(int i = 0; i < transports.length; i++){
 
       String path = "icons/${transports[i].getName()}.png";
-      Future<String> futureURL = storage.dowloadFileURL(path);
+      Future<String> futureURL = storage.downloadFileURL(path);
       String url = "";
 
       try{

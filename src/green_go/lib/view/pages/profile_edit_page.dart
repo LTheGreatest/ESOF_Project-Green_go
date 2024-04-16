@@ -37,6 +37,22 @@ class EditPageViewer extends State<EditPage> {
       photoUrl = userData.photoUrl;
     });
   }
+
+  void saveChangesAndUpdateProfile(BuildContext context) async {
+    // Save changes to the database
+    String newName = usernameController.text.trim();
+    String newNationality = nationalityController.text.trim();
+    String newJob = jobController.text.trim();
+    dataBaseUsers.updateUserProfile(
+      auth.getCurrentUser()!.uid,
+      newName,
+      newNationality,
+      newJob,
+      birthDate,
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,17 +201,7 @@ class EditPageViewer extends State<EditPage> {
                 padding: const EdgeInsets.only(top: 90),
                 child: ElevatedButton(
                   onPressed: () {
-                    // Save changes to the database
-                    String newName = usernameController.text.trim();
-                    String newNationality = nationalityController.text.trim();
-                    String newJob = jobController.text.trim();
-                    dataBaseUsers.updateUserProfile(
-                      auth.getCurrentUser()!.uid,
-                      newName,
-                      newNationality,
-                      newJob,
-                      birthDate,
-                    );
+                    saveChangesAndUpdateProfile(context);
                     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
                   },
                   child: const Text('Save Changes'),
