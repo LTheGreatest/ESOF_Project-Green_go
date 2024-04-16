@@ -10,6 +10,10 @@ class CameraService {
     this.cameraController = cameraController;
   }
 
+  void setCamerasList(List<CameraDescription> camList){
+    camerasList = camList;
+  }
+
   Future<void> initializeDefaultCamera() async {
     camerasList = await availableCameras();
     final firstCamera = camerasList.first;
