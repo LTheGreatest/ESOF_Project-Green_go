@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:green_go/controller/camera/camera.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/profile_display_pictures_screen.dart';
+import 'package:green_go/view/pages/profile_page.dart';
 
 class ProfileTakePictureScreen extends StatefulWidget {
   const ProfileTakePictureScreen({
@@ -69,7 +70,20 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
       ),
     );
   }
-
+  Widget backButton(BuildContext context){
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: IconButton(
+        onPressed: (){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+        } ,
+        icon: const Icon(
+          Icons.arrow_back,
+          size: 30,
+        )
+      ),
+    );
+  }
   Widget cameraSwitchButton(BuildContext context){
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -93,7 +107,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
             //switch camera icon
             icon: const Icon(
               Icons.cameraswitch_outlined,
-              size: 40,
+              size: 30,
             )
         ),
       ),
@@ -139,7 +153,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
             //camera icon
             icon: const Icon(
                 Icons.camera_alt,
-                size: 40
+                size: 30
             )
         ),
       ),
@@ -163,6 +177,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children:[
+                      backButton(context),
                       cameraSwitchButton(context),
                       takePictureButton(context),
                     ]

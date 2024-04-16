@@ -40,11 +40,11 @@ class ProfilePageState extends State<ProfilePage> {
     String defaultPhotoUrl = await FirebaseStorage.instance.ref().child("icons/Default_pfp.png").getDownloadURL();
     if (data['photoUrl'] != "") {
       photoUrl = data['photoUrl'];
-      profile = cloudStorage.dowloadFileURL(photoUrl!) as Image?;
+      //profile = cloudStorage.dowloadFileURL(photoUrl!) as Image?;
     } else {
       
       photoUrl = defaultPhotoUrl;
-      profile = NetworkImage(photoUrl!) as Image?;
+      //profile = NetworkImage(photoUrl!) as Image?;
     }
     name = data['username'];
     nationality = data['nationality'];
