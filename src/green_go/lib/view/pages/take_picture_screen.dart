@@ -1,7 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:green_go/controller/camera/camera.dart';
+import 'package:green_go/controller/camera/camera_service.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/display_pictures_screen.dart';
 import 'package:green_go/view/pages/trip_page.dart';

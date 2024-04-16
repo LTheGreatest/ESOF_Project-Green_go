@@ -5,6 +5,11 @@ class CameraService {
   CameraDescription? camera;
   late CameraController cameraController;
 
+  void setCameraController(CameraController cameraController){
+    //only used to facilitate testing
+    this.cameraController = cameraController;
+  }
+
   Future<void> initializeDefaultCamera() async {
     camerasList = await availableCameras();
     final firstCamera = camerasList.first;
