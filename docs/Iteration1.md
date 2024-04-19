@@ -2,7 +2,7 @@
 
 ## Release
 
-[Latest Release]()
+[Latest Release](https://github.com/FEUP-LEIC-ES-2023-24/2LEIC10T2/releases/tag/v0.1.0-Sprint1)
 
 ## Sprint Retrospective
 
