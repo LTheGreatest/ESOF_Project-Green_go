@@ -9,22 +9,16 @@ import 'package:green_go/controller/database/cloud_storage.dart';
 
 class ProfileDisplayPictureScreen extends StatefulWidget {
   final String imagePath;
-  
-  
-  ProfileDisplayPictureScreen({super.key, required this.imagePath});
-  
 
+  const ProfileDisplayPictureScreen({super.key, required this.imagePath});
   @override
   State<ProfileDisplayPictureScreen> createState() => _ProfileDisplayPictureScreenState();
 }
 
 class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScreen> {
-  
   final CloudStorage cloudStorage = CloudStorage();
   DataBaseUsers dataBaseUsers = DataBaseUsers();
-
   AuthService auth = AuthService();
-  
   Widget buildTitle(BuildContext context){
     return const Padding(
         padding: EdgeInsets.all(35),
@@ -37,7 +31,6 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
         )
     );
   }
-
   Widget buildImageContainer(BuildContext context) {
     double circleOverlaySize = MediaQuery.of(context).size.width * 0.7;
     return Stack(
@@ -80,7 +73,6 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
       ],
     );
   }
-
   Widget tryAgainButton(BuildContext context){
     return ElevatedButton(
         style: const ButtonStyle(
@@ -104,7 +96,6 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
     )
     );
   }
-
   Widget sendImageButton(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
@@ -125,7 +116,6 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

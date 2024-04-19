@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:green_go/controller/database/cloud_storage.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
@@ -17,10 +17,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  
-
   final AuthService authService = AuthService();
   final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  CloudStorage storage = CloudStorage();
   String? photoUrl;
   String? name;
   String? nationality;
@@ -34,9 +33,8 @@ class ProfilePageState extends State<ProfilePage> {
     initializeUserVariables();
   }
   Future<void> initializeUserVariables() async {
-    
     UserModel userData = await UserFetcher().getCurrentUserData();
-    String defaultPhotoUrl = await FirebaseStorage.instance.ref().child("icons/Default_pfp.png").getDownloadURL();
+    String defaultPhotoUrl = await storage.downloadFileURL("icons/Default_pfp.png");
     if (userData.photoUrl != "") {
       photoUrl = userData.photoUrl;
     } else {
@@ -48,7 +46,6 @@ class ProfilePageState extends State<ProfilePage> {
     age = calculateAge(userData.birthDate);
     uid = userData.uid;
   }
-
   int calculateAge(DateTime birthDate) {
     DateTime currentDate = DateTime.now();
     int age = currentDate.year - birthDate.year;
@@ -58,14 +55,13 @@ class ProfilePageState extends State<ProfilePage> {
     }
     return age;
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
           future: Future.wait([initializeUserVariables()]),
           builder: (context, snapshot) {
-            if(snapshot.hasData) {
+            if (snapshot.hasData) {
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15),
@@ -73,7 +69,6 @@ class ProfilePageState extends State<ProfilePage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                    
                         //profile picture
                         CircleAvatar(
                           radius: MediaQuery.of(context).size.width * 0.2,
@@ -88,14 +83,12 @@ class ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                         ),
-                    
                         //row with the buttons to edit the profile and delete the account
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              
                               //button to edit the account
                               ElevatedButton(
                                 style: ButtonStyle(
@@ -108,10 +101,8 @@ class ProfilePageState extends State<ProfilePage> {
                                     context,
                                     MaterialPageRoute(builder: (context) => const EditPage()),
                                   );
-                    
                                 },
-                                child: const Text(
-                                  'Edit Profile',
+                                child: const Text('Edit Profile',
                                    style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 15,
@@ -119,7 +110,6 @@ class ProfilePageState extends State<ProfilePage> {
                               ),
                                   ),
                               ),
-                    
                               //button to delete the account
                               ElevatedButton(
                                 style: ButtonStyle(
@@ -129,27 +119,23 @@ class ProfilePageState extends State<ProfilePage> {
                                 onPressed: () async {
                                   // Implement delete account functionality
                                   String? result = await authService.deleteUser();
-                                  if(result == "Delete successful"){
-                                    Navigator.pushReplacement(
-                                      context,
+                                  if (result == "Delete successful") {
+                                    Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) => const StartPage()),
                                     );
                                   }
-                    
                                 },
-                                child: const Text(
-                                  'Delete Account',
+                                child: const Text('Delete Account',
                                    style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold
-                                  ),
-                                  ),
+                                   ),
+                                ),
                               ),
                             ],
                           ),
                         ),
-                        
                         //Box with the profile details
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
@@ -160,23 +146,20 @@ class ProfilePageState extends State<ProfilePage> {
                               color: lightGray,
                               child: Column(
                                 children: [
-                                  const Text(
-                                    'Profile Details',
+                                  const Text('Profile Details',
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   const Padding(padding: EdgeInsets.only(top:50)),
-                                  
                                   //nationality row
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Padding(
                                         padding: EdgeInsets.only(left: 50),
-                                        child: Text(
-                                          'Nationality:',
+                                        child: Text('Nationality:',
                                           style: TextStyle(
                                             fontSize: 20,
                                           ),
@@ -194,17 +177,15 @@ class ProfilePageState extends State<ProfilePage> {
                                       
                                     ],
                                   ),
-                    
                                   //Age row
-                                  const Divider(thickness: 1, color: Colors.black,  ),
+                                  const Divider(thickness: 1, color: Colors.black),
                                   const Padding(padding: EdgeInsets.only(top:30)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Padding(
                                         padding: EdgeInsets.only(left: 50),
-                                        child: Text(
-                                          'Age:',
+                                        child: Text('Age:',
                                           style: TextStyle(
                                             fontSize: 20,
                                           ),
@@ -212,27 +193,23 @@ class ProfilePageState extends State<ProfilePage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(right: 50),
-                                        child: Text(
-                                          '$age',
+                                        child: Text('$age',
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
                                         ),
                                       ),
-                                      
                                     ],
                                   ),
-                    
                                   //Job row
-                                  const Divider(thickness: 1, color: Colors.black,),
+                                  const Divider(thickness: 1, color: Colors.black),
                                   const Padding(padding: EdgeInsets.only(top:30)),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       const Padding(
                                         padding: EdgeInsets.only(left: 50),
-                                        child: Text(
-                                          'Job:',
+                                        child: Text('Job:',
                                           style: TextStyle(
                                             fontSize: 20,
                                           ),
@@ -240,31 +217,27 @@ class ProfilePageState extends State<ProfilePage> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.only(right: 50),
-                                        child: Text(
-                                          '$job',
+                                        child: Text('$job',
                                           style: const TextStyle(
                                             fontSize: 20,
                                           ),
                                         ),
                                       ),
-                                      
                                     ],
                                   ),
-                                  const Divider(thickness: 1, color: Colors.black,),
+                                  const Divider(thickness: 1, color: Colors.black),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                    
-                        //Rwo with the buttons to check the mission histoty and achivements
+                        //Rwo with the buttons to check the mission history and achievements
                         Padding(
                           padding: const EdgeInsets.only(top: 20, bottom: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              
-                              //mission histoy button
+                              //mission history button
                               ElevatedButton(
                                 style: ButtonStyle(
                                   foregroundColor: MaterialStateProperty.all(Colors.black),
@@ -273,8 +246,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 onPressed: () {
                                   // Implement Mission History functionality
                                 },
-                                child: const Text(
-                                  'Mission History',
+                                child: const Text('Mission History',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 15,
@@ -282,7 +254,6 @@ class ProfilePageState extends State<ProfilePage> {
                                   ),
                                   ),
                               ),
-                              
                               //achievements button
                               ElevatedButton(
                                 style: ButtonStyle(
@@ -292,14 +263,13 @@ class ProfilePageState extends State<ProfilePage> {
                                 onPressed: () {
                                   // Implement Achievements functionality
                                 },
-                                child: const Text(
-                                  'Achievements',
+                                child: const Text('Achievements',
                                   style: TextStyle(
                                       color: Colors.black,
                                       fontSize: 15,
                                       fontWeight: FontWeight.bold
                                   ),
-                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -309,8 +279,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               );
-            }
-            else{
+            } else {
               return const Center(
                 child: CircularProgressIndicator(),
               );

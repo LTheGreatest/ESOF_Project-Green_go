@@ -73,7 +73,7 @@ class OngoingTripPageState extends State<OngoingTripPage> {
         },
       style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 82, 83, 85)),
-          minimumSize: MaterialStatePropertyAll(Size(150,50))
+          minimumSize: MaterialStatePropertyAll(Size(150, 50))
       ),
       child: const Text("Cancel",
         style: TextStyle(
@@ -84,7 +84,6 @@ class OngoingTripPageState extends State<OngoingTripPage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -101,11 +100,16 @@ class OngoingTripPageState extends State<OngoingTripPage> {
                   ),
                   const Padding(
                     padding: EdgeInsets.all(30),
-                    child: SubtitleWidget(text: "Your Trip Has Started"),
+                    child: Text("Your trip has started",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
                   ),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(15,100,15,5),
-                    child: Text("Tap The Stop Button When You Finnish",
+                    child: Text("Tap the Stop button when you finish",
                       textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -118,7 +122,7 @@ class OngoingTripPageState extends State<OngoingTripPage> {
                 ),
                   const Padding(
                     padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                    child: Text("Tap The Cancel Button If you want to cancel the trip",
+                    child: Text("Tap the Cancel button if you want to cancel the trip",
                       textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 15,
@@ -131,31 +135,29 @@ class OngoingTripPageState extends State<OngoingTripPage> {
                   ),
                 ]
               );
-            }
-            else {
+            } else {
               return Column(
                   children: [
                     const Padding(
-                    padding: EdgeInsets.all(35),
-                    child: TitleWidget(text: "Ongoing Trip"),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(30),
-                    child: SubtitleWidget(text: "Your Trip Has Started"),
-                  ),
+                      padding: EdgeInsets.all(35),
+                      child: TitleWidget(text: "Ongoing Trip"),
+                    ),
                     const Padding(
-                    padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                    child: ProblemWidget(text: "The trip cannot be verified without the GPS Location"),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: cancelButton(context),
-                  ),
+                      padding: EdgeInsets.all(30),
+                      child: SubtitleWidget(text: "Your Trip Has Started"),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                      child: ProblemWidget(text: "The trip cannot be verified without the GPS Location"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: cancelButton(context),
+                    ),
                   ]
               );
             }
-          }
-          else {
+          } else {
             return const Center(
                 child: CircularProgressIndicator(),
               );

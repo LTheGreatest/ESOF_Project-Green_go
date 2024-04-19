@@ -14,7 +14,7 @@ class StartPage extends StatelessWidget {
             child: Container(
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('images/GreenGo.png'),
+                  image: AssetImage('assets/GreenGo.png'),
                 ),
               ),
             ),
