@@ -94,7 +94,7 @@ class ScoreMainState extends State<ScoreMain> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('${goal - score}',
+                            Text('${(goal - score) > 0 ? (goal - score) : 0}',
                               style: const TextStyle(
                                 fontSize: 30,
                                 fontWeight: FontWeight.w900,
