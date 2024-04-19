@@ -5,9 +5,11 @@ class LocationService {
   late StreamSubscription<Position> _positionStream;
   double currentLongitude = 0;
   double currentLatitude = 0;
+
   void setPositionStream(StreamSubscription<Position> pos_stream){
     _positionStream = pos_stream;
   }
+
   Future<Position> determinePosition() async {
     // Check if location services are enabled
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
@@ -30,6 +32,7 @@ class LocationService {
     // If permissions are granted, return the current location
     return await Geolocator.getCurrentPosition();
   }
+  
   Future<bool> checkIfLocationServiceIsEnabled() async {
     bool isLocationServiceEnabled  = await Geolocator.isLocationServiceEnabled();
     if (isLocationServiceEnabled) {
@@ -42,6 +45,7 @@ class LocationService {
       return false;
     }
   }
+  
   Future<bool> checkLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -58,6 +62,7 @@ class LocationService {
       return true;
     }
   }
+
   Future<bool> requestLocationPermission() async {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
@@ -77,6 +82,7 @@ class LocationService {
     }
     return true;
   }
+
   void getLocationUpdates() {
     const LocationSettings locationSettings = LocationSettings(
       accuracy: LocationAccuracy.high,
@@ -89,10 +95,17 @@ class LocationService {
         currentLongitude = position.longitude;
       });
   }
+
   void stopListening() {
     _positionStream.cancel();
   }
+
   double calculateDistance(double startLatitude, double startLongitude, double endLatitude, double endLongitude) {
-    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+    if(startLatitude < -90 || startLatitude > 90 || startLongitude < -180 || startLongitude > 180 || endLatitude < -90 || endLatitude > 90 || endLongitude < -180 || endLongitude > 180 ){
+      return 0;
+    }
+    else{
+      return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude);
+    }
   }
 }

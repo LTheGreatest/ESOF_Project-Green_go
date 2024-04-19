@@ -32,23 +32,32 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
         hasWaitedTooLong = true;
     });
   }
-  int calculatePoints(double distance) {
+
+  int calculatePoints(double distance, double pointsPerDist) {
     //calculates the points earned in the trip
-    return (distance * widget.pointsPerDist).toInt();
+    if(distance < 0 || pointsPerDist < 0){
+      return 0;
+    }
+    else{
+      return (distance * pointsPerDist).toInt();
+    }
   }
+
   Future<void> updatePoints() async {
     //calls the database services to update the user points in the database
-   await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance));
+   await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.pointsPerDist));
   }
+
   Widget pointsEarnedText(BuildContext context){
     //Text with the number of points earned in the trip
-    return Text("You earned ${calculatePoints(widget.distance)} points",
+    return Text("You earned ${calculatePoints(widget.distance, widget.pointsPerDist)} points",
       style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.w500
       ),
     );
   }
+
   Widget verificationText(BuildContext context) {
     //Text that appears while the system is verifying the trip
     return const Text("Verifying your trip...",
@@ -58,6 +67,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       ),
     );
   }
+
   Widget weeklyPoints(BuildContext context, int points) {
     //row with the weekly number of points details
     return Container(
@@ -84,7 +94,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
             ),
           ),
           //number of points earned during the trip
-          Text("+${calculatePoints(widget.distance)}",
+          Text("+${calculatePoints(widget.distance, widget.pointsPerDist)}",
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -95,6 +105,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       ),
     );
   }
+
   Widget monthlyPoints(BuildContext context, int points) {
     //row with the monthly number of points details
     return Container(
@@ -121,7 +132,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
                 ),
               ),
               //number of points earned during the trip
-              Text("+${calculatePoints(widget.distance)}",
+              Text("+${calculatePoints(widget.distance, widget.pointsPerDist)}",
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -132,6 +143,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
         )
     );
   }
+
   Widget totalPoints(BuildContext context, int points) {
     //row with the total number of points details
     return Container(
@@ -158,7 +170,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
               ),
             ),
             //number of points earned during the trip
-            Text("+${calculatePoints(widget.distance)}",
+            Text("+${calculatePoints(widget.distance, widget.pointsPerDist)}",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -169,6 +181,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       ),
     );
   }
+
   Widget pointsContainer(BuildContext context, UserModel user) {
     //Container with the number of points by category (monthly, weekly and total)
     return Container(
@@ -183,22 +196,23 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
           //weekly points row
           Padding(
             padding: const EdgeInsets.fromLTRB(20,50,20,25),
-            child: weeklyPoints(context, user.weeklyPoints + calculatePoints(widget.distance)),
+            child: weeklyPoints(context, user.weeklyPoints + calculatePoints(widget.distance, widget.pointsPerDist)),
           ),
           //monthly points row
           Padding(
             padding: const EdgeInsets.fromLTRB(20,25,20,25),
-            child: monthlyPoints(context, user.monthlyPoints + calculatePoints(widget.distance)),
+            child: monthlyPoints(context, user.monthlyPoints + calculatePoints(widget.distance, widget.pointsPerDist)),
           ),
           //total points row
           Padding(
             padding: const EdgeInsets.fromLTRB(20,25,20,50),
-            child: totalPoints(context, user.totalPoints + calculatePoints(widget.distance)),
+            child: totalPoints(context, user.totalPoints + calculatePoints(widget.distance, widget.pointsPerDist)),
           ),
         ],
       ),
     );
   }
+
   Widget continueButton(BuildContext context) {
     //Button to exit the page
     return TextButton(
@@ -227,6 +241,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       ),
     );
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
