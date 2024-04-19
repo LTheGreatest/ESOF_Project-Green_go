@@ -7,10 +7,9 @@ class TransportsIconsFetcher {
   List<List<dynamic>> transportIcons = [];
   CloudStorage storage = CloudStorage();
 
-  void setStorage(CloudStorage cloudStorage){
+  void setStorage(CloudStorage cloudStorage) {
     storage = cloudStorage;
   }
-
   Future<List<List<dynamic>>> getTransportsIcons(List<TransportModel> transports) async {
     for (int i = 0; i < transports.length; i++) {
       String path = "icons/${transports[i].getName()}.png";

@@ -11,7 +11,6 @@ class UserFetcher {
   void setDB(DataBaseUsers newDB){
     db = newDB;
   }
-
   Future<List<UserModel>> getDataForLeaderboard() async {
     await db.getAllData().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
@@ -35,8 +34,6 @@ class UserFetcher {
     });
     return users;
   }
-
-  
   Future<UserModel> getCurrentUserData() async {
     UserModel user = UserModel(AuthService().getCurrentUser()!.uid, "notDefined");
     dynamic querySnapshot;

@@ -6,11 +6,11 @@ import 'package:green_go/view/pages/mission_page.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
-class CustomMenuBar extends StatelessWidget{
+class CustomMenuBar extends StatelessWidget {
   const CustomMenuBar({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
       //custom menu bar used in the main app pages
       return  Padding(
         padding: const EdgeInsets.all(2),
@@ -19,11 +19,9 @@ class CustomMenuBar extends StatelessWidget{
               color: lightGreen,
               borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
             ),
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-
                 ///leaderboard
                 SizedBox(
                   height: 50,
@@ -40,7 +38,6 @@ class CustomMenuBar extends StatelessWidget{
                      icon: Image.asset("assets/Leaderboard.png"),
                   ),
                 ),
-
                 ///bus
                 SizedBox(
                   height: 50,
@@ -57,7 +54,6 @@ class CustomMenuBar extends StatelessWidget{
                      icon: Image.asset("assets/Bus.png"),
                   ),
                 ),
-
                 ///main page
                 SizedBox(
                   height: 50,
@@ -73,7 +69,6 @@ class CustomMenuBar extends StatelessWidget{
                     icon: Image.asset("assets/Home.png"),
                   ),
                 ),
-
                 ///missions
                 SizedBox(
                   height: 50,
@@ -89,7 +84,6 @@ class CustomMenuBar extends StatelessWidget{
                     icon: Image.asset("assets/Search.png"),
                   ),
                 ),
-
                 ///profile
                 SizedBox(
                   height: 50,

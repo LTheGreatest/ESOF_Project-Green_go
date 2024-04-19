@@ -4,14 +4,16 @@ import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/view/pages/profile_take_picture_screen.dart';
-import '../../controller/fetchers/user_fetcher.dart';
-import '../../model/user_model.dart';
+import 'package:green_go/controller/fetchers/user_fetcher.dart';
+import 'package:green_go/model/user_model.dart';
 import 'package:green_go/controller/camera/camera_service.dart';
+
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
   @override
   State<StatefulWidget> createState() => EditPageViewer();
 }
+
 class EditPageViewer extends State<EditPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
@@ -21,15 +23,14 @@ class EditPageViewer extends State<EditPage> {
   DataBaseUsers dataBaseUsers = DataBaseUsers();
   AuthService auth = AuthService();
   final CameraService cameraService = CameraService();
+
   @override
   void initState() {
     super.initState();
     initializeUserVariables();
   }
   void initializeUserVariables() async {
-    // Fetch current user data
     UserModel userData = await UserFetcher().getCurrentUserData();
-    // Autofill the fields with user data
     setState(() {
       usernameController.text = userData.username;
       nationalityController.text = userData.nationality;
@@ -38,9 +39,7 @@ class EditPageViewer extends State<EditPage> {
       photoUrl = userData.photoUrl;
     });
   }
-
   void saveChangesAndUpdateProfile(BuildContext context) async {
-    // Save changes to the database
     String newName = usernameController.text.trim();
     String newNationality = nationalityController.text.trim();
     String newJob = jobController.text.trim();
@@ -52,13 +51,11 @@ class EditPageViewer extends State<EditPage> {
       birthDate,
     );
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10,35,10,10),
+        padding: const EdgeInsets.fromLTRB(10, 35, 10, 10),
         child: SingleChildScrollView(
           child: Container(
             decoration: BoxDecoration(
@@ -71,22 +68,18 @@ class EditPageViewer extends State<EditPage> {
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-              
                   Row(
                     children: [
-                      
                       //back button
                       IconButton(
-                          onPressed: (){
+                          onPressed: () {
                             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
                           },
                           icon: const Icon(Icons.arrow_back)
                       ),
-              
                       const Padding(
                         padding: EdgeInsets.only(left:50),
-                        child :  Text(
-                          'Edit Profile',
+                        child :  Text('Edit Profile',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
@@ -95,10 +88,8 @@ class EditPageViewer extends State<EditPage> {
                       )
                     ],
                   ),
-              
                   Stack(
                     children: [
-              
                       //Edit profile picture
                       CircleAvatar(
                         radius: MediaQuery.of(context).size.width * 0.2,
@@ -117,14 +108,12 @@ class EditPageViewer extends State<EditPage> {
                       ),
                     ],
                   ),
-              
                   //edit name
                   const Padding(
                     padding: EdgeInsets.only(top: 30),
                     child:  Align(
                       alignment: Alignment.topLeft,
-                      child:  Text(
-                        "Name:",
+                      child:  Text("Name:",
                         style: TextStyle(
                           fontSize: 20
                         ),
@@ -140,14 +129,12 @@ class EditPageViewer extends State<EditPage> {
                         ),
                       ),
                   ),
-              
                   //edit nationality
                   const Padding(
                     padding: EdgeInsets.only(top: 30),
                     child:  Align(
                       alignment: Alignment.topLeft,
-                      child:  Text(
-                        "Nationality:",
+                      child:  Text("Nationality:",
                         style: TextStyle(
                           fontSize: 20
                         ),
@@ -163,14 +150,12 @@ class EditPageViewer extends State<EditPage> {
                         ),
                       ),
                   ),
-              
                   //edit job
                   const Padding(
                     padding: EdgeInsets.only(top: 30),
                     child:  Align(
                       alignment: Alignment.topLeft,
-                      child:  Text(
-                        "Job:",
+                      child:  Text("Job:",
                         style: TextStyle(
                           fontSize: 20
                         ),
@@ -186,14 +171,12 @@ class EditPageViewer extends State<EditPage> {
                         ),
                       ),
                   ),
-              
                   //edit date of birth
                   const Padding(
                     padding: EdgeInsets.only(top: 30),
                     child:  Align(
                       alignment: Alignment.topLeft,
-                      child:  Text(
-                        "Date of birth:",
+                      child:  Text("Date of birth:",
                         style: TextStyle(
                           fontSize: 20
                         ),
@@ -223,21 +206,19 @@ class EditPageViewer extends State<EditPage> {
                       }
                     },
                   ),
-              
                   //button to save the changes
                   Padding(
                       padding: const EdgeInsets.only(top: 50),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                                      foregroundColor: MaterialStateProperty.all(Colors.black),
-                                      backgroundColor: MaterialStateProperty.all(lightGreen),
-                                    ),
+                          foregroundColor: MaterialStateProperty.all(Colors.black),
+                          backgroundColor: MaterialStateProperty.all(lightGreen),
+                        ),
                         onPressed: () {
                           saveChangesAndUpdateProfile(context);
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
                         },
-                        child: const Text(
-                          'Save Changes',
+                        child: const Text('Save Changes',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 20,
