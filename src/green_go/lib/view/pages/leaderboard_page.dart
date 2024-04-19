@@ -27,7 +27,29 @@ class LeaderboardPageState extends State<LeaderboardPage> {
     total = true;
   }
 
+  void setWeekly(){
+    //sets the variables to weekly points leaderboard
+    weekly = true;
+    monthly = false;
+    total = false;
+  }
+
+  void setMonthly(){
+    //sets the variables to monthly points leaderboard
+    weekly = false;
+    monthly = true;
+    total = false;
+  }
+
+  void setTotal(){
+    //sets the variables to total points leaderboard
+    weekly = false;
+    monthly = false;
+    total = true;
+  }
+
   List<UserModel> sortUsers(List<UserModel> users){
+    //sorts the users accordingly to their points and category chose
     if(monthly){
       users.sort((a, b) => b.monthlyPoints.compareTo(a.monthlyPoints));
     }
@@ -42,6 +64,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
   }
 
   int choosePoints(UserModel user){
+    //checks what option the user chose for the points
     if(total){
       return user.totalPoints;
     }
@@ -53,8 +76,9 @@ class LeaderboardPageState extends State<LeaderboardPage> {
     }
   }
 
-  ///Builds the page title
+
   Widget buildTitle(BuildContext context) {
+      //Builds the page title
     return Container(
       decoration: BoxDecoration(
         color: Colors.green.shade300,
@@ -75,84 +99,87 @@ class LeaderboardPageState extends State<LeaderboardPage> {
       ),
     );
   }
-  ///Builds the leaderboard table
-  Widget buildLeaderboardTable(BuildContext context) {
+
+  Widget buildLeaderboardTable(BuildContext context, List<UserModel> userScoreData) {
+    //Builds the leaderboard table
     return Expanded(
-      child: FutureBuilder( ///used because we need to wait the data to arrive from the DB
-        future: userScore,
-        builder: (context, snapshot){
-          if (snapshot.hasData) {
-            List<UserModel>? userScoreData = snapshot.data;
-            userScoreData = sortUsers(userScoreData!);
-            return ListView.builder( ///List with the data from the leaderboard
-              padding: EdgeInsets.zero,
-              itemCount: userScoreData?.length,
-              itemBuilder: (BuildContext context, int index){
-                return tableRow(context, userScoreData![index], index);
-                },
-            );
-          } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-          }
-          },
-      ),
+      child: ListView.builder( ///List with the data from the leaderboard
+                padding: EdgeInsets.zero,
+                itemCount: userScoreData?.length,
+                itemBuilder: (BuildContext context, int index){
+                  return tableRow(context, userScoreData![index], index);
+                  },
+             ),
     );
+          
   }
 
   Widget tableRow(BuildContext context, UserModel user, int index){
+    //Draws a single table row
     return Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 2,
+            decoration: BoxDecoration(
+              //the color varies depending on the user position
+              color: 
+                index == 0? Colors.amber.shade300 : 
+                index == 1? Colors.blue.shade100 : 
+                index == 2? Colors.yellow.shade800 : 
+                Colors.white,
+              border: Border.all(
+                width: 2,
+              ),
+              borderRadius: const BorderRadius.all(Radius.elliptical(10, 10)),
+            ),
+
+            //
+            child: Stack(
+              children: [
+
+                //position
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      (index + 1).toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
-                      borderRadius: const BorderRadius.all(Radius.elliptical(10, 10)),
+                      ),
                     ),
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              (index + 1).toString(),
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              ),
-                            ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(50,8,8,8),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child:  Text(
-                              user.username,
-                              style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                              ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Align(
-                            alignment: Alignment.centerRight,
-                            child:  Text(
-                              choosePoints(user).toString(),
-                              style: const TextStyle(
-                                fontSize: 20,
-                              ),
-                              ),
-                            ),
-                        ),
-                      ],
+                ),
+                //Username
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(50,8,8,8),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child:  Text(
+                      user.username,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      ),
+                  ),
+                ),
+                //Points
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child:  Text(
+                      choosePoints(user).toString(),
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                      ),
                     ),
-                );
+                ),
+              ],
+            ),
+        );
   }
+
   Widget weeklyButton(BuildContext context){
     //button to change for the weekly points leaderboard
     return Container(
@@ -170,9 +197,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
           child: TextButton(
             onPressed: (){
               setState(() {
-                weekly = true;
-                monthly = false;
-                total = false;
+               setWeekly();
               });
             },
 
@@ -210,9 +235,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
           child: TextButton(
             onPressed: (){
                 setState(() {
-                weekly = false;
-                monthly = false;
-                total = true;
+                setTotal();
               });
             },
 
@@ -247,9 +270,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
           child: TextButton(
             onPressed: (){
               setState(() {
-                weekly = false;
-                monthly = true;
-                total = false;
+                setMonthly();
               });
             },
 
@@ -265,23 +286,9 @@ class LeaderboardPageState extends State<LeaderboardPage> {
     );
   }
 
-  Widget firstPlace(BuildContext context, UserModel user){
-    return Container(
-      child: Stack(
-        children:[
-          Image.asset("../assets/1st Place.png"),
-          Container(
-            child: Row(children: [
-              Text(user.username),
-              Text(choosePoints(user).toString()),
-            ],),
-          )
-        ],
-      ),
-    );
-  }
 
-  Widget titleContainer(BuildContext contex){
+  Widget titleButtonsContainer(BuildContext contex, UserModel first, UserModel second, UserModel third){
+    //draws the container that contains the title and the buttons to change the leaderboard that appears on the screen
     return  Container(
             decoration: const BoxDecoration(
               color: lightGray,
@@ -289,7 +296,11 @@ class LeaderboardPageState extends State<LeaderboardPage> {
             child: Column(
               children: [
                 const Padding(padding: EdgeInsets.all(20)),
+
+                //Title
                 buildTitle(context),
+
+                //Buttons
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Padding(
@@ -318,46 +329,31 @@ class LeaderboardPageState extends State<LeaderboardPage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: Column(
-      children: <Widget>[
+      body: FutureBuilder( ///used because we need to wait the data to arrive from the DB
+        future: userScore,
+        builder: (context, snapshot){
+          if (snapshot.hasData) {
+            List<UserModel>? userScoreData = snapshot.data;
+            userScoreData = sortUsers(userScoreData!);
+            return Column(
+            children: <Widget>[
 
           //Title and Buttons container
-          Container(
-            decoration: const BoxDecoration(
-              color: lightGray,
-            ),
-            child: Column(
-              children: [
-                const Padding(padding: EdgeInsets.all(20)),
-                buildTitle(context),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0,10,0,30),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 2
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          weeklyButton(context),
-                          allTimeButton(context),
-                          monthlyButton(context),
-                        ],)       
-                      ,),
-                  ),
-                )
-              ],) ,
-          ),
+          titleButtonsContainer(context, userScoreData.elementAt(0), userScoreData.elementAt(1), userScoreData.elementAt(2)),
 
           //leaderboard
-          buildLeaderboardTable(context),
+          buildLeaderboardTable(context, userScoreData),
         ],
+      );
+          }
+          else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+          }
+        }
       ),
+
       bottomSheet: const CustomMenuBar(),
     );
   }
