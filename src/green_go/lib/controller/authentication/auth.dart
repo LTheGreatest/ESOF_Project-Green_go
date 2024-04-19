@@ -2,22 +2,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
 
-
-
 class AuthService {
   late FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
   DataBaseUsers dataBaseUsers = DataBaseUsers();
-
 
   void setFirebaseAuth(FirebaseAuth firebaseAuth) {
     _firebaseAuth = firebaseAuth;
     
   }
-
   void setDataBaseUsers(DataBaseUsers dataBaseUsers) {
     this.dataBaseUsers = dataBaseUsers;
   }
-
   User? getCurrentUser() {
     return _firebaseAuth.currentUser;
   }
