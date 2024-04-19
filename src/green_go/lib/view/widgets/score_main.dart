@@ -20,20 +20,29 @@ class ScoreMainState extends State<ScoreMain> {
   late String streakIcon;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
+    getCurrentUserData();
+    fetchIcons();
+  }
+    
+  Future<void> getCurrentUserData() async{
     UserModel user = await UserFetcher().getCurrentUserData();
     score = user.totalPoints;
     goal = user.goal;
     streak = user.streak;
+  }
+  Future<void> fetchIcons() async{
     scoreIcon = await CloudStorage().downloadFileURL('icons/Score.png');
     goalIcon = await CloudStorage().downloadFileURL('icons/Goal.png');
     streakIcon = await CloudStorage().downloadFileURL('icons/Streak.png');
   }
+
+  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Future.wait([initState()]),
+        future: Future.wait([getCurrentUserData(), fetchIcons()]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
@@ -163,6 +172,7 @@ class ScoreMainState extends State<ScoreMain> {
                 child: CircularProgressIndicator(),
             );
           }
+          
         }
     );
   }

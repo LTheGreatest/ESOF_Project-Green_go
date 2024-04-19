@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
           Image.asset('assets/GreenGo.png'),
           const ScoreMain(),
           /// Only to occupy the rest of the space while there is nothing to put
-          const Padding(padding:EdgeInsets.all(250)),
+          ///const Padding(padding:EdgeInsets.all(250)),
         ],
       ),
       bottomSheet: const CustomMenuBar(),
