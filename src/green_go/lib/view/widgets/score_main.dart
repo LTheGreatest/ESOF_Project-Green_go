@@ -25,20 +25,17 @@ class ScoreMainState extends State<ScoreMain> {
     getCurrentUserData();
     fetchIcons();
   }
-    
-  Future<void> getCurrentUserData() async{
+  Future<void> getCurrentUserData() async {
     UserModel user = await UserFetcher().getCurrentUserData();
     score = user.totalPoints;
     goal = user.goal;
     streak = user.streak;
   }
-  Future<void> fetchIcons() async{
+  Future<void> fetchIcons() async {
     scoreIcon = await CloudStorage().downloadFileURL('icons/Score.png');
     goalIcon = await CloudStorage().downloadFileURL('icons/Goal.png');
     streakIcon = await CloudStorage().downloadFileURL('icons/Streak.png');
   }
-
-  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -172,7 +169,6 @@ class ScoreMainState extends State<ScoreMain> {
                 child: CircularProgressIndicator(),
             );
           }
-          
         }
     );
   }
