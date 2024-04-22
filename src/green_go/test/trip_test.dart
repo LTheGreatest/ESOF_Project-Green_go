@@ -1,8 +1,5 @@
 import 'package:green_go/controller/location/location.dart';
-import 'package:green_go/view/pages/ongoing_trip_page.dart';
 import 'package:green_go/view/pages/points_earned_page.dart';
-import 'package:mockito/annotations.dart';
-import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main(){

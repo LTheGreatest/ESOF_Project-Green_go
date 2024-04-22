@@ -105,9 +105,9 @@ class LeaderboardPageState extends State<LeaderboardPage> {
     return Expanded(
       child: ListView.builder( ///List with the data from the leaderboard
                 padding: EdgeInsets.zero,
-                itemCount: userScoreData?.length,
+                itemCount: userScoreData.length,
                 itemBuilder: (BuildContext context, int index){
-                  return tableRow(context, userScoreData![index], index);
+                  return tableRow(context, userScoreData[index], index);
                   },
              ),
     );
