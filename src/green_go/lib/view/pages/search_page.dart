@@ -23,6 +23,10 @@ class SearchPageState extends State<SearchPage>{
     missionsFuture = MissionsFetcher().getAllMissions();
   }
 
+  void setSearchString(String newSearchString){
+    searchString = newSearchString;
+  }
+  
   void searchMissions(String query){
     setState(() {
       searchString = query;

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/leaderboard_page.dart';
 import 'package:green_go/view/pages/main_page.dart';
-import 'package:green_go/view/pages/mission_page.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/search_page.dart';
 import 'package:green_go/view/pages/trip_page.dart';
