@@ -9,6 +9,10 @@ class MissionsFetcher {
   DataBaseMissions db = DataBaseMissions();
   List<MissionsModel> missions = [];
 
+  void setDB(DataBaseMissions newDB){
+    db = newDB;
+  }
+
   Future<List<MissionsModel>> getAllMissions() async{
     await db.getAllData().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {

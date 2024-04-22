@@ -301,10 +301,10 @@ packages:
     dependency: "direct main"
     description:
       name: fake_cloud_firestore
-      sha256: f82ebf1bcb9e3c53d09a066733e8f77a5747bf7c39d7bd7de6ccd2ba3a48815e
+      sha256: "43233cd3862c7a9754037a17bab17804868db664df00c6da9fc3a5926a830641"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.9"
+    version: "2.5.1"
   fake_firebase_security_rules:
     dependency: transitive
     description:
@@ -385,14 +385,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "11.7.2"
-  firebase_storage_mocks:
-    dependency: "direct main"
-    description:
-      name: firebase_storage_mocks
-      sha256: "45035bb69e0e00dd840240ed8296da2e92e36617eadc8522c12052bcf53068d3"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.1"
   firebase_storage_platform_interface:
     dependency: transitive
     description:
@@ -804,10 +796,10 @@ packages:
     dependency: transitive
     description:
       name: rx
-      sha256: "3dbb26d92cf356fe2346abf636dd54eb611dfa99428ed989ea6ba268c7fa80ae"
+      sha256: "7f54bd39cc63a01c770c1de4b6ce8e135eb13119614cba2216bd9a93ccd29e56"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0"
   rxdart:
     dependency: transitive
     description:
