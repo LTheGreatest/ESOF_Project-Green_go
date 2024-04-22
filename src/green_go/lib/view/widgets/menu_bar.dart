@@ -4,6 +4,7 @@ import 'package:green_go/view/pages/leaderboard_page.dart';
 import 'package:green_go/view/pages/main_page.dart';
 import 'package:green_go/view/pages/mission_page.dart';
 import 'package:green_go/view/pages/profile_page.dart';
+import 'package:green_go/view/pages/search_page.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
 class CustomMenuBar extends StatelessWidget {
@@ -78,7 +79,7 @@ class CustomMenuBar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const MissionsPage()),
+                          builder: (context) => const SearchPage()),
                       );
                     },
                     icon: Image.asset("assets/Search.png"),
