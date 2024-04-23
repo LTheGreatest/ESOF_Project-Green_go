@@ -3,7 +3,7 @@ import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
 
 class AuthService {
-  late FirebaseAuth _firebaseAuth=FirebaseAuth.instance;
+  FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   DataBaseUsers dataBaseUsers = DataBaseUsers();
 
   void setFirebaseAuth(FirebaseAuth firebaseAuth) {
@@ -53,13 +53,18 @@ class AuthService {
       return e.code;
     }
   }
-  Future deleteUser() async{
+  Future deleteUser() async {
+    var user = _firebaseAuth.currentUser;
     try {
-      dataBaseUsers.deleteUser(_firebaseAuth.currentUser!.uid);
-      await _firebaseAuth.currentUser!.delete();
+      dataBaseUsers.deleteUser(user!.uid);
+      try {
+        await user.delete();
+      } on FirebaseAuthException catch (e) {
+        return e.code;
+      }
       return "Delete successful";
-    } catch(e) {
-      return "Invalid deletion";
+    } catch (e) {
+      return "Invalid deletion from database";
     }
   }
 }
