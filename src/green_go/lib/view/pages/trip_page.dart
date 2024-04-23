@@ -31,55 +31,44 @@ class TripPageState extends State<TripPage> {
     transportsFuture = transportsFetcher.getTransports();
     initializeSelectionList();
     getIcons();
-
     //waits 10 seconds for the future methods
-    Future.delayed(const Duration(seconds: 10),(){
+    Future.delayed(const Duration(seconds: 10),() {
         hasWaitedTooLong = true;
     });
   }
-
-  Future<void> getTransports() async{
+  Future<void> getTransports() async {
     await transportsFuture.then((value) => transports = value);
   }
-
-  Future<void> initializeSelectionList() async{
+  Future<void> initializeSelectionList() async {
     //initializes the list with the transport selection status
-
     int length = 0;
     await transportsFuture.then((value) => length = value.length);
     selectionList = List.filled(length, false);
   }
-
-  Future<void> getIcons() async{
+  Future<void> getIcons() async {
     //gets all the transport icons from the database
-
     List<TransportModel> transports = [];
     await transportsFuture.then((value) => transports = value);
     Future<List<List<dynamic>>> transportsIconsFuture = transportsIconsFetcher.getTransportsIcons(transports);
     await transportsIconsFuture.then((value) => transportsIcons = value);
   }
-
-  Image? findIcon(String transportName){
+  Image? findIcon(String transportName) {
     //finds the icon for a given transport
-
     Image? img;
-    for(int i = 0; i < transportsIcons.length; i++){
-      if(transportsIcons[i][1] == transportName){
+    for (int i = 0; i < transportsIcons.length; i++) {
+      if (transportsIcons[i][1] == transportName) {
         img = transportsIcons[i][0];
       }
     }
     return img;
   }
-
-  void selectElement(int idx){
+  void selectElement(int idx) {
     //changes the widget state when a transport is selected
     setState(() {
       selectionList[idx] = !selectionList.elementAt(idx); 
     });
   }
-
-
-  Widget startButton(BuildContext context,TransportModel transportModel){
+  Widget startButton(BuildContext context,TransportModel transportModel) {
     //button used to start a trip
     return TextButton(
         onPressed: (){
@@ -111,7 +100,6 @@ class TripPageState extends State<TripPage> {
         },
     );
   }
-
   Widget transportNameText(BuildContext context, TransportModel transportModel) {
     //transport name
     return Text(transportModel.getName(),
@@ -121,7 +109,6 @@ class TripPageState extends State<TripPage> {
       ),
     );
   }
-
   Widget transportIconImage(BuildContext context, Image img) {
     //transport icon
     return SizedBox(
@@ -133,7 +120,6 @@ class TripPageState extends State<TripPage> {
       ),
     );
   }
-
   Widget transportWidget(BuildContext context, TransportModel transportModel, int idx, Image img) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15,5,15,15),

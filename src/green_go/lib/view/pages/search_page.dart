@@ -3,15 +3,14 @@ import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
-class SearchPage extends StatefulWidget{
+class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
 
-
-@override
-State<StatefulWidget> createState() => SearchPageState();
+  @override
+  State<StatefulWidget> createState() => SearchPageState();
 }
 
-class SearchPageState extends State<SearchPage>{
+class SearchPageState extends State<SearchPage> {
   late Future<List<MissionsModel>> missionsFuture;
   List<MissionsModel> missions = [];
   TextEditingController searchController = TextEditingController();
@@ -22,22 +21,18 @@ class SearchPageState extends State<SearchPage>{
     super.initState();
     missionsFuture = MissionsFetcher().getAllMissions();
   }
-
   void setSearchString(String newSearchString){
     searchString = newSearchString;
   }
-  
-  void searchMissions(String query){
+  void searchMissions(String query) {
     setState(() {
       searchString = query;
     });
   }
-
-  bool containsString(String title){
+  bool containsString(String title) {
     return title.toLowerCase().contains(searchString.toLowerCase());
   }
-  
-  Widget searchTextField(BuildContext context){
+  Widget searchTextField(BuildContext context) {
     return TextField(
           textAlign: TextAlign.start,
           controller: searchController,
@@ -53,13 +48,11 @@ class SearchPageState extends State<SearchPage>{
             ),
             prefixIconConstraints: const BoxConstraints(),
             hintText: "Search",
-            
           ),
           onChanged: searchMissions,
         );
   }
-
-  Widget missionContainer(BuildContext context, MissionsModel missionsModel){
+  Widget missionContainer(BuildContext context, MissionsModel missionsModel) {
     return Container(
               width: MediaQuery.of(context).size.width * 0.3,
               decoration: BoxDecoration(
@@ -68,11 +61,10 @@ class SearchPageState extends State<SearchPage>{
                 ),
                 borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
               ),
-      
               child: TextButton(
-                onPressed: (){
+                onPressed: () {
+
                 },
-      
                 child: Text(
                   missionsModel.title,
                   style: const TextStyle(
@@ -84,12 +76,11 @@ class SearchPageState extends State<SearchPage>{
               ),
             );
   }
-
-  Widget missionsList(BuildContext context, List<MissionsModel> missions){
+  Widget missionsList(BuildContext context, List<MissionsModel> missions) {
     return Expanded(
       child: ListView.builder(
         itemCount: missions.length,
-        itemBuilder: (BuildContext context, int index){
+        itemBuilder: (BuildContext context, int index) {
           return containsString(missions[index].title)? 
           Padding(
             padding: const EdgeInsets.all(15),
@@ -100,7 +91,6 @@ class SearchPageState extends State<SearchPage>{
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,7 +103,7 @@ class SearchPageState extends State<SearchPage>{
           FutureBuilder(
             future: missionsFuture,
             builder: (context, snapshot) {
-              if(snapshot.hasData){
+              if (snapshot.hasData) {
                 missions = snapshot.data!;
                 return missionsList(context, missions);
               }
@@ -129,5 +119,4 @@ class SearchPageState extends State<SearchPage>{
       bottomSheet: const CustomMenuBar(),
     );
   }
-
 }

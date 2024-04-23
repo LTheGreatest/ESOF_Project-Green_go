@@ -5,6 +5,10 @@ class DataBaseUsers {
   static final CollectionReference userCollection = FirebaseFirestore.instance.collection("users");
 
   Future addUser(UserModel user) async {
+    await FirebaseFirestore.instance.collection("user_missions").doc(user.uid).set({
+      'missions': [],
+      'completedMissions': {},
+    });
     return await userCollection.doc(user.uid).set({
       'username': user.username,
       'totalPoints': user.totalPoints,

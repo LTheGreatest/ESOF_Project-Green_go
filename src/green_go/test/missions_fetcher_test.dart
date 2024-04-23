@@ -32,7 +32,7 @@ void main(){
     }
     );
 
-    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('missions').get());
+    when(db.getAllMissions()).thenAnswer((realInvocation) => instance.collection('missions').get());
     fetcher.setDB(db);
 
     final missions = await fetcher.getAllMissions();

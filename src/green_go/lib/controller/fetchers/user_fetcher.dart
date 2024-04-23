@@ -40,7 +40,6 @@ class UserFetcher {
     await db.getUserData(AuthService().getCurrentUser()!.uid).then((value) => querySnapshot = value);
         try {
           String username = querySnapshot['username'] ;
-
           String photoUrl = querySnapshot['photoUrl'];                                     
           String nationality = querySnapshot['nationality'];                          
           String job = querySnapshot['job']; 
@@ -66,7 +65,7 @@ class UserFetcher {
           user.goal = goal;
           user.firstTime = firstTime;
 
-        } catch (e){
+        } catch (e) {
           if (kDebugMode) {
             print("Failed with error '${e.toString()}'");
           }

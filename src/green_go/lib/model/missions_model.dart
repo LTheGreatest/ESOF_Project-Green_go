@@ -1,8 +1,9 @@
-class MissionsModel{
+class MissionsModel {
   String title;
   String description;
-  List<dynamic> types; //[trasport, type of mission, especific value related to the type]
+  String frequency;
+  List<dynamic> types; //[transport, type of mission, specific value related to the type]
   int points;
 
-  MissionsModel(this.title, this.description, this.types, this.points);
+  MissionsModel(this.title, this.description, this.frequency, this.types, this.points);
 }
