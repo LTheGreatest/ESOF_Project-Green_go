@@ -3,7 +3,7 @@ import 'package:green_go/controller/database/cloud_storage.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
-import 'package:green_go/view//constants.dart';
+import 'package:green_go/view/constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/view/pages/start_page.dart';
 import 'package:green_go/view/pages/profile_edit_page.dart';
@@ -290,7 +290,7 @@ class ProfilePageState extends State<ProfilePage> {
             }
           }
       ),
-      bottomSheet: const CustomMenuBar(),
+      bottomSheet: const CustomMenuBar(currentPage: MenuPage.profile,),
     );
   }
 }

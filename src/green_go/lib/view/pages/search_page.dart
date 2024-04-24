@@ -116,7 +116,7 @@ class SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
-      bottomSheet: const CustomMenuBar(),
+      bottomSheet: const CustomMenuBar(currentPage: MenuPage.missions,),
     );
   }
 }

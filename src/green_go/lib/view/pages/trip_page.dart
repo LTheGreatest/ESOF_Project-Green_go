@@ -213,7 +213,7 @@ class TripPageState extends State<TripPage> {
               transportWidgetList(context),
           ],
       ),
-      bottomSheet: const CustomMenuBar(),
+      bottomSheet: const CustomMenuBar(currentPage: MenuPage.bus,),
     );
   }
 }

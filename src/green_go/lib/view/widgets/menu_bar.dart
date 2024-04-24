@@ -6,102 +6,70 @@ import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/search_page.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
+enum MenuPage { leaderboard, bus, mainPage, missions, profile }
+
 class CustomMenuBar extends StatelessWidget {
-  const CustomMenuBar({super.key});
+  final MenuPage currentPage;
+
+  const CustomMenuBar({super.key, required this.currentPage});
 
   @override
   Widget build(BuildContext context) {
-      //custom menu bar used in the main app pages
-      return  Padding(
-        padding: const EdgeInsets.all(2),
-        child: Container(
-            decoration: const BoxDecoration(
-              color: lightGreen,
-              borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ///leaderboard
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: IconButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LeaderboardPage(), 
-                        ),
-                      );
-                    },
-                     icon: Image.asset("assets/Leaderboard.png"),
-                  ),
-                ),
-                ///bus
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: IconButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                              builder: (context) => const TripPage(),
-                            ),
-                      );
-                    },
-                     icon: Image.asset("assets/Bus.png"),
-                  ),
-                ),
-                ///main page
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: IconButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainPage()),
-                      );
-                    },
-                    icon: Image.asset("assets/Home.png"),
-                  ),
-                ),
-                ///missions
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: IconButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SearchPage()),
-                      );
-                    },
-                    icon: Image.asset("assets/Search.png"),
-                  ),
-                ),
-                ///profile
-                SizedBox(
-                  height: 50,
-                  width: 50,
-                  child: IconButton(
-                    onPressed: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ProfilePage()),
-                      );
-                    },
-                     icon: Image.asset("assets/Profile.png"),
-                  ),
-                ),
-              ],
-            ),
+    return Padding(
+      padding: const EdgeInsets.all(2),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: lightGreen,
+          borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
         ),
-      );
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildMenuButton(MenuPage.leaderboard, "assets/Leaderboard.png", context),
+            buildMenuButton(MenuPage.bus, "assets/Bus.png", context),
+            buildMenuButton(MenuPage.mainPage, "assets/Home.png", context),
+            buildMenuButton(MenuPage.missions, "assets/Search.png", context),
+            buildMenuButton(MenuPage.profile, "assets/Profile.png", context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildMenuButton(MenuPage page, String iconAsset, BuildContext context) {
+    return SizedBox(
+      height: 50,
+      width: 50,
+      child: IconButton(
+        onPressed: currentPage == page
+            ? null // Disable the button if it corresponds to the current page
+            : () {
+          navigateToPage(context, page);
+        },
+        icon: Image.asset(iconAsset),
+      ),
+    );
+  }
+
+  void navigateToPage(BuildContext context, MenuPage page) {
+    late Widget destinationPage;
+    switch (page) {
+      case MenuPage.leaderboard:
+        destinationPage = const LeaderboardPage();
+        break;
+      case MenuPage.bus:
+        destinationPage = const TripPage();
+        break;
+      case MenuPage.mainPage:
+        destinationPage = const MainPage();
+        break;
+      case MenuPage.missions:
+        destinationPage = const SearchPage();
+        break;
+      case MenuPage.profile:
+        destinationPage = const ProfilePage();
+        break;
+    }
+    Navigator.push(context, MaterialPageRoute(builder: (context) => destinationPage));
   }
 }

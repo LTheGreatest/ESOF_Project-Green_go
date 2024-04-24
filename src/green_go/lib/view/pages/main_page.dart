@@ -20,7 +20,7 @@ class MainPage extends StatelessWidget {
           ],
         ),
       ),
-      bottomSheet: const CustomMenuBar(),
+      bottomSheet: const CustomMenuBar(currentPage: MenuPage.mainPage,),
     );
   }
 }
