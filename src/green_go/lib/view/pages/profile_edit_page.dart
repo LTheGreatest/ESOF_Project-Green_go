@@ -7,6 +7,7 @@ import 'package:green_go/view/pages/profile_take_picture_screen.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/controller/camera/camera_service.dart';
+import 'package:green_go/controller/database/cloud_storage.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
@@ -18,6 +19,7 @@ class EditPageViewer extends State<EditPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
   final TextEditingController jobController = TextEditingController();
+  CloudStorage storage = CloudStorage();
   DateTime birthDate = DateTime(DateTime.now().year - 18);
   String photoUrl = "";
   DataBaseUsers dataBaseUsers = DataBaseUsers();
@@ -31,12 +33,20 @@ class EditPageViewer extends State<EditPage> {
   }
   void initializeUserVariables() async {
     UserModel userData = await UserFetcher().getCurrentUserData();
+    String defaultPhotoUrl = await storage.downloadFileURL("icons/Default_pfp.png");
     setState(() {
       usernameController.text = userData.username;
       nationalityController.text = userData.nationality;
       jobController.text = userData.job;
       birthDate = userData.birthDate;
-      photoUrl = userData.photoUrl;
+      if(userData.photoUrl == ""){
+        
+        photoUrl = defaultPhotoUrl;
+      }
+      else{
+        photoUrl = userData.photoUrl;
+      }
+      
     });
   }
   void saveChangesAndUpdateProfile(BuildContext context) async {
