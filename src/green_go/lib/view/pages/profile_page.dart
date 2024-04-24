@@ -137,6 +137,21 @@ class ProfilePageState extends State<ProfilePage> {
                                    ),
                                 ),
                               ),
+                              ElevatedButton(
+                                onPressed: (){
+                                  authService.signOut();
+                                  Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) => const StartPage()),
+                                  );
+                                }, 
+                                child: const Text('Logout',
+                                   style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold
+                                   ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
