@@ -128,7 +128,7 @@ class TripPageState extends State<TripPage> {
         height: !selectionList[idx] ? 90 : 150,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-          color: lightGray,
+          color: lightGrey,
         ),
         child: Stack(
           children: [

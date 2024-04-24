@@ -60,7 +60,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
             height: MediaQuery.of(context).size.height / 1.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-              color: lightGray,
+              color: lightGrey,
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -105,7 +105,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
         width: 120,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
-          color: lightGray,
+          color: lightGrey,
         ),
 
         child: IconButton(
@@ -131,7 +131,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
         width: 120,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
-          color: lightGray,
+          color: lightGrey,
         ),
         //button to take the picture
         child: IconButton(

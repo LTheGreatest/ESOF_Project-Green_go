@@ -15,8 +15,8 @@ class MainPage extends StatelessWidget {
           children: [
             Image.asset('assets/GreenGo.png'),
             const ScoreMain(),
-            Padding(padding: EdgeInsets.all(MediaQuery.of(context).size.height * 0.05)),
-            //const MissionMain(),
+            Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.025)),
+            const MissionMain(),
           ],
         ),
       ),

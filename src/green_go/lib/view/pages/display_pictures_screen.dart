@@ -19,7 +19,7 @@ class DisplayPictureScreen extends StatelessWidget {
       height: MediaQuery.of(context).size.height / 1.5,
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-        color: lightGray,
+        color: lightGrey,
       ),
       child: Padding(
         padding: const EdgeInsets.all(15),
@@ -35,7 +35,7 @@ class DisplayPictureScreen extends StatelessWidget {
     //button used to go back to the camera page
     return ElevatedButton(
         style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(lightGray),
+            backgroundColor: MaterialStatePropertyAll(lightGrey),
             minimumSize: MaterialStatePropertyAll(Size(150,50))
         ),
         onPressed: () {
@@ -59,7 +59,7 @@ class DisplayPictureScreen extends StatelessWidget {
     //button used to sen the image taken for verification
     return ElevatedButton(
         style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(lightGray),
+            backgroundColor: MaterialStatePropertyAll(lightGrey),
             minimumSize: MaterialStatePropertyAll(Size(150,50))
         ),
         onPressed: () {

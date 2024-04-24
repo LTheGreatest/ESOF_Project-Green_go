@@ -42,7 +42,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
             height: MediaQuery.of(context).size.height / 1.5,
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
-              color: lightGray,
+              color: lightGrey,
             ),
             child: Padding(
               padding: const EdgeInsets.all(15),
@@ -76,7 +76,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
   Widget tryAgainButton(BuildContext context){
     return ElevatedButton(
         style: const ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(lightGray),
+            backgroundColor: MaterialStatePropertyAll(lightGrey),
             minimumSize: MaterialStatePropertyAll(Size(150,50))
         ),
         onPressed:
@@ -99,7 +99,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
   Widget sendImageButton(BuildContext context) {
     return ElevatedButton(
       style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all(lightGray),
+        backgroundColor: MaterialStateProperty.all(lightGrey),
         minimumSize: MaterialStateProperty.all(const Size(150, 50)),
       ),
       onPressed: () async {

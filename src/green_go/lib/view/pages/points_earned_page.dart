@@ -217,7 +217,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
     //Button to exit the page
     return TextButton(
       style: const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(lightGray),
+          backgroundColor: MaterialStatePropertyAll(lightGrey),
           minimumSize: MaterialStatePropertyAll(Size(150,50))
       ),
       onPressed: () async{

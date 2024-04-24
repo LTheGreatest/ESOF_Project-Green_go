@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/view/constants.dart';
+import 'package:green_go/view/pages/search_page.dart';
 
 class MissionMain extends StatefulWidget {
   const MissionMain({super.key});
@@ -9,7 +11,8 @@ class MissionMain extends StatefulWidget {
 }
 
 class MissionMainState extends State<MissionMain> {
-
+  MissionsFetcher missionsFetcher = MissionsFetcher();
+  late List missions;
 
   @override
   void initState() {
@@ -17,7 +20,7 @@ class MissionMainState extends State<MissionMain> {
     getMissions();
   }
   Future<void> getMissions() async {
-
+    missions = await missionsFetcher.getAllMissions();
   }
   @override
   Widget build(BuildContext context) {
@@ -25,124 +28,102 @@ class MissionMainState extends State<MissionMain> {
         future: Future.wait([getMissions()]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              width: MediaQuery.sizeOf(context).width * 0.8,
-              height: MediaQuery.sizeOf(context).height * 0.3,
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
-                color: lightGreen,
-              ),
-              child: Column(
-                children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children:[
-                      Padding(
-                        padding: EdgeInsets.only(left: 20, top: 20),
-                        child: Text("Score",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 30,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 20, top: 20),
-                        child: Text("+",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 30,
-                          ),
+            return Stack(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 25),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
+                    color: lightGrey,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 4,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
+                              child: Container(
+                                height: MediaQuery.of(context).size.height * 0.05,
+                                decoration: BoxDecoration(
+                                  color: darkGrey,
+                                  border: Border.all(
+                                    width: 2,
+                                    color: Colors.white70,
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
+                                ),
+                                child: TextButton(
+                                  onPressed: () {//TODO: Add mission page
+                                    //Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(missions[index].title,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600
+                                          )
+                                      ),
+                                      Text(missions[index].frequency,
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.w400
+                                          )
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );},
                         ),
                       ),
                     ],
                   ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.05, top: 20)),
-                      Container(
-                        width: MediaQuery.sizeOf(context).width * 0.4,
-                        height: MediaQuery.sizeOf(context).height * 0.2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 5,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('',
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            const Text("Remaining",
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children:[
+                    const Padding(
+                      padding: EdgeInsets.only(left: 20, top: 20),
+                      child: Text("Missions",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w900,
+                          fontSize: 30,
                         ),
                       ),
-                      Padding(padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.1)),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                children: [
-                                  const Text("Goal",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Text("",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ],
-                              ),
-                            ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 20, top: 20),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(darkGrey),
+                        ),
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
+                        },
+                        child: const Text("+",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900,
+                            fontSize: 30,
                           ),
-                          Row(
-                            children: [
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                children: [
-                                  const Text("Score",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Text("",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                children: [
-                                  const Text("Streak",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Text("",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             );
           } else {
             return const Center(

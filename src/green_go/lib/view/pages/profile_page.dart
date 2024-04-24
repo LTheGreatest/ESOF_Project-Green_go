@@ -147,7 +147,7 @@ class ProfilePageState extends State<ProfilePage> {
                             height: MediaQuery.of(context).size.height * 0.4,
                             width: MediaQuery.of(context).size.width * 0.9,
                             child: Card(
-                              color: lightGray,
+                              color: lightGrey,
                               child: Column(
                                 children: [
                                   const Text('Profile Details',

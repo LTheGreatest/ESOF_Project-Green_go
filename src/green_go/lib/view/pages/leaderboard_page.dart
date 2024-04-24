@@ -191,7 +191,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
               ),
             ),
             borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
-            color: weekly? lightGreen : lightGray,
+            color: weekly? lightGreen : lightGrey,
           ),
 
           child: TextButton(
@@ -229,7 +229,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
             ),
 
               borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
-              color: total? lightGreen : lightGray,
+              color: total? lightGreen : lightGrey,
           ),
 
           child: TextButton(
@@ -264,7 +264,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
             ),
 
             borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
-            color: monthly? lightGreen : lightGray,
+            color: monthly? lightGreen : lightGrey,
           ),
 
           child: TextButton(
@@ -291,7 +291,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
     //draws the container that contains the title and the buttons to change the leaderboard that appears on the screen
     return  Container(
             decoration: const BoxDecoration(
-              color: lightGray,
+              color: lightGrey,
             ),
             child: Column(
               children: [

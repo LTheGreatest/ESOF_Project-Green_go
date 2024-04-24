@@ -51,24 +51,34 @@ class ScoreMainState extends State<ScoreMain> {
               ),
               child: Column(
                 children: [
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children:[
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 20, top: 20),
                         child: Text("Score",
                           style: TextStyle(
+                            color: Colors.black,
                             fontWeight: FontWeight.w900,
                             fontSize: 30,
                           ),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 20, top: 20),
-                        child: Text("+",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w900,
-                            fontSize: 30,
+                        padding: const EdgeInsets.only(right: 20, top: 20),
+                        child: ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(darkGreen),
+                          ),
+                          onPressed: () {
+                            //Navigator.push(context, MaterialPageRoute(builder: (context) => const ScorePage()));
+                          },
+                          child: const Text("+",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 30,
+                            ),
                           ),
                         ),
                       ),
