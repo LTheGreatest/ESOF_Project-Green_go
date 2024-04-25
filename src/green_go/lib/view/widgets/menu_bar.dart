@@ -13,29 +13,6 @@ class CustomMenuBar extends StatelessWidget {
 
   const CustomMenuBar({super.key, required this.currentPage});
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2),
-      child: Container(
-        decoration: const BoxDecoration(
-          color: lightGreen,
-          borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildMenuButton(MenuPage.leaderboard, "assets/Leaderboard.png", context),
-            buildMenuButton(MenuPage.bus, "assets/Bus.png", context),
-            buildMenuButton(MenuPage.mainPage, "assets/Home.png", context),
-            buildMenuButton(MenuPage.missions, "assets/Search.png", context),
-            buildMenuButton(MenuPage.profile, "assets/Profile.png", context),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget buildMenuButton(MenuPage page, String iconAsset, BuildContext context) {
     return SizedBox(
       height: 50,
@@ -71,5 +48,28 @@ class CustomMenuBar extends StatelessWidget {
         break;
     }
     Navigator.push(context, MaterialPageRoute(builder: (context) => destinationPage));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(2),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: lightGreen,
+          borderRadius: BorderRadius.all(Radius.elliptical(20, 15)),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            buildMenuButton(MenuPage.leaderboard, "assets/Leaderboard.png", context),
+            buildMenuButton(MenuPage.bus, "assets/Bus.png", context),
+            buildMenuButton(MenuPage.mainPage, "assets/Home.png", context),
+            buildMenuButton(MenuPage.missions, "assets/Search.png", context),
+            buildMenuButton(MenuPage.profile, "assets/Profile.png", context),
+          ],
+        ),
+      ),
+    );
   }
 }
