@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
+import 'package:green_go/view/pages/app_image_picker.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
@@ -8,6 +10,7 @@ import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/controller/camera/camera_service.dart';
 import 'package:green_go/controller/database/cloud_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
@@ -19,7 +22,7 @@ class EditPageViewer extends State<EditPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
   final TextEditingController jobController = TextEditingController();
-  CloudStorage storage = CloudStorage();
+  CloudStorage cloudStorage = CloudStorage();
   DateTime birthDate = DateTime(DateTime.now().year - 18);
   String photoUrl = "";
   DataBaseUsers dataBaseUsers = DataBaseUsers();
@@ -33,7 +36,7 @@ class EditPageViewer extends State<EditPage> {
   }
   void initializeUserVariables() async {
     UserModel userData = await UserFetcher().getCurrentUserData();
-    String defaultPhotoUrl = await storage.downloadFileURL("icons/Default_pfp.png");
+    String defaultPhotoUrl = await cloudStorage.downloadFileURL("icons/Default_pfp.png");
     setState(() {
       usernameController.text = userData.username;
       nationalityController.text = userData.nationality;
@@ -60,6 +63,10 @@ class EditPageViewer extends State<EditPage> {
       newJob,
       birthDate,
     );
+  }
+
+  Future<File?> pickImage(ImageSource source) async {
+    return await AppImagePicker(source: source).pick();
   }
 
   Widget buildHeader(BuildContext context) {
@@ -95,8 +102,41 @@ class EditPageViewer extends State<EditPage> {
           right: 0,
           child: IconButton(
             onPressed: () {
-              saveChangesAndUpdateProfile(context);
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileTakePictureScreen()));
+              showModalBottomSheet(context: context, builder: (BuildContext context) {
+                return SizedBox (
+                  height: 150,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.camera),
+                        title: const Text('Take a photo'),
+                        onTap: () {
+                          saveChangesAndUpdateProfile(context);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileTakePictureScreen()));
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.image),
+                        title: const Text('Choose from gallery'),
+                        onTap: () async {
+                          saveChangesAndUpdateProfile(context);
+                          File? image = await pickImage(ImageSource.gallery);
+                          if (image != null) {
+                            setState(() {
+                              photoUrl = image.path;
+                            });
+                          }
+                          String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(photoUrl);
+                          dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
+                        },
+
+                      )
+                    ],
+                  )
+                );
+              });
             },
             icon: const Icon(Icons.camera_alt),
           ),

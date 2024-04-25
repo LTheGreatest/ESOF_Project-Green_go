@@ -50,8 +50,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget buildSubtitle(BuildContext context) {
     //the subtitle may be different depending on the context
     return widget.isStarting? 
-          const SubtitleWidget(text: "Take a Picture of your starting location") : 
-          const SubtitleWidget(text:  "Take a Picture of your finishing location");
+          const SubtitleWidget(text: "Take a Picture of your start location") :
+          const SubtitleWidget(text:  "Take a Picture of your end location");
   }
 
   Widget buildCameraFeed(BuildContext context) {
