@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:green_go/view/constants.dart';
-import 'package:green_go/view/pages/app_image_picker.dart';
+import 'package:green_go/controller/image_picker/app_image_picker.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_users.dart';
