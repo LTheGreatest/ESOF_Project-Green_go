@@ -7,9 +7,13 @@ import 'package:green_go/model/user_model.dart';
 class UserFetcher {
   DataBaseUsers db = DataBaseUsers();
   List<UserModel> users = [];
+  late AuthService auth = AuthService();
 
   void setDB(DataBaseUsers newDB){
     db = newDB;
+  }
+  void setAuth(AuthService newauth){
+    auth = newauth;
   }
   Future<List<UserModel>> getDataForLeaderboard() async {
     await db.getAllData().then((querySnapshot) {
@@ -35,9 +39,9 @@ class UserFetcher {
     return users;
   }
   Future<UserModel> getCurrentUserData() async {
-    UserModel user = UserModel(AuthService().getCurrentUser()!.uid, "notDefined");
+    UserModel user = UserModel(auth.getCurrentUser()!.uid, "notDefined");
     dynamic querySnapshot;
-    await db.getUserData(AuthService().getCurrentUser()!.uid).then((value) => querySnapshot = value);
+    await db.getUserData(auth.getCurrentUser()!.uid).then((value) => querySnapshot = value);
         try {
           String username = querySnapshot['username'] ;
           String photoUrl = querySnapshot['photoUrl'];                                     

@@ -6,6 +6,8 @@
 import 'dart:async' as _i4;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as _i2;
+import 'package:firebase_auth/firebase_auth.dart' as _i7;
+import 'package:green_go/controller/authentication/auth.dart' as _i6;
 import 'package:green_go/controller/database/database_users.dart' as _i3;
 import 'package:green_go/model/user_model.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
@@ -26,6 +28,16 @@ import 'package:mockito/mockito.dart' as _i1;
 class _FakeDocumentSnapshot_0<T extends Object?> extends _i1.SmartFake
     implements _i2.DocumentSnapshot<T> {
   _FakeDocumentSnapshot_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDataBaseUsers_1 extends _i1.SmartFake implements _i3.DataBaseUsers {
+  _FakeDataBaseUsers_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -220,4 +232,105 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
         ),
         returnValueForMissingStub: null,
       );
+}
+
+/// A class which mocks [AuthService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthService extends _i1.Mock implements _i6.AuthService {
+  @override
+  _i3.DataBaseUsers get dataBaseUsers => (super.noSuchMethod(
+        Invocation.getter(#dataBaseUsers),
+        returnValue: _FakeDataBaseUsers_1(
+          this,
+          Invocation.getter(#dataBaseUsers),
+        ),
+        returnValueForMissingStub: _FakeDataBaseUsers_1(
+          this,
+          Invocation.getter(#dataBaseUsers),
+        ),
+      ) as _i3.DataBaseUsers);
+
+  @override
+  set dataBaseUsers(_i3.DataBaseUsers? _dataBaseUsers) => super.noSuchMethod(
+        Invocation.setter(
+          #dataBaseUsers,
+          _dataBaseUsers,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void setFirebaseAuth(_i7.FirebaseAuth? firebaseAuth) => super.noSuchMethod(
+        Invocation.method(
+          #setFirebaseAuth,
+          [firebaseAuth],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void setDataBaseUsers(_i3.DataBaseUsers? dataBaseUsers) => super.noSuchMethod(
+        Invocation.method(
+          #setDataBaseUsers,
+          [dataBaseUsers],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i4.Future<String?> signIn(
+    String? email,
+    String? password,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signIn,
+          [
+            email,
+            password,
+          ],
+        ),
+        returnValue: _i4.Future<String?>.value(),
+        returnValueForMissingStub: _i4.Future<String?>.value(),
+      ) as _i4.Future<String?>);
+
+  @override
+  _i4.Future<String?> signUp(
+    String? email,
+    String? password,
+    String? username,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #signUp,
+          [
+            email,
+            password,
+            username,
+          ],
+        ),
+        returnValue: _i4.Future<String?>.value(),
+        returnValueForMissingStub: _i4.Future<String?>.value(),
+      ) as _i4.Future<String?>);
+
+  @override
+  _i4.Future<dynamic> signOut() => (super.noSuchMethod(
+        Invocation.method(
+          #signOut,
+          [],
+        ),
+        returnValue: _i4.Future<dynamic>.value(),
+        returnValueForMissingStub: _i4.Future<dynamic>.value(),
+      ) as _i4.Future<dynamic>);
+
+  @override
+  _i4.Future<dynamic> deleteUser() => (super.noSuchMethod(
+        Invocation.method(
+          #deleteUser,
+          [],
+        ),
+        returnValue: _i4.Future<dynamic>.value(),
+        returnValueForMissingStub: _i4.Future<dynamic>.value(),
+      ) as _i4.Future<dynamic>);
 }
