@@ -33,6 +33,7 @@ class ProfilePageState extends State<ProfilePage> {
     initializeUserVariables();
   }
   Future<void> initializeUserVariables() async {
+    //initializes the global variables
     UserModel userData = await UserFetcher().getCurrentUserData();
     String defaultPhotoUrl = await storage.downloadFileURL("icons/Default_pfp.png");
     if (userData.photoUrl != "") {
@@ -47,6 +48,7 @@ class ProfilePageState extends State<ProfilePage> {
     uid = userData.uid;
   }
   int calculateAge(DateTime birthDate) {
+    //calculates the user age from the current date
     DateTime currentDate = DateTime.now();
     int age = currentDate.year - birthDate.year;
     if (currentDate.month < birthDate.month ||

@@ -6,6 +6,7 @@ class ProblemWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    //standart widget for displaing problems
     return  Center(
       child: Text(
         text,

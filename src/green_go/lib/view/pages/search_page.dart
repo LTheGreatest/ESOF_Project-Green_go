@@ -32,9 +32,11 @@ class SearchPageState extends State<SearchPage> {
     });
   }
   bool containsString(String title) {
+    //verifies if the a certain title contains the search string
     return title.toLowerCase().contains(searchString.toLowerCase());
   }
   Widget searchTextField(BuildContext context) {
+    //builds a search field
     return TextField(
           textAlign: TextAlign.start,
           controller: searchController,
@@ -55,6 +57,7 @@ class SearchPageState extends State<SearchPage> {
         );
   }
   Widget missionContainer(BuildContext context, MissionsModel missionsModel) {
+    //container that contains the mission title and a button to access the mission details
     return Container(
               width: MediaQuery.of(context).size.width * 0.3,
               decoration: BoxDecoration(
@@ -100,6 +103,7 @@ class SearchPageState extends State<SearchPage> {
             );
   }
   Widget missionsList(BuildContext context, List<MissionsModel> missions) {
+    //builds the mission list
     return Expanded(
       child: ListView.builder(
         itemCount: missions.length,

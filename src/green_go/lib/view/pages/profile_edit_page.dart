@@ -53,6 +53,7 @@ class EditPageViewer extends State<EditPage> {
     });
   }
   void saveChangesAndUpdateProfile(BuildContext context) async {
+    //saves the changes made
     String newName = usernameController.text.trim();
     String newNationality = nationalityController.text.trim();
     String newJob = jobController.text.trim();
@@ -66,10 +67,12 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Future<File?> pickImage(ImageSource source) async {
+    //function used to pic a image from the gallery
     return await AppImagePicker(source: source).pick();
   }
 
   Widget buildHeader(BuildContext context) {
+    //builds the header of the page (back button and title)
     return Row(
       children: [
         IconButton(
@@ -91,6 +94,7 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Widget buildProfilePicture() {
+    //builds the profile picutre
     return Stack(
       children: [
         CircleAvatar(
@@ -146,6 +150,7 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Widget buildNameField() {
+    //builds the name field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -166,6 +171,7 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Widget buildNationalityField() {
+    //builds the nationality field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -186,6 +192,7 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Widget buildJobField() {
+    //builds the job field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -206,6 +213,7 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Widget buildDateOfBirthField() {
+    //builds the date of birth field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -240,6 +248,7 @@ class EditPageViewer extends State<EditPage> {
   }
 
   Widget buildSaveChangesButton() {
+    //builds the button used to save the changes made
     return Padding(
       padding: const EdgeInsets.only(top: 50),
       child: ElevatedButton(

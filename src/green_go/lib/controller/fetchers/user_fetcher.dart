@@ -16,6 +16,7 @@ class UserFetcher {
     auth = newauth;
   }
   Future<List<UserModel>> getDataForLeaderboard() async {
+    //gets all user information to use in the leaderboard
     await db.getAllData().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         Map<String, dynamic> data = docSnapshot.data();
@@ -39,6 +40,7 @@ class UserFetcher {
     return users;
   }
   Future<UserModel> getCurrentUserData() async {
+    //gets the current user data (user that is currently logged in)
     UserModel user = UserModel(auth.getCurrentUser()!.uid, "notDefined");
     dynamic querySnapshot;
     await db.getUserData(auth.getCurrentUser()!.uid).then((value) => querySnapshot = value);

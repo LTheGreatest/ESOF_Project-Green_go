@@ -11,6 +11,7 @@ class TransportsIconsFetcher {
     storage = cloudStorage;
   }
   Future<List<List<dynamic>>> getTransportsIcons(List<TransportModel> transports) async {
+    // gets the transport icons from the firebase storage database
     for (int i = 0; i < transports.length; i++) {
       String path = "icons/${transports[i].getName()}.png";
       Future<String> futureURL = storage.downloadFileURL(path);

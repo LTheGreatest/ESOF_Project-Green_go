@@ -10,7 +10,6 @@ import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'user_score_fetcher_test.mocks.dart';
-import 'user_login_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<DataBaseUsers>(), MockSpec<AuthService>()])
 class MockUser extends Mock implements User {

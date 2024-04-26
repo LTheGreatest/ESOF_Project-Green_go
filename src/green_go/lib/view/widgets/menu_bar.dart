@@ -14,6 +14,7 @@ class CustomMenuBar extends StatelessWidget {
   const CustomMenuBar({super.key, required this.currentPage});
 
   Widget buildMenuButton(MenuPage page, String iconAsset, BuildContext context) {
+    //builds the buttons in the menu
     return SizedBox(
       height: 50,
       width: 50,
@@ -29,6 +30,7 @@ class CustomMenuBar extends StatelessWidget {
   }
 
   void navigateToPage(BuildContext context, MenuPage page) {
+    //Changes the current page to the one the user chose
     late Widget destinationPage;
     switch (page) {
       case MenuPage.leaderboard:

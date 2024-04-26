@@ -15,6 +15,7 @@ class MissionsFetcher {
     dbUser = newDBUser;
   }
   Future<List<MissionsModel>> getAllMissions() async {
+    //gets all missions available at the firebase firestore database
     await db.getAllMissions().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         try {
@@ -34,7 +35,9 @@ class MissionsFetcher {
     });
     return missions;
   }
+
   Future<List<MissionsModel>> getUserMissions(String userId) async {
+    //gets all the mission that the user completed
     await dbUser.getUserMissions(userId).then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         try {

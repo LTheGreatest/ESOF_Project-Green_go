@@ -89,18 +89,9 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
       ],
     );
   }
-  Widget backButton(BuildContext context){
-    return IconButton(
-        onPressed: (){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
-        } ,
-        icon: const Icon(
-          Icons.arrow_back,
-          size: 30,
-        )
-    );
-  }
+
   Widget cameraSwitchButton(BuildContext context){
+    //button to swicht camera lens
     return  Container(
         width: 120,
         decoration: const BoxDecoration(
@@ -127,6 +118,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
   }
 
   Widget takePictureButton(BuildContext context){
+    //button to take the picture
     return  Container(
         width: 120,
         decoration: const BoxDecoration(
@@ -185,7 +177,6 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children:[
-                      //backButton(context),
                       Padding(
                         padding: const EdgeInsets.all(20),
                         child: cameraSwitchButton(context),

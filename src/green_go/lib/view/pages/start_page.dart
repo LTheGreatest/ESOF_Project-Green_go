@@ -37,7 +37,7 @@ class StartPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage())
                       );
-                      // Ação do primeiro botão
+                      // first button action
                     },
                     child: const Text("Register"),
                 ),
@@ -52,7 +52,7 @@ class StartPage extends StatelessWidget {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => const LoginPage())
                       );
-                      // Ação do segundo botão
+                      // second button action
                     },
                     child: const Text('Login'),
                 ),

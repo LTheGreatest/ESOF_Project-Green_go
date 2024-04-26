@@ -10,6 +10,7 @@ class TransportsFetcher {
     db = dbNew;
   }
   Future<List<TransportModel>> getTransports() async {
+    //gets the transports available from the firebase firestore database
     await db.getAllData().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         try {

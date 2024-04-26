@@ -74,6 +74,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
     );
   }
   Widget tryAgainButton(BuildContext context){
+    //button to try again and taje another picture
     return ElevatedButton(
         style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(lightGrey),
@@ -97,6 +98,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
     );
   }
   Widget sendImageButton(BuildContext context) {
+    //button to send the image for processing
     return ElevatedButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(lightGrey),
