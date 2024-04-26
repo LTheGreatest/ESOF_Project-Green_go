@@ -21,6 +21,18 @@ class RegisterPageViewState extends State<RegisterPage> {
   final AuthService authService = AuthService();
   DataBaseUsers dataBaseUsers = DataBaseUsers();
 
+  bool isNotFilled(String username, String email, String password, String confirmPassword) {
+    return username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty;
+  }
+  
+  bool isInvalidEmail(String email) {
+    return !email.contains('@') || !email.contains('.');
+  }
+  
+  bool diffPasswords(String password, String confirmPassword) {
+    return password != confirmPassword;
+  }
+  
   Widget labelText(BuildContext context, String text) {
     //label of the input forms
     return Text(text,
@@ -43,6 +55,7 @@ class RegisterPageViewState extends State<RegisterPage> {
         ),
       );
   }
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -143,7 +156,7 @@ class RegisterPageViewState extends State<RegisterPage> {
                   String password = passwordController.text;
                   String confirmPassword = confPasswordController.text;
                   //verifies if the user filled every input box
-                  if (username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+                  if (isNotFilled(username, email, password, confirmPassword)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Please fill in all fields.'),
@@ -152,7 +165,7 @@ class RegisterPageViewState extends State<RegisterPage> {
                     return;
                   }
                   //verifies if the email inserted is in fact an email
-                  if (!email.contains('@') || !email.contains('.')) {
+                  if (isInvalidEmail(email)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Invalid email address.'),
@@ -162,7 +175,7 @@ class RegisterPageViewState extends State<RegisterPage> {
                     return;
                   }
                   //verifies if the user inserted the password correctly in the confirmation
-                  if (password != confirmPassword) {
+                  if (diffPasswords(password, confirmPassword)) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('Passwords do not match.'),
