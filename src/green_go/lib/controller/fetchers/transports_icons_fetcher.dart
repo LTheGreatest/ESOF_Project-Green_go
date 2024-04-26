@@ -5,7 +5,7 @@ import 'package:green_go/model/transport_model.dart';
 
 class TransportsIconsFetcher {
   List<List<dynamic>> transportIcons = [];
-  CloudStorage storage = CloudStorage();
+  late CloudStorage storage = CloudStorage();
 
   void setStorage(CloudStorage cloudStorage) {
     storage = cloudStorage;

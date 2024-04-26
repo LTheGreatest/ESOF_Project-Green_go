@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/controller/authentication/auth.dart';
@@ -6,11 +5,12 @@ import 'package:green_go/model/user_model.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'auth_test.mocks.dart';
 import 'package:green_go/controller/database/database_users.dart';
 
 
 import 'package:green_go/view/pages/register_page.dart';
+
+import 'user_login_test.mocks.dart';
 
 
 class MockUserCredential extends Mock implements UserCredential {}
