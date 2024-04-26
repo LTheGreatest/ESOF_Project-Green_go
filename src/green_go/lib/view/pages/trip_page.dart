@@ -104,6 +104,7 @@ class TripPageState extends State<TripPage> {
     //transport name
     return Text(transportModel.getName(),
       style: const TextStyle(
+          color: Colors.black,
           fontSize: 30,
           fontWeight: FontWeight.w600
       ),
@@ -112,8 +113,8 @@ class TripPageState extends State<TripPage> {
   Widget transportIconImage(BuildContext context, Image img) {
     //transport icon
     return SizedBox(
-      width: 60,
-      height: 60,
+      width: 50,
+      height: 50,
       child: Align(
           alignment:Alignment.topLeft ,
           child: img
@@ -130,36 +131,44 @@ class TripPageState extends State<TripPage> {
           borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
           color: lightGrey,
         ),
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15,20,8,8),
-              child: transportIconImage(context, img),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8,20,8,8),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: transportNameText(context, transportModel),
+
+        //button to select the transport and expand the container
+
+        child: TextButton(
+          style: const ButtonStyle(
+            splashFactory: NoSplash.splashFactory,
+          ),
+          onPressed: (){
+            selectElement(idx);
+          },
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15,15,8,8),
+                child: transportIconImage(context, img),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8,20,8,8),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: arrowButton(context, idx),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8,20,8,8),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: transportNameText(context, transportModel),
+                ),
               ),
-            ),
-            //if the arrow button has selected, the container expands and a start button appears
-            selectionList[idx] ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: startButton(context, transportModel),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(8,20,8,8),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: !selectionList[idx] ? const Icon(Icons.arrow_circle_right, size: 40, color: Colors.black,) 
+                          : const Icon(Icons.arrow_circle_down, size: 40, color: Colors.black),
+                ),
               ),
-            )
-            : const Padding(padding: EdgeInsets.zero),
-          ],
+              selectionList[idx] ? Align(
+                  alignment: Alignment.bottomCenter,
+                  child: startButton(context, transportModel),
+                )
+              : const Padding(padding: EdgeInsets.zero),
+            ],
+          ),
         ) ,
       ),
     );
