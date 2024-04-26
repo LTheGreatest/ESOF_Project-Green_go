@@ -53,7 +53,7 @@ class CustomMenuBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(2),
+      padding: const EdgeInsets.all(5),
       child: Container(
         decoration: const BoxDecoration(
           color: lightGreen,

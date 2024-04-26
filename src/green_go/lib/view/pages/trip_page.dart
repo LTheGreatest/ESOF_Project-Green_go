@@ -172,8 +172,9 @@ class TripPageState extends State<TripPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Padding(
-              padding: const EdgeInsets.only(bottom: 45.0),
+              padding: const EdgeInsets.only(top: 20),
               child: ListView.builder(
+                padding: EdgeInsets.zero,
                 itemCount: transports.length,
                 itemBuilder: (context, index) {
                   Image? imgIcon = findIcon(transports[index].getName());
@@ -213,7 +214,7 @@ class TripPageState extends State<TripPage> {
               transportWidgetList(context),
           ],
       ),
-      bottomSheet: const CustomMenuBar(currentPage: MenuPage.bus,),
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.bus,),
     );
   }
 }

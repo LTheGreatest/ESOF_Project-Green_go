@@ -354,7 +354,7 @@ class LeaderboardPageState extends State<LeaderboardPage> {
         }
       ),
 
-      bottomSheet: const CustomMenuBar(currentPage: MenuPage.leaderboard,),
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.leaderboard,),
     );
   }
 }

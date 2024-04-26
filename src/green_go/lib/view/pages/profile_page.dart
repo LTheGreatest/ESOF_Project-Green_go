@@ -64,7 +64,7 @@ class ProfilePageState extends State<ProfilePage> {
             if (snapshot.hasData) {
               return Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: const EdgeInsets.only(top: 35),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -237,7 +237,7 @@ class ProfilePageState extends State<ProfilePage> {
                         ),
                         //Rwo with the buttons to check the mission history and achievements
                         Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 20),
+                          padding: const EdgeInsets.only(top: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -290,7 +290,7 @@ class ProfilePageState extends State<ProfilePage> {
             }
           }
       ),
-      bottomSheet: const CustomMenuBar(currentPage: MenuPage.profile,),
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.profile,),
     );
   }
 }

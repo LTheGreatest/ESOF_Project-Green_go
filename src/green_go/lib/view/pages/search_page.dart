@@ -62,7 +62,7 @@ class SearchPageState extends State<SearchPage> {
                     color: Colors.grey.withOpacity(0.5),
                     spreadRadius: 5,
                     blurRadius: 7,
-                    offset: Offset(0, 3), // changes position of shadow
+                    offset: const Offset(0, 3), // changes position of shadow
                   ),
                 ],
                 color: lightGrey,
@@ -138,7 +138,7 @@ class SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
-      bottomSheet: const CustomMenuBar(currentPage: MenuPage.missions,),
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.missions,),
     );
   }
 }
