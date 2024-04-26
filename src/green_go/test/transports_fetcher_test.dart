@@ -11,7 +11,8 @@ import 'transports_fetcher_test.mocks.dart';
 
 void main(){
 
-  test("get transports", () async{
+  group("get transports", () { 
+    test("get transports", () async{
     //given
     TransportsFetcher fetcher = TransportsFetcher();
     DataBaseTransports db = MockDataBaseTransports();
@@ -39,5 +40,47 @@ void main(){
     expectLater(transports[1].pointsPerDist, 2);
     
   });
+
+    test("get transports but some parameters are missing", () async{
+    //given
+    TransportsFetcher fetcher = TransportsFetcher();
+    DataBaseTransports db = MockDataBaseTransports();
+    final instance =  FakeFirebaseFirestore();
+    await instance.collection('transports').add({
+      'pointsPerDist' : 1.5
+    }
+    );
+    await instance.collection('transports').add({
+      'name': 'train',
+    }
+    );
+    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('transports').get());
+    fetcher.setDB(db);
+
+    //when
+    final transports = await fetcher.getTransports();
+
+    //then
+    expectLater(transports.length, 0);
+    
+  });
+
+  test("get transports but there are no transports", () async{
+    //given
+    TransportsFetcher fetcher = TransportsFetcher();
+    DataBaseTransports db = MockDataBaseTransports();
+    final instance =  FakeFirebaseFirestore();
+    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('transports').get());
+    fetcher.setDB(db);
+
+    //when
+    final transports = await fetcher.getTransports();
+
+    //then
+    expectLater(transports.length, 0);
+    
+  });
+  });
+  
 
 }

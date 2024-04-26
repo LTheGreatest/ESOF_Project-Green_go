@@ -11,7 +11,8 @@ import 'user_score_fetcher_test.mocks.dart';
 
 void main(){
 
-  test("get Data For Leaderboard", () async{
+  group("get users for leaderboard", (){
+    test("get Data For Leaderboard", () async{
     UserFetcher fetcher = UserFetcher();
     DataBaseUsers db = MockDataBaseUsers();
     final instance =  FakeFirebaseFirestore();
@@ -43,5 +44,44 @@ void main(){
     expectLater(users[1].monthlyPoints, 36);
 
   });
+
+    test("get Data For Leaderboard but user parameters are missing", () async{
+    UserFetcher fetcher = UserFetcher();
+    DataBaseUsers db = MockDataBaseUsers();
+    final instance =  FakeFirebaseFirestore();
+    await instance.collection('users').add({
+      'username' : "Lucas",
+      "totalPoints": 100,
+
+      "monthlyPoints": 16
+    });
+    await instance.collection('users').add({
+      "totalPoints": 101,
+      "weeklyPoints" : 20,
+      "monthlyPoints": 36
+    });
+
+    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
+    fetcher.setDB(db);
+
+    final users = await fetcher.getDataForLeaderboard();
+
+    expectLater(users.length, 0);
+  });
+
+    test("get Data For Leaderboard but there are no users", () async{
+    UserFetcher fetcher = UserFetcher();
+    DataBaseUsers db = MockDataBaseUsers();
+    final instance =  FakeFirebaseFirestore();
+
+    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
+    fetcher.setDB(db);
+
+    final users = await fetcher.getDataForLeaderboard();
+
+    expectLater(users.length, 0);
+  });
+  });
+  
 
 }

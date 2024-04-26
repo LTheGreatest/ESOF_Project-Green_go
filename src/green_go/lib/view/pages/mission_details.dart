@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/search_page.dart';
-import 'package:green_go/view/widgets/subtitle_widget.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
 
 class MissionDetails extends StatelessWidget{

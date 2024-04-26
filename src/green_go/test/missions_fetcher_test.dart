@@ -10,7 +10,9 @@ import 'missions_fetcher_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<DataBaseMissions>()])
 
 void main(){
-  test("get missions", () async{
+
+  group("get Missions", () {
+     test("get missions", () async{
 
     MissionsFetcher fetcher = MissionsFetcher();
     DataBaseMissions db = MockDataBaseMissions();
@@ -51,4 +53,47 @@ void main(){
     expectLater(missions[1].types, ['bus', 'distance', 1000]);
 
     });
+
+    test("Get mission but not every element is filled", () async{
+      MissionsFetcher fetcher = MissionsFetcher();
+    DataBaseMissions db = MockDataBaseMissions();
+    final instance =  FakeFirebaseFirestore();
+
+    await instance.collection('missions').add({
+        'title' : 'use train',
+        'description' : 'use train one time',
+        'points': 500,
+        'types' : ['train', 'points', 23]
+    }
+    );
+
+    await instance.collection('missions').add({
+        'title' : 'use bus 1km',
+        'description' : 'use bus one time for 1km',
+        'points': 500,
+        'types' : ['bus', 'distance', 1000]
+    }
+    );
+
+    when(db.getAllMissions()).thenAnswer((realInvocation) => instance.collection('missions').get());
+    fetcher.setDB(db);
+
+    final missions = await fetcher.getAllMissions();
+    expectLater(missions.length, 0);
+    });
+
+    test("Get mission but there are no missions", () async{
+      MissionsFetcher fetcher = MissionsFetcher();
+    DataBaseMissions db = MockDataBaseMissions();
+    final instance =  FakeFirebaseFirestore();
+
+    when(db.getAllMissions()).thenAnswer((realInvocation) => instance.collection('missions').get());
+    fetcher.setDB(db);
+
+    final missions = await fetcher.getAllMissions();
+    expectLater(missions.length, 0);
+    });
+  });
+ 
+  
 }
