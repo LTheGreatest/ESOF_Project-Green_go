@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:green_go/controller/camera/camera_service.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/profile_display_pictures_screen.dart';
-import 'package:green_go/view/pages/profile_page.dart';
 
 class ProfileTakePictureScreen extends StatefulWidget {
   const ProfileTakePictureScreen({
