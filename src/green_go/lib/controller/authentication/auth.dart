@@ -46,9 +46,10 @@ class AuthService {
     }
     return "Something went wrong, please try again";
   }
-  Future signOut() async {
+  Future<String?> signOut() async {
     try {
       await _firebaseAuth.signOut();
+      return "logout_success";
     } on FirebaseAuthException catch (e) {
       return e.code;
     }

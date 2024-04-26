@@ -138,11 +138,21 @@ class ProfilePageState extends State<ProfilePage> {
                                 ),
                               ),
                               ElevatedButton(
-                                onPressed: (){
-                                  authService.signOut();
-                                  Navigator.pushReplacement(context,
-                                    MaterialPageRoute(builder: (context) => const StartPage()),
-                                  );
+                                onPressed: () async{
+                                  String? logutResult= await authService.signOut() ;
+                                  if(logutResult == "logout_success"){
+                                    Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) => const StartPage()),
+                                    );
+                                  }
+                                  else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(logutResult!),
+                                      ),
+                                    );
+                                  }
+                                  
                                 }, 
                                 child: const Text('Logout',
                                    style: TextStyle(
