@@ -68,15 +68,15 @@ class MissionMainState extends State<MissionMain> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(missions[index].title,
-                                          style: const TextStyle(
-                                              color: Colors.black,
+                                          style: TextStyle(
+                                              color: Colors.white,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w600
                                           )
                                       ),
                                       Text(missions[index].frequency,
                                           style: const TextStyle(
-                                              color: Colors.black,
+                                              color: Colors.white,
                                               fontSize: 15,
                                               fontWeight: FontWeight.w400
                                           )

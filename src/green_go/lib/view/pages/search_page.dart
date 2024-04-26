@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/model/missions_model.dart';
+import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
 class SearchPage extends StatefulWidget {
@@ -56,6 +57,15 @@ class SearchPageState extends State<SearchPage> {
     return Container(
               width: MediaQuery.of(context).size.width * 0.3,
               decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+                color: lightGrey,
                 border: Border.all(
                   width: 2
                 ),
@@ -65,13 +75,25 @@ class SearchPageState extends State<SearchPage> {
                 onPressed: () {
 
                 },
-                child: Text(
-                  missionsModel.title,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 15,
-                    fontWeight: FontWeight.w600
-                  )
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      missionsModel.title,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600
+                      )
+                    ),
+                    Text(
+                      missionsModel.frequency,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    )
+                  ],
                 ),
               ),
             );

@@ -20,6 +20,7 @@ void main(){
         'title' : 'use train',
         'description' : 'use train one time',
         'points': 500,
+        'frequency': 'annual',
         'types' : ['train', 'points', 23]
     }
     );
@@ -28,6 +29,7 @@ void main(){
         'title' : 'use bus 1km',
         'description' : 'use bus one time for 1km',
         'points': 500,
+        'frequency': "daily",
         'types' : ['bus', 'distance', 1000]
     }
     );
@@ -40,10 +42,12 @@ void main(){
     expectLater(missions[0].title, 'use train');
     expectLater(missions[0].description,'use train one time' );
     expectLater(missions[0].points, 500);
+    expectLater(missions[0].frequency, 'annual');
     expectLater(missions[0].types,['train', 'points', 23] );
     expectLater(missions[1].title, 'use bus 1km');
     expectLater(missions[1].description,'use bus one time for 1km');
     expectLater(missions[1].points, 500);
+    expectLater(missions[1].frequency, 'daily');
     expectLater(missions[1].types, ['bus', 'distance', 1000]);
 
     });
