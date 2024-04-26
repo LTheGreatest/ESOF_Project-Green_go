@@ -28,7 +28,7 @@ class MockDataBaseMissions extends _i1.Mock implements _i2.DataBaseMissions {
   @override
   _i3.Future<dynamic> getAllMissions() => (super.noSuchMethod(
         Invocation.method(
-          #getAllData,
+          #getAllMissions,
           [],
         ),
         returnValue: _i3.Future<dynamic>.value(),
