@@ -19,7 +19,7 @@ void main() {
       debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
       expect(DefaultFirebaseOptions.currentPlatform, DefaultFirebaseOptions.ios);
     });
-    test('macOS', () {;
+    test('macOS', () {
       debugDefaultTargetPlatformOverride = TargetPlatform.macOS;
       expect(DefaultFirebaseOptions.currentPlatform, DefaultFirebaseOptions.macos);
     });

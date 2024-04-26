@@ -121,6 +121,9 @@ class ProfilePageState extends State<ProfilePage> {
                                 onPressed: () async {
                                   // Implement delete account functionality
                                   String result = await authService.deleteUser();
+                                  
+                                  if(!context.mounted) return;
+
                                   if (result == "Delete successful") {
                                     Navigator.pushReplacement(context,
                                       MaterialPageRoute(builder: (context) => const StartPage()),

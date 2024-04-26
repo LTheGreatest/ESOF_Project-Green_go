@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationService {
@@ -6,8 +7,8 @@ class LocationService {
   double currentLongitude = 0;
   double currentLatitude = 0;
 
-  void setPositionStream(StreamSubscription<Position> pos_stream){
-    _positionStream = pos_stream;
+  void setPositionStream(StreamSubscription<Position> posStream){
+    _positionStream = posStream;
   }
 
   Future<Position> determinePosition() async {
@@ -37,11 +38,15 @@ class LocationService {
     bool isLocationServiceEnabled  = await Geolocator.isLocationServiceEnabled();
     if (isLocationServiceEnabled) {
       // You can fetch location data here or alert the user that location services are turned on.
-      print('Location services are enabled');
+      if (kDebugMode) {
+        print('Location services are enabled');
+      }
       return true;
     } else {
       // You could try to prompt the user to turn on location services here or handle it differently.
-      print('Location services are disabled');
+      if (kDebugMode) {
+        print('Location services are disabled');
+      }
       return false;
     }
   }
@@ -50,15 +55,21 @@ class LocationService {
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       // Permissions are denied.
-      print("Location permissions are denied");
+      if (kDebugMode) {
+        print("Location permissions are denied");
+      }
       return false;
     } else if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever.
-      print("Location permissions are permanently denied");
+      if (kDebugMode) {
+        print("Location permissions are permanently denied");
+      }
       return false;
     } else {
       // Permissions are granted (either can be whileInUse, always, restricted).
-      print("Location permissions are granted");
+      if (kDebugMode) {
+        print("Location permissions are granted");
+      }
       return true;
     }
   }
@@ -69,14 +80,20 @@ class LocationService {
       // Permissions are denied or denied forever, let's request it!
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        print("Location permissions are still denied");
+        if (kDebugMode) {
+          print("Location permissions are still denied");
+        }
         return false;
       } else if (permission == LocationPermission.deniedForever) {
-        print("Location permissions are permanently denied");
+        if (kDebugMode) {
+          print("Location permissions are permanently denied");
+        }
         return false;
       } else {
         // Permissions are granted (either can be whileInUse, always, restricted).
-        print("Location permissions are granted after requesting");
+        if (kDebugMode) {
+          print("Location permissions are granted after requesting");
+        }
         return true;
       }
     }

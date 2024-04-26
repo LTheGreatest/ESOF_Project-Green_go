@@ -133,6 +133,8 @@ class EditPageViewer extends State<EditPage> {
                           }
                           String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(photoUrl);
                           dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
+                          
+                          if(!context.mounted) return;
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
                         },
 

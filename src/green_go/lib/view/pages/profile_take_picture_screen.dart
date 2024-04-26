@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/camera/camera_service.dart';
 import 'package:green_go/view/constants.dart';
@@ -147,7 +148,9 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
                 );
               } catch (e) {
                 // If an error occurs, log the error to the console.
-                print(e);
+                if (kDebugMode) {
+                  print(e);
+                }
               }
             },
             //camera icon

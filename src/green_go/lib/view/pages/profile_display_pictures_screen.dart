@@ -107,6 +107,8 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
       onPressed: () async {
         String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(widget.imagePath);
         dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
+
+        if(!context.mounted) return;
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
       },
       child: const Text(
