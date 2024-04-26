@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/model/user_model.dart';
@@ -8,9 +10,20 @@ import 'auth_test.mocks.dart';
 import 'package:green_go/controller/database/database_users.dart';
 
 
+import 'package:green_go/view/pages/register_page.dart';
+
+
 class MockUserCredential extends Mock implements UserCredential {}
-class MockDataBaseUsers extends Mock implements DataBaseUsers {}
-class MockUser extends Mock implements User {}
+class MockDataBaseUsers extends Mock implements DataBaseUsers {
+  @override
+  Future addUser(UserModel user) {
+    return Future.value();
+  }
+}
+class MockUser extends Mock implements User {
+  @override
+  String get uid => '123';
+}
 
 
 @GenerateNiceMocks([MockSpec<FirebaseAuth>()])
@@ -18,6 +31,7 @@ void main() {
   late MockFirebaseAuth firebaseAuth;
   late AuthService authService;
   late MockDataBaseUsers mockDataBaseUsers;
+  RegisterPageViewState registerPageViewState = RegisterPageViewState();
 
   setUp(() {
     firebaseAuth = MockFirebaseAuth();
@@ -26,55 +40,22 @@ void main() {
     authService.setFirebaseAuth(firebaseAuth);
     authService.setDataBaseUsers(mockDataBaseUsers);
   });
-
-  group('Sign in - ', () {
-    test('Successful', () async {
-      when(firebaseAuth.signInWithEmailAndPassword(
-        email: 'test@example.com',
-        password: '123456',
-      )).thenAnswer((_) async => MockUserCredential()); // MockUserCredential should be defined or use a real UserCredential instance
-
-      final result = await authService.signIn('test@example.com', '123456');
-      expect(result, equals("Successfully logged in"));
-    });
-
-    test('User not found', () async {
-      when(firebaseAuth.signInWithEmailAndPassword(
-        email: 'wrong@example.com',
-        password: 'incorrect',
-      )).thenThrow(FirebaseAuthException(code: 'user-not-found'));
-
-      final result = await authService.signIn('wrong@example.com', 'incorrect');
-      expect(result, equals("User not found: Double check your email"));
-    });
-
-    test('Wrong password', () async {
-      when(firebaseAuth.signInWithEmailAndPassword(
-        email: 'test@example.com',
-        password: 'wrongpassword',
-      )).thenThrow(FirebaseAuthException(code: 'wrong-password'));
-
-      final result = await authService.signIn('test@example.com', 'wrongpassword');
-      expect(result, equals("Wrong password, try again"));
-    });
-  });
-  group('AuthService signUp Tests', () {
-    test('signUp - Successfully registered', () async {
+  group('Register - ', () {
+    test('Successfully registered', () async {
       final MockUser user = MockUser();
-      when(user.uid).thenReturn('123');
       final MockUserCredential userCredential = MockUserCredential();
       when(userCredential.user).thenReturn(user);
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'new@example.com',
         password: 'strongpassword',
       )).thenAnswer((_) async => userCredential);
-      when(mockDataBaseUsers.addUser(UserModel('new@example.com', 'strongpassword'))).thenAnswer((_) async {});
+
 
       final result = await authService.signUp('new@example.com', 'strongpassword', 'newUser');
       expect(result, equals("Successfully registered"));
-    }); //se eu apagar este teste,passa o ultimo hehe
+    });
 
-    test('signUp - Weak password', () async {
+    test('Weak password', () async {
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'new@example.com',
         password: 'weak',
@@ -84,17 +65,16 @@ void main() {
       expect(result, equals("Password is too weak"));
     });
 
-    test('signUp - Email already in use', () async {
+    test('Email already in use', () async {
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'existing@example.com',
         password: 'strongpassword',
       )).thenThrow(FirebaseAuthException(code: 'email-already-in-use'));
-
       final result = await authService.signUp('existing@example.com', 'strongpassword', 'existingUser');
       expect(result, equals("Email is already in use"));
     });
 
-    test('signUp - Other errors', () async {
+    test('Other errors', () async {
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'error@example.com',
         password: 'password123',
@@ -104,4 +84,35 @@ void main() {
       expect(result, equals("Error: Exception: Unexpected error. Please try again"));
     });
   });
+
+  //REGISTER PAGE TEST
+
+  group('Register Page test - ', () {
+    test('isNotFilled() - not filled', () {
+      expect(registerPageViewState.isNotFilled("", "email@example.com", "password", "password"), true);
+      expect(registerPageViewState.isNotFilled("example", "", "password", "password"), true);
+      expect(registerPageViewState.isNotFilled("example", "email@example.com", "", "password"), true);
+      expect(registerPageViewState.isNotFilled("example", "email@example.com", "password", ""), true);
+    });
+    test('isNotFilled() - all filled', () {
+      expect(registerPageViewState.isNotFilled("example", "email@example.com", "password", "password"), false);
+    });
+    test('isInvalidEmail() - invalid', () {
+      expect(registerPageViewState.isInvalidEmail("example.com"), true);
+      expect(registerPageViewState.isInvalidEmail("example@ni"), true);
+    });
+    test('isInvalidEmail() - valid', () {
+      expect(registerPageViewState.isInvalidEmail("example@example.com"), false);
+    });
+    test('diffPassword() - different', () {
+      expect(registerPageViewState.diffPasswords("123", "321"), true);
+      expect(registerPageViewState.diffPasswords("123", "123 "), true);
+      expect(registerPageViewState.diffPasswords("", "123"), true);
+      expect(registerPageViewState.diffPasswords("123", ""), true);
+    });
+    test('diffPassword() - different', () {
+      expect(registerPageViewState.diffPasswords("123", "123"), false);
+    });
+  });
+
 }
