@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/view/constants.dart';
+import 'package:green_go/view/pages/mission_details.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 
 class SearchPage extends StatefulWidget {
@@ -73,7 +74,7 @@ class SearchPageState extends State<SearchPage> {
               ),
               child: TextButton(
                 onPressed: () {
-
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missionsModel)));
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
