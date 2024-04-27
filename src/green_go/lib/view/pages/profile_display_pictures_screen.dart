@@ -4,8 +4,8 @@ import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/profile_take_picture_screen.dart';
 import 'package:green_go/controller/database/database_users.dart';
-import '../../controller/authentication/auth.dart';
 import 'package:green_go/controller/database/cloud_storage.dart';
+import 'package:green_go/controller/authentication/auth.dart';
 
 class ProfileDisplayPictureScreen extends StatefulWidget {
   final String imagePath;
@@ -22,8 +22,7 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
   Widget buildTitle(BuildContext context){
     return const Padding(
         padding: EdgeInsets.all(35),
-        child: Text(
-            "Image preview",
+        child: Text("Image preview",
             style: TextStyle(
                 fontSize: 40,
                 fontWeight: FontWeight.w600
@@ -74,27 +73,21 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
     );
   }
   Widget tryAgainButton(BuildContext context){
-    //button to try again and taje another picture
+    //button to try again and take another picture
     return ElevatedButton(
         style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(lightGrey),
-            minimumSize: MaterialStatePropertyAll(Size(150,50))
+            minimumSize: MaterialStatePropertyAll(Size(150, 50))
         ),
-        onPressed:
-            (){
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ProfileTakePictureScreen(),
-            ),
-          );
-        }, child: const Text(
-      "Try again",
-      style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w600
-      ),
-    )
+        onPressed: () {
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfileTakePictureScreen()));
+        },
+        child: const Text("Try again",
+          style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w600
+          ),
+        )
     );
   }
   Widget sendImageButton(BuildContext context) {
@@ -107,12 +100,10 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
       onPressed: () async {
         String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(widget.imagePath);
         dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
-
-        if(!context.mounted) return;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
+        if (!context.mounted) return;
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
       },
-      child: const Text(
-        "Send Image",
+      child: const Text("Send Image",
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w600,

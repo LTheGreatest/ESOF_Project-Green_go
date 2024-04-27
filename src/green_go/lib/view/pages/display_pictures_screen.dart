@@ -30,20 +30,18 @@ class DisplayPictureScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget tryAgainButton(BuildContext context) {
     //button used to go back to the camera page
     return ElevatedButton(
         style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(lightGrey),
-            minimumSize: MaterialStatePropertyAll(Size(150,50))
+            minimumSize: MaterialStatePropertyAll(Size(150, 50))
         ),
         onPressed: () {
           Navigator.pushReplacement(context,
             MaterialPageRoute(
               builder: (context) => TakePictureScreen(isStarting: isStarting, distance: distance, pointsPerDist: pointsPerDist,),
-            ),
-          );
+            ),);
           },
         child: const Text("Try again",
           style: TextStyle(
@@ -54,20 +52,18 @@ class DisplayPictureScreen extends StatelessWidget {
         )
     );
   }
-
   Widget sendImageButton(BuildContext context, double distance) {
     //button used to sen the image taken for verification
     return ElevatedButton(
         style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(lightGrey),
-            minimumSize: MaterialStatePropertyAll(Size(150,50))
+            minimumSize: MaterialStatePropertyAll(Size(150, 50))
         ),
         onPressed: () {
           Navigator.pushReplacement(context,
             MaterialPageRoute(
                 builder: (context) => isStarting? OngoingTripPage(pointsPerDist: pointsPerDist) : PointsEarnedPage(distance: distance,pointsPerDist: pointsPerDist, ),
-            ),
-          );
+            ),);
           },
         child: const Text("Send Image",
           style: TextStyle(
@@ -78,7 +74,6 @@ class DisplayPictureScreen extends StatelessWidget {
         )
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,8 +92,8 @@ class DisplayPictureScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-                tryAgainButton(context),
-                sendImageButton(context, distance),               
+              tryAgainButton(context),
+              sendImageButton(context, distance),
             ],
           ),
         ],

@@ -6,7 +6,7 @@ class SubtitleWidget extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    //standart subtitle
+    //standard subtitle
    return Text(text,
      style: const TextStyle(
          fontSize: 15,

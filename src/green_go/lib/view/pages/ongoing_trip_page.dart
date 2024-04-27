@@ -25,17 +25,14 @@ class OngoingTripPageState extends State<OngoingTripPage> {
     // Calls the location service to determine the initial location
     await locationService.determinePosition().then((value) => initialLocation = value);
   }
-
   Future<void> getFinalPosition() async {
     // Calls the location service to determine the final location
     await locationService.determinePosition().then((value) => finalLocation = value);
   }
-
   double calculateDistance(Position first, Position second) {
     // Calls the location service to calculate the distance
     return locationService.calculateDistance(first.latitude, first.longitude, second.latitude, second.longitude);
   }
-
   Widget stopButton(BuildContext context) {
     // Button to stop the trip
     return TextButton(
@@ -49,12 +46,17 @@ class OngoingTripPageState extends State<OngoingTripPage> {
         //Redirects the user to take the final photo
         await Navigator.of(context).pushReplacement(
             MaterialPageRoute(
-                builder: (context) => TakePictureScreen(isStarting: false, distance: dist, pointsPerDist: widget.pointsPerDist,))
+                builder: (context) => TakePictureScreen(
+                  isStarting: false,
+                  distance: dist,
+                  pointsPerDist: widget.pointsPerDist
+                )
+            )
         );
         },
       style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 189, 53, 32)),
-          minimumSize: MaterialStatePropertyAll(Size(150,50))
+          minimumSize: MaterialStatePropertyAll(Size(150, 50))
       ),
       child: const Text("Stop",
         style: TextStyle(
@@ -65,15 +67,11 @@ class OngoingTripPageState extends State<OngoingTripPage> {
       ),
     );
   }
-
   Widget cancelButton(BuildContext context) {
     // Button to cancel the trip
     return TextButton(
       onPressed: () {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(
-                builder: (context) => const TripPage())
-        );
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const TripPage()));
         },
       style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 82, 83, 85)),
@@ -88,7 +86,6 @@ class OngoingTripPageState extends State<OngoingTripPage> {
       ),
     );
   }
-  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -113,7 +110,7 @@ class OngoingTripPageState extends State<OngoingTripPage> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.fromLTRB(15,100,15,5),
+                    padding: EdgeInsets.fromLTRB(15, 100, 15, 5),
                     child: Text("Tap the Stop button when you finish",
                       textAlign: TextAlign.center,
                         style: TextStyle(

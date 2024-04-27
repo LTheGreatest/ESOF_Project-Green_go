@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/view/constants.dart';
+import 'package:green_go/view/pages/mission_details.dart';
 import 'package:green_go/view/pages/search_page.dart';
 
 class MissionMain extends StatefulWidget {
@@ -61,8 +62,8 @@ class MissionMainState extends State<MissionMain> {
                                   borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
                                 ),
                                 child: TextButton(
-                                  onPressed: () {//TODO: Add mission page
-                                    //Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
+                                  onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missions[index])));
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -127,7 +128,9 @@ class MissionMainState extends State<MissionMain> {
             );
           } else {
             return const Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(darkGrey),
+              ),
             );
           }
         }

@@ -6,13 +6,13 @@ class ProblemWidget extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    //standart widget for displaing problems
+    //standard widget for displaying problems
     return  Center(
       child: Text(
         text,
         style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold
+            fontSize: 20,
+            fontWeight: FontWeight.bold
         ),
       ),
     );

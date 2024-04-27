@@ -39,21 +39,18 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         hasWaitedTooLong = true;
     });
   }
-
   @override
   void dispose() {
     // Dispose of the controller when the widget is disposed.
     cameraService.disposeController();
     super.dispose();
   }
-
   Widget buildSubtitle(BuildContext context) {
     //the subtitle may be different depending on the context
     return widget.isStarting? 
           const SubtitleWidget(text: "Take a Picture of your start location") :
           const SubtitleWidget(text:  "Take a Picture of your end location");
   }
-
   Widget buildCameraFeed(BuildContext context) {
     return Container(
       //the height is defined accordingly to the screen size
@@ -69,7 +66,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         )
     );
   }
-
   Widget cameraSwitchButton(BuildContext context){
     //button to switch camera lens
     return Container(
@@ -153,7 +149,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                 },
               style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 82, 83, 85)),
-                  minimumSize: MaterialStatePropertyAll(Size(150,50))
+                  minimumSize: MaterialStatePropertyAll(Size(150, 50))
               ),
               child: const Text("Cancel",
                 style: TextStyle(

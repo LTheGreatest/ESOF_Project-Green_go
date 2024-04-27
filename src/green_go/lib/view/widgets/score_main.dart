@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/constants.dart';
+import 'package:green_go/view/pages/score_page.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/controller/database/cloud_storage.dart';
 
@@ -12,12 +13,14 @@ class ScoreMain extends StatefulWidget {
 }
 
 class ScoreMainState extends State<ScoreMain> {
+  late UserModel user;
   late int score;
   late int goal;
   late int streak;
   late String scoreIcon;
   late String goalIcon;
   late String streakIcon;
+  late double completionPercentage;
 
   @override
   void initState() {
@@ -26,10 +29,15 @@ class ScoreMainState extends State<ScoreMain> {
     fetchIcons();
   }
   Future<void> getCurrentUserData() async {
-    UserModel user = await UserFetcher().getCurrentUserData();
+    user = await UserFetcher().getCurrentUserData();
     score = user.totalPoints;
     goal = user.goal;
     streak = user.streak;
+    if (goal == 0) {
+      completionPercentage = 0;
+    } else {
+      completionPercentage = score / goal;
+    }
   }
   Future<void> fetchIcons() async {
     scoreIcon = await CloudStorage().downloadFileURL('icons/Score.png');
@@ -71,7 +79,7 @@ class ScoreMainState extends State<ScoreMain> {
                             backgroundColor: MaterialStateProperty.all<Color>(darkGreen),
                           ),
                           onPressed: () {
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => const ScorePage()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ScorePage()));
                           },
                           child: const Text("+",
                             style: TextStyle(
@@ -88,32 +96,36 @@ class ScoreMainState extends State<ScoreMain> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.05, top: 20)),
-                      Container(
-                        width: MediaQuery.sizeOf(context).width * 0.4,
-                        height: MediaQuery.sizeOf(context).height * 0.2,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            color: Colors.grey,
-                            width: 5,
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.4,
+                            height: MediaQuery.of(context).size.height * 0.2,
+                            child: CircularProgressIndicator(
+                              backgroundColor: lightGrey,
+                              value: completionPercentage,
+                              strokeWidth: 8,
+                              valueColor: const AlwaysStoppedAnimation<Color>(darkGreen),
+                            ),
                           ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text('${(goal - score) > 0 ? (goal - score) : 0}',
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.w900,
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text('${(goal - score) > 0 ? (goal - score) : 0}',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.w900,
+                                ),
                               ),
-                            ),
-                            const Text("Remaining",
-                              style: TextStyle(
-                                fontSize: 20,
+                              const Text("Remaining",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
+                        ],
                       ),
                       Padding(padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.1)),
                       Column(
@@ -176,7 +188,9 @@ class ScoreMainState extends State<ScoreMain> {
             );
           } else {
             return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(darkGreen),
+                )
             );
           }
         }

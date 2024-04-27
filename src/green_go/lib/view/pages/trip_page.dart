@@ -131,9 +131,7 @@ class TripPageState extends State<TripPage> {
           borderRadius: BorderRadius.all(Radius.elliptical(10, 5)),
           color: lightGrey,
         ),
-
         //button to select the transport and expand the container
-
         child: TextButton(
           style: const ButtonStyle(
             splashFactory: NoSplash.splashFactory,
@@ -189,19 +187,15 @@ class TripPageState extends State<TripPage> {
                   Image? imgIcon = findIcon(transports[index].getName());
                   if (imgIcon == null) {
                     return const Text("Error while loading the widget. Please verify your internet connection");
-                  }
-                  else {
+                  } else {
                     return transportWidget(context, transports.elementAt(index), index, imgIcon);
                   }
                 },
               ),
             );
-          }
-          else {
-             return hasWaitedTooLong ? const ProblemWidget(text: "Error while loading the data from the database. Please confirm that you have a internet connection or try to contact us.")
-             : const Center(
-                child: CircularProgressIndicator(),
-              );
+          } else {
+            return hasWaitedTooLong ? const ProblemWidget(text: "Error while loading the data from the database. Please confirm that you have a internet connection or try to contact us.")
+                : const Center(child: CircularProgressIndicator());
           }
         },
       ),

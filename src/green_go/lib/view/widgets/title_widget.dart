@@ -6,7 +6,7 @@ class TitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //standart title
+    //standard title
     return Text(text,
       textAlign: TextAlign.center,
       style: const TextStyle(

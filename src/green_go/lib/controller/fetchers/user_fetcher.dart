@@ -12,8 +12,8 @@ class UserFetcher {
   void setDB(DataBaseUsers newDB){
     db = newDB;
   }
-  void setAuth(AuthService newauth){
-    auth = newauth;
+  void setAuth(AuthService newAuth){
+    auth = newAuth;
   }
   Future<List<UserModel>> getDataForLeaderboard() async {
     //gets all user information to use in the leaderboard

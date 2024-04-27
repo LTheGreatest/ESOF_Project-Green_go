@@ -6,11 +6,10 @@ import 'package:green_go/view/pages/profile_page.dart';
 import 'package:green_go/view/pages/search_page.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 
-enum MenuPage { leaderboard, bus, mainPage, missions, profile }
+enum MenuPage { leaderboard, bus, mainPage, missions, profile, other }
 
 class CustomMenuBar extends StatelessWidget {
   final MenuPage currentPage;
-
   const CustomMenuBar({super.key, required this.currentPage});
 
   Widget buildMenuButton(MenuPage page, String iconAsset, BuildContext context) {
@@ -48,10 +47,11 @@ class CustomMenuBar extends StatelessWidget {
       case MenuPage.profile:
         destinationPage = const ProfilePage();
         break;
+      case MenuPage.other:
+        break;
     }
     Navigator.push(context, MaterialPageRoute(builder: (context) => destinationPage));
   }
-
   @override
   Widget build(BuildContext context) {
     return Padding(

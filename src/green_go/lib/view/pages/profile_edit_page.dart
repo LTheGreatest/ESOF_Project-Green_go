@@ -14,6 +14,7 @@ import 'package:image_picker/image_picker.dart';
 
 class EditPage extends StatefulWidget {
   const EditPage({super.key});
+
   @override
   State<StatefulWidget> createState() => EditPageViewer();
 }
@@ -22,12 +23,12 @@ class EditPageViewer extends State<EditPage> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
   final TextEditingController jobController = TextEditingController();
+  final CameraService cameraService = CameraService();
+  AuthService auth = AuthService();
   CloudStorage cloudStorage = CloudStorage();
+  DataBaseUsers dataBaseUsers = DataBaseUsers();
   DateTime birthDate = DateTime(DateTime.now().year - 18);
   String photoUrl = "";
-  DataBaseUsers dataBaseUsers = DataBaseUsers();
-  AuthService auth = AuthService();
-  final CameraService cameraService = CameraService();
 
   @override
   void initState() {
@@ -42,14 +43,12 @@ class EditPageViewer extends State<EditPage> {
       nationalityController.text = userData.nationality;
       jobController.text = userData.job;
       birthDate = userData.birthDate;
-      if(userData.photoUrl == ""){
-
+      if (userData.photoUrl == "") {
         photoUrl = defaultPhotoUrl;
       }
       else{
         photoUrl = userData.photoUrl;
       }
-
     });
   }
   void saveChangesAndUpdateProfile(BuildContext context) async {
@@ -65,12 +64,10 @@ class EditPageViewer extends State<EditPage> {
       birthDate,
     );
   }
-
   Future<File?> pickImage(ImageSource source) async {
     //function used to pic a image from the gallery
     return await AppImagePicker(source: source).pick();
   }
-
   Widget buildHeader(BuildContext context) {
     //builds the header of the page (back button and title)
     return Row(
@@ -92,9 +89,8 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-
   Widget buildProfilePicture() {
-    //builds the profile picutre
+    //builds the profile picture
     return Stack(
       children: [
         CircleAvatar(
@@ -133,8 +129,7 @@ class EditPageViewer extends State<EditPage> {
                           }
                           String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(photoUrl);
                           dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
-                          
-                          if(!context.mounted) return;
+                          if (!context.mounted) return;
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()),);
                         },
 
@@ -150,7 +145,6 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-
   Widget buildNameField() {
     //builds the name field
     return Column(
@@ -171,7 +165,6 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-
   Widget buildNationalityField() {
     //builds the nationality field
     return Column(
@@ -192,7 +185,6 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-
   Widget buildJobField() {
     //builds the job field
     return Column(
@@ -213,7 +205,6 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-
   Widget buildDateOfBirthField() {
     //builds the date of birth field
     return Column(
@@ -248,7 +239,6 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-
   Widget buildSaveChangesButton() {
     //builds the button used to save the changes made
     return Padding(
@@ -269,7 +259,6 @@ class EditPageViewer extends State<EditPage> {
       ),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

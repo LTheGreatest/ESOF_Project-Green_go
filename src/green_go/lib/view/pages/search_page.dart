@@ -38,69 +38,69 @@ class SearchPageState extends State<SearchPage> {
   Widget searchTextField(BuildContext context) {
     //builds a search field
     return TextField(
-          textAlign: TextAlign.start,
-          controller: searchController,
-          obscureText: false,
-          decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10.0)
-            ),
-            prefixIcon: const Padding(
-              padding: EdgeInsets.only(left:20, right: 20),
-              child: Icon(Icons.search),
-            ),
-            prefixIconConstraints: const BoxConstraints(),
-            hintText: "Search",
-          ),
-          onChanged: searchMissions,
-        );
+      textAlign: TextAlign.start,
+      controller: searchController,
+      obscureText: false,
+      decoration: InputDecoration(
+      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0)
+        ),
+        prefixIcon: const Padding(
+          padding: EdgeInsets.only(left:20, right: 20),
+          child: Icon(Icons.search),
+        ),
+        prefixIconConstraints: const BoxConstraints(),
+        hintText: "Search",
+      ),
+      onChanged: searchMissions,
+    );
   }
   Widget missionContainer(BuildContext context, MissionsModel missionsModel) {
     //container that contains the mission title and a button to access the mission details
     return Container(
-              width: MediaQuery.of(context).size.width * 0.3,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-                color: lightGrey,
-                border: Border.all(
-                  width: 2
-                ),
-                borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
+      width: MediaQuery.of(context).size.width * 0.3,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+        color: lightGrey,
+        border: Border.all(
+          width: 2
+        ),
+        borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
+      ),
+      child: TextButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missionsModel)));
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              missionsModel.title,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+                fontWeight: FontWeight.w600
+              )
+            ),
+            Text(
+              missionsModel.frequency,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
               ),
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missionsModel)));
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      missionsModel.title,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600
-                      )
-                    ),
-                    Text(
-                      missionsModel.frequency,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 15,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
+            )
+          ],
+        ),
+      ),
+    );
   }
   Widget missionsList(BuildContext context, List<MissionsModel> missions) {
     //builds the mission list
@@ -121,23 +121,22 @@ class SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20,100,20,20),
-                child: searchTextField(context),
-              ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20,100,20,20),
+            child: searchTextField(context),
+          ),
           FutureBuilder(
             future: missionsFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 missions = snapshot.data!;
                 return missionsList(context, missions);
-              }
-              else{
+              } else{
                  return const Center(
-                child: CircularProgressIndicator(),
-              );
+                   child: CircularProgressIndicator(),
+                 );
               }
             },
           ),
