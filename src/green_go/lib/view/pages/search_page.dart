@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/view/constants.dart';
