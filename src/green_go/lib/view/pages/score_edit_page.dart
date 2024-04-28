@@ -36,6 +36,60 @@ class ScoreEditPageState extends State<ScoreEditPage> {
     goalController.dispose();
     super.dispose();
   }
+
+  Widget saveButton(BuildContext context){
+    //button used to save the changes made and return to the score page
+    return ElevatedButton(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(20, 5, 20, 5)),
+              backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
+            ),
+            onPressed: () async {
+              String goal = goalController.text.trim();
+              if (isNumeric(goal)) {
+                await dataBaseUsers.updateUserGoal(user.uid, int.parse(goal)).then((value) =>
+                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScorePage()))
+                );
+              } else {
+                goalController.clear();
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Please enter a valid number"),
+                ));
+              }
+            },
+            child: const Text("Save Changes",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 30,
+              ),
+            ),
+          );
+  }
+
+  Widget textForm(BuildContext context){
+    return TextFormField(
+            textAlign: TextAlign.center,
+            controller: goalController,
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0)
+              ),
+            ),
+          );
+  }
+
+  Widget backButton(BuildContext context){
+    //button to go back to the previous page
+    return IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back, size: 40),
+          );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -63,12 +117,7 @@ class ScoreEditPageState extends State<ScoreEditPage> {
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: const Icon(Icons.arrow_back, size: 40),
-                                ),
+                                child: backButton(context),
                               ),
                               const Padding(
                                 padding: EdgeInsets.only(left: 25),
@@ -78,6 +127,7 @@ class ScoreEditPageState extends State<ScoreEditPage> {
                               ),
                             ],
                           ),
+                          //label text
                           Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1)),
                           const Text("Personal Goal:",
                               style: TextStyle(
@@ -88,43 +138,9 @@ class ScoreEditPageState extends State<ScoreEditPage> {
                           ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.05, 20, MediaQuery.of(context).size.height * 0.05),
-                            child: TextFormField(
-                              textAlign: TextAlign.center,
-                              controller: goalController,
-                              decoration: InputDecoration(
-                                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0)
-                                ),
-                              ),
-                            ),
+                            child: textForm(context),
                           ),
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(20, 5, 20, 5)),
-                              backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
-                            ),
-                            onPressed: () async {
-                              String goal = goalController.text.trim();
-                              if (isNumeric(goal)) {
-                                await dataBaseUsers.updateUserGoal(user.uid, int.parse(goal)).then((value) =>
-                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScorePage()))
-                                );
-                              } else {
-                                goalController.clear();
-                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                  content: Text("Please enter a valid number"),
-                                ));
-                              }
-                            },
-                            child: const Text("Save Changes",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 30,
-                              ),
-                            ),
-                          ),
+                          saveButton(context),
                         ],
                       ),
                     ),

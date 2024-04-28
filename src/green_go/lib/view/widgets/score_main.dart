@@ -44,6 +44,8 @@ class ScoreMainState extends State<ScoreMain> {
     goalIcon = await CloudStorage().downloadFileURL('icons/Goal.png');
     streakIcon = await CloudStorage().downloadFileURL('icons/Streak.png');
   }
+
+  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

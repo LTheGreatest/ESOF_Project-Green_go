@@ -28,6 +28,7 @@ class ScorePageState extends State<ScorePage> {
     user = await UserFetcher().getCurrentUserData();
   }
   Widget buildDetailRow(String title, String content) {
+    //builds a row with  the details
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -56,6 +57,36 @@ class ScorePageState extends State<ScorePage> {
       ),
     );
   }
+
+  Widget backButton(BuildContext context){
+    //button to go back to the main page
+    return IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
+              },
+            icon: const Icon(Icons.arrow_back, size: 40),
+          );
+  }
+
+  Widget updateButton(BuildContext context){
+    //button to access the score edit page
+    return  ElevatedButton(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(25, 5, 25, 5)),
+              backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
+            ),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ScoreEditPage()));
+              },
+            child: const Text("Update Goal",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontSize: 30,
+              ),
+            ),
+          );
+  }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -82,12 +113,7 @@ class ScorePageState extends State<ScorePage> {
                               children: [
                                 Align(
                                   alignment: Alignment.centerLeft,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage()));
-                                      },
-                                    icon: const Icon(Icons.arrow_back, size: 40),
-                                  ),
+                                  child: backButton(context),
                                 ),
                                 const Padding(
                                   padding: EdgeInsets.only(left: 25),
@@ -120,22 +146,7 @@ class ScorePageState extends State<ScorePage> {
                             ),
                             Padding(
                               padding: const EdgeInsets.all(20),
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(25, 5, 25, 5)),
-                                  backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
-                                ),
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ScoreEditPage()));
-                                  },
-                                child: const Text("Update Goal",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 30,
-                                  ),
-                                ),
-                              ),
+                              child: updateButton(context),
                             ),
                           ],
                         ),
