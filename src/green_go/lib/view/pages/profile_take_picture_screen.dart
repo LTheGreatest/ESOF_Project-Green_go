@@ -97,7 +97,7 @@ class TakePictureScreenState extends State<ProfileTakePictureScreen> {
           onPressed: () async {
             //toggles camera lens and redraws the screen
             await cameraService.toggleCameraLens();
-            setState(() {});//TODO: check if this function call is necessary guys, I am not sure
+            setState(() {});
             },
           //switch camera icon
           icon: const Icon(

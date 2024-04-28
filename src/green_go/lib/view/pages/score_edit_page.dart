@@ -43,90 +43,95 @@ class ScoreEditPageState extends State<ScoreEditPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.1, 20, 20),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * 0.8,
-                    decoration: BoxDecoration(
-                        border: Border.all(
-                            width: 1
-                        ),
-                        borderRadius: const BorderRadius.all(Radius.elliptical(20, 20))
-                    ),
-                    child: Column(
-                      children:[
-                        Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01)),
-                        //Back button and title
-                        Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: IconButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                icon: const Icon(Icons.arrow_back, size: 40),
+              body: Center(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.8,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              width: 1
+                          ),
+                          borderRadius: const BorderRadius.all(Radius.elliptical(20, 20))
+                      ),
+                      child: Column(
+                        children:[
+                          Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01)),
+                          //Back button and title
+                          Stack(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: IconButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  icon: const Icon(Icons.arrow_back, size: 40),
+                                ),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 25),
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: TitleWidget(text: "Score Details")),
+                              ),
+                            ],
+                          ),
+                          Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1)),
+                          const Text("Personal Goal:",
+                              style: TextStyle(
+                                color: darkerGrey,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w500
+                              )
+                          ),
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.05, 20, MediaQuery.of(context).size.height * 0.05),
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              controller: goalController,
+                              decoration: InputDecoration(
+                                contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0)
+                                ),
                               ),
                             ),
-                            const Align(
-                                alignment: Alignment.center,
-                                child: TitleWidget(text: "Score Details")),
-                          ],
-                        ),
-                        Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1)),
-                        const Text("Personal Goal:",
-                            style: TextStyle(
-                              color: darkerGrey,
-                              fontSize: 25,
-                              fontWeight: FontWeight.w500
-                            )
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.05, 20, MediaQuery.of(context).size.height * 0.05),
-                          child: TextFormField(
-                            textAlign: TextAlign.center,
-                            controller: goalController,
-                            decoration: InputDecoration(
-                              contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          ElevatedButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(20, 5, 20, 5)),
+                              backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
+                            ),
+                            onPressed: () async {
+                              String goal = goalController.text.trim();
+                              if (isNumeric(goal)) {
+                                await dataBaseUsers.updateUserGoal(user.uid, int.parse(goal)).then((value) =>
+                                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScorePage()))
+                                );
+                              } else {
+                                goalController.clear();
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                  content: Text("Please enter a valid number"),
+                                ));
+                              }
+                            },
+                            child: const Text("Save Changes",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 30,
                               ),
                             ),
                           ),
-                        ),
-                        ElevatedButton(
-                          style: ButtonStyle(
-                            padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(20, 5, 20, 5)),
-                            backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
-                          ),
-                          onPressed: () async {
-                            String goal = goalController.text.trim();
-                            if (isNumeric(goal)) {
-                              await dataBaseUsers.updateUserGoal(user.uid, int.parse(goal)).then((value) =>
-                                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScorePage()))
-                              );
-                            } else {
-                              goalController.clear();
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content: Text("Please enter a valid number"),
-                              ));
-                            }
-                          },
-                          child: const Text("Save Changes",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 30,
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
-              bottomSheet: const CustomMenuBar(currentPage: MenuPage.other,),
+              bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.other,),
             );
           } else {
             return const Center(

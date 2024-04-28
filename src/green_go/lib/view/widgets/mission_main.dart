@@ -29,12 +29,8 @@ class MissionMainState extends State<MissionMain> {
         future: Future.wait([getMissions()]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Stack(
-              children: [
+            return 
                 Container(
-                  padding: const EdgeInsets.only(top: 25),
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  height: MediaQuery.of(context).size.height * 0.35,
                   decoration: const BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.elliptical(10, 10)),
                     color: lightGrey,
@@ -42,90 +38,99 @@ class MissionMainState extends State<MissionMain> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: MediaQuery.of(context).size.height * 0.3,
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: 4,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
-                              child: Container(
-                                height: MediaQuery.of(context).size.height * 0.05,
-                                decoration: BoxDecoration(
-                                  color: darkGrey,
-                                  border: Border.all(
-                                    width: 2,
-                                    color: Colors.white70,
-                                  ),
-                                  borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children:[
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20),
+                              child: Text("Missions",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 30,
                                 ),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missions[index])));
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(missions[index].title,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600
-                                          )
-                                      ),
-                                      Text(missions[index].frequency,
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.w400
-                                          )
-                                      ),
-                                    ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all<Color>(darkGrey),
+                                ),
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
+                                },
+                                child: const Text("+",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 30,
                                   ),
                                 ),
                               ),
-                            );},
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children:[
-                    const Padding(
-                      padding: EdgeInsets.only(left: 20, top: 20),
-                      child: Text("Missions",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w900,
-                          fontSize: 30,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 20, top: 20),
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(darkGrey),
-                        ),
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
-                        },
-                        child: const Text("+",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w900,
-                            fontSize: 30,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: 4,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+                                child: Container(
+                                  height: MediaQuery.of(context).size.height * 0.06,
+                                  decoration: BoxDecoration(
+                                    color: darkGrey,
+                                    border: Border.all(
+                                      width: 2,
+                                      color: Colors.white70,
+                                    ),
+                                    borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
+                                  ),
+                                  child: TextButton(
+                                    onPressed: () {
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missions[index])));
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Flexible(
+                                          child: Text(
+                                            missions[index].title,
+                                            overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 18,
+                                                  fontWeight: FontWeight.w600
+                                              )
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(left: 20),
+                                          child: Text(missions[index].frequency,
+                                              style: const TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.w400
+                                              )
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );},
                           ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
+                    ],
+                  ),
+                );
           } else {
             return const Center(
               child: CircularProgressIndicator(

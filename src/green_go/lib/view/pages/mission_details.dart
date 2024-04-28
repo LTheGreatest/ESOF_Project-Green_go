@@ -132,73 +132,72 @@ class MissionDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.1, 20, 20),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.8,
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 1
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20,40, 20, 20),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 1
+                ),
+              borderRadius: const BorderRadius.all(Radius.elliptical(20, 20))
               ),
-            borderRadius: const BorderRadius.all(Radius.elliptical(20, 20))
-            ),
-            child: Column(
-              children:[
-                Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01)),
-                //Back button and title
-                Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: const Icon(Icons.arrow_back, size: 40),
+              child: Column(
+                children:[
+                  Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01)),
+                  //Back button and title
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: IconButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: const Icon(Icons.arrow_back, size: 40),
+                        ),
                       ),
-                    ),
-                  const Align(
-                      alignment: Alignment.center,
-                      child: TitleWidget(text: "Mission")),
-                  ],
-                ),
-                //Mission title
-                Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: buildMissionTitle(),
-                ),
-                //subtitle
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
-                  child: buildSubtitle(),
-                ),
-                //mission description
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: buildDetailRow("Description", model.description),
-                ),
-                //mission types
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: buildTypesDetailsRow(model.types),
-                ),
-                //Mission frequency
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: buildDetailRow("Frequency", model.frequency),
-                ),
-                //Mission Points
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: buildDetailRow("Points", model.points.toString()),
-                ),
-        
-              ],
+                    const Align(
+                        alignment: Alignment.center,
+                        child: TitleWidget(text: "Mission")),
+                    ],
+                  ),
+                  //Mission title
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20),
+                    child: buildMissionTitle(),
+                  ),
+                  //subtitle
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 30, 20, 10),
+                    child: buildSubtitle(),
+                  ),
+                  //mission description
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: buildDetailRow("Description", model.description),
+                  ),
+                  //mission types
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: buildTypesDetailsRow(model.types),
+                  ),
+                  //Mission frequency
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: buildDetailRow("Frequency", model.frequency),
+                  ),
+                  //Mission Points
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: buildDetailRow("Points", model.points.toString()),
+                  ),
+          
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      bottomSheet: const CustomMenuBar(currentPage: MenuPage.other,)
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.other,)
     );
   }
 }
