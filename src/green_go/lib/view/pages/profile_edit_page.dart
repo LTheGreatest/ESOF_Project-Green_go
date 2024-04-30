@@ -35,6 +35,9 @@ class EditPageViewer extends State<EditPage> {
     super.initState();
     initializeUserVariables();
   }
+  void setUsersDB(DataBaseUsers newDB){
+    dataBaseUsers = newDB;
+  }
   void initializeUserVariables() async {
     UserModel userData = await UserFetcher().getCurrentUserData();
     String defaultPhotoUrl = await cloudStorage.downloadFileURL("icons/Default_pfp.png");
@@ -51,7 +54,7 @@ class EditPageViewer extends State<EditPage> {
       }
     });
   }
-  void saveChangesAndUpdateProfile(BuildContext context) async {
+  void saveChangesAndUpdateProfile() async {
     //saves the changes made
     String newName = usernameController.text.trim();
     String newNationality = nationalityController.text.trim();
@@ -112,7 +115,7 @@ class EditPageViewer extends State<EditPage> {
                         leading: const Icon(Icons.camera),
                         title: const Text('Take a photo'),
                         onTap: () {
-                          saveChangesAndUpdateProfile(context);
+                          saveChangesAndUpdateProfile();
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileTakePictureScreen()));
                         },
                       ),
@@ -120,7 +123,7 @@ class EditPageViewer extends State<EditPage> {
                         leading: const Icon(Icons.image),
                         title: const Text('Choose from gallery'),
                         onTap: () async {
-                          saveChangesAndUpdateProfile(context);
+                          saveChangesAndUpdateProfile();
                           File? image = await pickImage(ImageSource.gallery);
                           if (image != null) {
                             setState(() {
@@ -249,7 +252,7 @@ class EditPageViewer extends State<EditPage> {
           backgroundColor: MaterialStateProperty.all(lightGreen),
         ),
         onPressed: () {
-          saveChangesAndUpdateProfile(context);
+          saveChangesAndUpdateProfile();
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
         },
         child: const Text(
