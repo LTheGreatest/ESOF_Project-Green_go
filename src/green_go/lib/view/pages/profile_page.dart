@@ -146,8 +146,9 @@ class ProfilePageState extends State<ProfilePage> {
                                 onPressed: () async{
                                   String? logutResult= await authService.signOut() ;
                                   if(logutResult == "logout_success"){
-                                    Navigator.pushReplacement(context,
+                                    Navigator.pushAndRemoveUntil(context,
                                       MaterialPageRoute(builder: (context) => const StartPage()),
+                                      (Route route) => false
                                     );
                                   }
                                   else{
