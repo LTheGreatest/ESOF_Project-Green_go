@@ -5,9 +5,8 @@ import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/widgets/menu_bar.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
-import 'package:green_go/view/pages/start_page.dart';
-import 'package:green_go/view/pages/profile_edit_page.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
+import 'package:green_go/view/widgets/profile_popup_menu.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -149,104 +148,41 @@ class ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         //profile picture
-                        buildProfilePicture(context),
+                        Stack(
+                          children: [
+                            Align(
+                              alignment: Alignment.center,
+                              child: buildProfilePicture(context)),
+                            
+                          ],
+                        ),
                         //username
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Text(
-                            name!,
-                            style: const TextStyle(
-                              fontSize: 30,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 20),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      name!,
+                                      style: const TextStyle(
+                                        fontSize: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      decoration: const BoxDecoration(
+                                        color: darkGrey,
+                                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                                      child: PopUpMenu(authService: authService))),
+                                ]
+                              ),
                             ),
                           ),
-                        ),
-                        //row with the buttons to edit the profile and delete the account
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              //button to edit the account
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                                  backgroundColor: MaterialStateProperty.all(lightGreen),
-                                ),
-                                onPressed: () {
-                                  // Implement edit profile functionality
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const EditPage()),
-                                  );
-                                },
-                                child: const Text('Edit Profile',
-                                   style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold
-                              ),
-                                  ),
-                              ),
-                              //button to delete the account
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                                ),
-                                onPressed: () async {
-                                  // Implement delete account functionality
-                                  String result = await authService.deleteUser();
-                                  
-                                  if(!context.mounted) return;
-
-                                  if (result == "Delete successful") {
-                                    Navigator.pushReplacement(context,
-                                      MaterialPageRoute(builder: (context) => const StartPage()),
-                                    );
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(result),),
-                                      );
-                                  }
-                                },
-                                child: const Text('Delete Account',
-                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold
-                                   ),
-                                ),
-                              ),
-                              ElevatedButton(
-                                onPressed: () async{
-                                  String? logoutResult= await authService.signOut() ;
-                                  if(!context.mounted) return;
-                                  if(logoutResult == "logout_success"){
-                                    Navigator.pushAndRemoveUntil(context,
-                                      MaterialPageRoute(builder: (context) => const StartPage()),
-                                      (Route route) => false
-                                    );
-                                  }
-                                  else{
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(logoutResult!),
-                                      ),
-                                    );
-                                  }
-                                  
-                                }, 
-                                child: const Text('Logout',
-                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold
-                                   ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                         //Box with the profile details
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
