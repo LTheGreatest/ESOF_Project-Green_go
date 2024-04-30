@@ -315,14 +315,14 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       ) as _i4.Future<String?>);
 
   @override
-  _i4.Future<dynamic> signOut() => (super.noSuchMethod(
+  _i4.Future<String?> signOut() => (super.noSuchMethod(
         Invocation.method(
           #signOut,
           [],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i4.Future<String?>.value(),
+        returnValueForMissingStub: _i4.Future<String?>.value(),
+      ) as _i4.Future<String?>);
 
   @override
   _i4.Future<dynamic> deleteUser() => (super.noSuchMethod(
