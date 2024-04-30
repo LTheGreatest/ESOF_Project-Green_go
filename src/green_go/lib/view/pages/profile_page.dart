@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   final AuthService authService = AuthService();
   final DataBaseUsers dataBaseUsers = DataBaseUsers();
-  CloudStorage storage = CloudStorage();
+  late CloudStorage storage = CloudStorage();
   String? photoUrl;
   String? name;
   String? nationality;
@@ -54,6 +54,11 @@ class ProfilePageState extends State<ProfilePage> {
         (currentDate.month == birthDate.month && currentDate.day < birthDate.day)) {
       age--;
     }
+
+    if(age < 0){
+      return 18;
+    }
+
     return age;
   }
 
