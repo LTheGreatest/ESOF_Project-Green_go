@@ -57,6 +57,83 @@ class ProfilePageState extends State<ProfilePage> {
     }
     return age;
   }
+
+  Widget buildProfilePicture(BuildContext context){
+    //builds the profile picture avatar
+      return CircleAvatar(
+            radius: MediaQuery.of(context).size.width * 0.2,
+            backgroundImage: NetworkImage(photoUrl!),
+          );
+  }
+
+  Widget detailsRow(BuildContext context, String title, String content){
+    //builds a row with the details given (used in the profile details)
+    return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 50),
+                  child: Text(title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 50),
+                  child: Text(
+                    content,
+                    style: const TextStyle(
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                
+              ],
+            );
+  }
+
+  Widget missionHistoryButton(BuildContext context){
+    //button used to acces the user mission history
+    return ElevatedButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+              backgroundColor: MaterialStateProperty.all(lightGreen),
+            ),
+            onPressed: () {
+              // Implement Mission History functionality
+            },
+            child: const Text('Mission History',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+              ),
+              ),
+          );
+  }
+
+  Widget achievementsButton(BuildContext context){
+    //Button to access the useer achivements
+    return ElevatedButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+              backgroundColor: MaterialStateProperty.all(lightGreen),
+            ),
+            onPressed: () {
+              // Implement Achievements functionality
+            },
+            child: const Text('Achievements',
+              style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold
+              ),
+            ),
+          );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +149,8 @@ class ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         //profile picture
-                        CircleAvatar(
-                          radius: MediaQuery.of(context).size.width * 0.2,
-                          backgroundImage: NetworkImage(photoUrl!),
-                        ),
+                        buildProfilePicture(context),
+                        //username
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Text(
@@ -144,8 +219,9 @@ class ProfilePageState extends State<ProfilePage> {
                               ),
                               ElevatedButton(
                                 onPressed: () async{
-                                  String? logutResult= await authService.signOut() ;
-                                  if(logutResult == "logout_success"){
+                                  String? logoutResult= await authService.signOut() ;
+                                  if(!context.mounted) return;
+                                  if(logoutResult == "logout_success"){
                                     Navigator.pushAndRemoveUntil(context,
                                       MaterialPageRoute(builder: (context) => const StartPage()),
                                       (Route route) => false
@@ -154,7 +230,7 @@ class ProfilePageState extends State<ProfilePage> {
                                   else{
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
-                                        content: Text(logutResult!),
+                                        content: Text(logoutResult!),
                                       ),
                                     );
                                   }
@@ -189,123 +265,34 @@ class ProfilePageState extends State<ProfilePage> {
                                   ),
                                   const Padding(padding: EdgeInsets.only(top:50)),
                                   //nationality row
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 50),
-                                        child: Text('Nationality:',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 50),
-                                        child: Text(
-                                          '$nationality',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      
-                                    ],
-                                  ),
+                                  detailsRow(context, "Nationality: ", nationality.toString()),
+                                  
                                   //Age row
                                   const Divider(thickness: 1, color: Colors.black),
                                   const Padding(padding: EdgeInsets.only(top:30)),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 50),
-                                        child: Text('Age:',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 50),
-                                        child: Text('$age',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  detailsRow(context, "Age: ", age.toString()),
+                                  
                                   //Job row
                                   const Divider(thickness: 1, color: Colors.black),
                                   const Padding(padding: EdgeInsets.only(top:30)),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 50),
-                                        child: Text('Job:',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(right: 50),
-                                        child: Text('$job',
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  detailsRow(context, "Job: ", job.toString()),
+                                 
                                   const Divider(thickness: 1, color: Colors.black),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        //Rwo with the buttons to check the mission history and achievements
+                        //Row with the buttons to check the mission history and achievements
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               //mission history button
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                                  backgroundColor: MaterialStateProperty.all(lightGreen),
-                                ),
-                                onPressed: () {
-                                  // Implement Mission History functionality
-                                },
-                                child: const Text('Mission History',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                  ),
-                              ),
+                              missionHistoryButton(context),
                               //achievements button
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                                  backgroundColor: MaterialStateProperty.all(lightGreen),
-                                ),
-                                onPressed: () {
-                                  // Implement Achievements functionality
-                                },
-                                child: const Text('Achievements',
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold
-                                  ),
-                                ),
-                              ),
+                              achievementsButton(context),
                             ],
                           ),
                         ),
