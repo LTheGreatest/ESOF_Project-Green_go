@@ -142,6 +142,31 @@ class ProfilePageState extends State<ProfilePage> {
                                    ),
                                 ),
                               ),
+                              ElevatedButton(
+                                onPressed: () async{
+                                  String? logutResult= await authService.signOut() ;
+                                  if(logutResult == "logout_success"){
+                                    Navigator.pushReplacement(context,
+                                      MaterialPageRoute(builder: (context) => const StartPage()),
+                                    );
+                                  }
+                                  else{
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(logutResult!),
+                                      ),
+                                    );
+                                  }
+                                  
+                                }, 
+                                child: const Text('Logout',
+                                   style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold
+                                   ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
