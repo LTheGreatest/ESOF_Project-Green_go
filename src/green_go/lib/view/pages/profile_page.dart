@@ -76,7 +76,7 @@ class ProfilePageState extends State<ProfilePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 50),
+                  padding: const EdgeInsets.only(left: 40),
                   child: Text(title,
                     style: const TextStyle(
                       fontSize: 20,
@@ -84,7 +84,7 @@ class ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(right: 50),
+                  padding: const EdgeInsets.only(right: 40),
                   child: Text(
                     content,
                     style: const TextStyle(
@@ -192,7 +192,6 @@ class ProfilePageState extends State<ProfilePage> {
                         Padding(
                           padding: const EdgeInsets.only(top: 20),
                           child: SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.4,
                             width: MediaQuery.of(context).size.width * 0.9,
                             child: Card(
                               color: lightGrey,
