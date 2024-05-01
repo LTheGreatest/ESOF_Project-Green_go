@@ -56,7 +56,31 @@ void main(){
   });
 
   group("initialize the variables", (){
-    test("initialize variables", () async{
+    test("initialize variables 1", () async{
+      EditPageViewer editpage = EditPageViewer();
+      CloudStorage storage = MockCloudStorage();
+      UserFetcher fetcher = MockUserFetcher();
+      UserModel user = UserModel("123", "Lucas");
+      user.birthDate = DateTime(0, 0, 0);
+      user.job = "Gas expert";
+      user.nationality = "?12*+´çã";
+      user.photoUrl = "aswa";
+      Future<UserModel> futureUser = Future.value(user);
+      when(fetcher.getCurrentUserData()).thenAnswer((realInvocation) => futureUser);
+      when(storage.downloadFileURL("icons/Default_pfp.png")).thenAnswer((realInvocation) => Future.value("default"));
+      editpage.setUserFetcher(fetcher);
+      editpage.setCloudStorage(storage);
+
+      await editpage.initializeUserVariables();
+
+      expectLater(editpage.usernameController.text, "Lucas");
+      expectLater(editpage.nationalityController.text, "?12*+´çã");
+      expectLater(editpage.jobController.text, "Gas expert");
+      expectLater(editpage.birthDate, DateTime(0,0,0));
+      expectLater(editpage.photoUrl, "aswa");
+    });
+
+    test("initialize variables 2", () async{
       EditPageViewer editpage = EditPageViewer();
       CloudStorage storage = MockCloudStorage();
       UserFetcher fetcher = MockUserFetcher();
@@ -80,7 +104,7 @@ void main(){
       expectLater(editpage.photoUrl, "ioewur+");
     });
 
-    test("initialize variables but the user doesn't have a profile picture", () async{
+    test("initialize variables but the user doesn't have a profile picture 1", () async{
       EditPageViewer editpage = EditPageViewer();
       CloudStorage storage = MockCloudStorage();
       UserFetcher fetcher = MockUserFetcher();
@@ -100,6 +124,30 @@ void main(){
       expectLater(editpage.usernameController.text, "Lucas");
       expectLater(editpage.nationalityController.text, "Portugues");
       expectLater(editpage.jobController.text, "Engineer");
+      expectLater(editpage.birthDate, DateTime(2020, 2, 10));
+      expectLater(editpage.photoUrl, "default");
+    });
+
+    test("initialize variables but the user doesn't have a profile picture 2", () async{
+      EditPageViewer editpage = EditPageViewer();
+      CloudStorage storage = MockCloudStorage();
+      UserFetcher fetcher = MockUserFetcher();
+      UserModel user = UserModel("123", "Lucas");
+      user.birthDate = DateTime(2020, 2, 10);
+      user.job = "Gas expert";
+      user.nationality = "?12*+´çã";
+      user.photoUrl = "";
+      Future<UserModel> futureUser = Future.value(user);
+      when(fetcher.getCurrentUserData()).thenAnswer((realInvocation) => futureUser);
+      when(storage.downloadFileURL("icons/Default_pfp.png")).thenAnswer((realInvocation) => Future.value("default"));
+      editpage.setUserFetcher(fetcher);
+      editpage.setCloudStorage(storage);
+
+      await editpage.initializeUserVariables();
+
+      expectLater(editpage.usernameController.text, "Lucas");
+      expectLater(editpage.nationalityController.text, "?12*+´çã");
+      expectLater(editpage.jobController.text, "Gas expert");
       expectLater(editpage.birthDate, DateTime(2020, 2, 10));
       expectLater(editpage.photoUrl, "default");
     });
