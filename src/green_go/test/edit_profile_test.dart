@@ -9,6 +9,7 @@ import 'package:green_go/view/pages/profile_edit_page.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
+
 import 'profile_test.mocks.dart';
 import 'user_score_fetcher_test.mocks.dart';
 
@@ -35,7 +36,6 @@ class JobControllerMock extends Mock implements TextEditingController{
 void main(){
 
   test("store data behaviour", (){
-    //given
     DataBaseUsers db = MockDataBaseUsers();
     AuthService auth = MockAuthService();
     User user = MockUser();
@@ -43,21 +43,44 @@ void main(){
     TextEditingController nationalityController = NationalityControllerMock();
     TextEditingController jobController = JobControllerMock();
     when(auth.getCurrentUser()).thenAnswer((realInvocation) => user);
+    
     EditPageViewer editpage = EditPageViewer();
     editpage.setUsersDB(db);
     editpage.setControllers(usernameController, nationalityController, jobController);
     editpage.setAuth(auth);
 
-    //when
+
     editpage.saveChangesAndUpdateProfile();
 
-    //then
     verify(db.updateUserProfile("1234", "Lucas", "Portuguese", "Engineer", DateTime(DateTime.now().year - 18))).called(1);
   });
 
   group("initialize the variables", (){
-    test("initialize variables", () async{
-      //given
+    test("initialize variables 1", () async{
+      EditPageViewer editpage = EditPageViewer();
+      CloudStorage storage = MockCloudStorage();
+      UserFetcher fetcher = MockUserFetcher();
+      UserModel user = UserModel("123", "Lucas");
+      user.birthDate = DateTime(0, 0, 0);
+      user.job = "Gas expert";
+      user.nationality = "?12*+´çã";
+      user.photoUrl = "aswa";
+      Future<UserModel> futureUser = Future.value(user);
+      when(fetcher.getCurrentUserData()).thenAnswer((realInvocation) => futureUser);
+      when(storage.downloadFileURL("icons/Default_pfp.png")).thenAnswer((realInvocation) => Future.value("default"));
+      editpage.setUserFetcher(fetcher);
+      editpage.setCloudStorage(storage);
+
+      await editpage.initializeUserVariables();
+
+      expectLater(editpage.usernameController.text, "Lucas");
+      expectLater(editpage.nationalityController.text, "?12*+´çã");
+      expectLater(editpage.jobController.text, "Gas expert");
+      expectLater(editpage.birthDate, DateTime(0,0,0));
+      expectLater(editpage.photoUrl, "aswa");
+    });
+
+    test("initialize variables 2", () async{
       EditPageViewer editpage = EditPageViewer();
       CloudStorage storage = MockCloudStorage();
       UserFetcher fetcher = MockUserFetcher();
@@ -72,10 +95,8 @@ void main(){
       editpage.setUserFetcher(fetcher);
       editpage.setCloudStorage(storage);
 
-      //when
       await editpage.initializeUserVariables();
 
-      //then
       expectLater(editpage.usernameController.text, "Lucas");
       expectLater(editpage.nationalityController.text, "Portugues");
       expectLater(editpage.jobController.text, "Engineer");
@@ -83,8 +104,7 @@ void main(){
       expectLater(editpage.photoUrl, "ioewur+");
     });
 
-    test("initialize variables but the user doesn't have a profile picture", () async{
-      //given
+    test("initialize variables but the user doesn't have a profile picture 1", () async{
       EditPageViewer editpage = EditPageViewer();
       CloudStorage storage = MockCloudStorage();
       UserFetcher fetcher = MockUserFetcher();
@@ -99,13 +119,35 @@ void main(){
       editpage.setUserFetcher(fetcher);
       editpage.setCloudStorage(storage);
 
-      //when
       await editpage.initializeUserVariables();
 
-      //then
       expectLater(editpage.usernameController.text, "Lucas");
       expectLater(editpage.nationalityController.text, "Portugues");
       expectLater(editpage.jobController.text, "Engineer");
+      expectLater(editpage.birthDate, DateTime(2020, 2, 10));
+      expectLater(editpage.photoUrl, "default");
+    });
+
+    test("initialize variables but the user doesn't have a profile picture 2", () async{
+      EditPageViewer editpage = EditPageViewer();
+      CloudStorage storage = MockCloudStorage();
+      UserFetcher fetcher = MockUserFetcher();
+      UserModel user = UserModel("123", "Lucas");
+      user.birthDate = DateTime(2020, 2, 10);
+      user.job = "Gas expert";
+      user.nationality = "?12*+´çã";
+      user.photoUrl = "";
+      Future<UserModel> futureUser = Future.value(user);
+      when(fetcher.getCurrentUserData()).thenAnswer((realInvocation) => futureUser);
+      when(storage.downloadFileURL("icons/Default_pfp.png")).thenAnswer((realInvocation) => Future.value("default"));
+      editpage.setUserFetcher(fetcher);
+      editpage.setCloudStorage(storage);
+
+      await editpage.initializeUserVariables();
+
+      expectLater(editpage.usernameController.text, "Lucas");
+      expectLater(editpage.nationalityController.text, "?12*+´çã");
+      expectLater(editpage.jobController.text, "Gas expert");
       expectLater(editpage.birthDate, DateTime(2020, 2, 10));
       expectLater(editpage.photoUrl, "default");
     });
