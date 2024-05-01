@@ -20,6 +20,7 @@ The app will try to encourage the FEUP community to have better practices regard
   * [Physical architecture](#physical-architecture)
   * [Vertical prototype](#vertical-prototype)
 * [Project management](#project-management)
+* [Notes for the teacher](#important-notes)
 
 Contributions are expected to be made exclusively by the initial team, but we may open them to the community, after the course, in all areas and topics: requirements, technologies, development, experimentation, testing, etc.
 
