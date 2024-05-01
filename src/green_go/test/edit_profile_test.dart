@@ -9,7 +9,7 @@ import 'package:green_go/view/pages/profile_edit_page.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'edit_profile_test.mocks.dart';
+
 import 'profile_test.mocks.dart';
 import 'user_score_fetcher_test.mocks.dart';
 
