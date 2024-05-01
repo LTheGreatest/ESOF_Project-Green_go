@@ -43,6 +43,7 @@ void main(){
 
   group("test initialization", (){
     test("test initialization",() async{
+      //given
       CloudStorage storage = MockCloudStorage();
       ProfilePageState page = ProfilePageState();
       UserFetcher fetcher = MockUserFetcher();
@@ -57,8 +58,10 @@ void main(){
       page.setUserFetcher(fetcher);
       page.setCloudStorage(storage);
 
+      //when
       await page.initializeUserVariables();
 
+      //then
       expectLater(page.name, "Lucas");
       expectLater(page.nationality, "Portugues");
       expectLater(page.age, page.calculateAge(user.birthDate));
@@ -69,6 +72,7 @@ void main(){
     });
 
     test("test initialization but the user doesn't have a profile photo",() async{
+      //given
       CloudStorage storage = MockCloudStorage();
       ProfilePageState page = ProfilePageState();
       UserFetcher fetcher = MockUserFetcher();
@@ -83,8 +87,10 @@ void main(){
       page.setUserFetcher(fetcher);
       page.setCloudStorage(storage);
 
+      //when
       await page.initializeUserVariables();
 
+      //then
       expectLater(page.name, "Lucas");
       expectLater(page.nationality, "Portugues");
       expectLater(page.age, page.calculateAge(user.birthDate));

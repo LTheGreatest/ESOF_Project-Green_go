@@ -40,16 +40,22 @@ void main(){
   group('logout tests', () { 
     
     test('logout successful', () async {
+      //when
       final result = await authService.signOut();
 
+      //then
       expect(result, equals("logout_success"));
 
     });
 
     test('logout - faild', () async {
+      //given
       when(firebaseAuth.signOut()).thenThrow(FirebaseAuthException(code: 'user-not-found'));
+
+      //when
       final result = await authService.signOut();
 
+      //then
       expect(result, equals('user-not-found'));
     });
     

@@ -36,6 +36,7 @@ class JobControllerMock extends Mock implements TextEditingController{
 void main(){
 
   test("store data behaviour", (){
+    //given
     DataBaseUsers db = MockDataBaseUsers();
     AuthService auth = MockAuthService();
     User user = MockUser();
@@ -43,20 +44,21 @@ void main(){
     TextEditingController nationalityController = NationalityControllerMock();
     TextEditingController jobController = JobControllerMock();
     when(auth.getCurrentUser()).thenAnswer((realInvocation) => user);
-    
     EditPageViewer editpage = EditPageViewer();
     editpage.setUsersDB(db);
     editpage.setControllers(usernameController, nationalityController, jobController);
     editpage.setAuth(auth);
 
-
+    //when
     editpage.saveChangesAndUpdateProfile();
 
+    //then
     verify(db.updateUserProfile("1234", "Lucas", "Portuguese", "Engineer", DateTime(DateTime.now().year - 18))).called(1);
   });
 
   group("initialize the variables", (){
     test("initialize variables", () async{
+      //given
       EditPageViewer editpage = EditPageViewer();
       CloudStorage storage = MockCloudStorage();
       UserFetcher fetcher = MockUserFetcher();
@@ -71,8 +73,10 @@ void main(){
       editpage.setUserFetcher(fetcher);
       editpage.setCloudStorage(storage);
 
+      //when
       await editpage.initializeUserVariables();
 
+      //then
       expectLater(editpage.usernameController.text, "Lucas");
       expectLater(editpage.nationalityController.text, "Portugues");
       expectLater(editpage.jobController.text, "Engineer");
@@ -81,6 +85,7 @@ void main(){
     });
 
     test("initialize variables but the user doesn't have a profile picture", () async{
+      //given
       EditPageViewer editpage = EditPageViewer();
       CloudStorage storage = MockCloudStorage();
       UserFetcher fetcher = MockUserFetcher();
@@ -95,8 +100,10 @@ void main(){
       editpage.setUserFetcher(fetcher);
       editpage.setCloudStorage(storage);
 
+      //when
       await editpage.initializeUserVariables();
 
+      //then
       expectLater(editpage.usernameController.text, "Lucas");
       expectLater(editpage.nationalityController.text, "Portugues");
       expectLater(editpage.jobController.text, "Engineer");

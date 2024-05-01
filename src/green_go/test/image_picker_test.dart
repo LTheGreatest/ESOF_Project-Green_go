@@ -10,14 +10,15 @@ import 'image_picker_test.mocks.dart';
 
 void main(){
   test("Image picker behaviour", (){
+    //given
       ImagePicker pickerMock = MockImagePicker();
-
       AppImagePicker appPicker = AppImagePicker(source: ImageSource.gallery);
-
       appPicker.setPicker(pickerMock);
 
+      //when
       appPicker.pick();
 
+      //then
       verify(pickerMock.pickImage(source: ImageSource.gallery)).called(1);
   });
 }

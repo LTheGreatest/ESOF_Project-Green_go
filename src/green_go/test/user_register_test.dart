@@ -42,6 +42,7 @@ void main() {
   });
   group('Register - ', () {
     test('Successfully registered', () async {
+      //given
       final MockUser user = MockUser();
       final MockUserCredential userCredential = MockUserCredential();
       when(userCredential.user).thenReturn(user);
@@ -50,37 +51,52 @@ void main() {
         password: 'strongpassword',
       )).thenAnswer((_) async => userCredential);
 
-
+      //when
       final result = await authService.signUp('new@example.com', 'strongpassword', 'newUser');
+
+      //then
       expect(result, equals("Successfully registered"));
     });
 
     test('Weak password', () async {
+      //given
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'new@example.com',
         password: 'weak',
       )).thenThrow(FirebaseAuthException(code: 'weak-password'));
 
+      //when
       final result = await authService.signUp('new@example.com', 'weak', 'newUser');
+
+      //then
       expect(result, equals("Password is too weak"));
     });
 
     test('Email already in use', () async {
+      //given
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'existing@example.com',
         password: 'strongpassword',
       )).thenThrow(FirebaseAuthException(code: 'email-already-in-use'));
+
+      //when
       final result = await authService.signUp('existing@example.com', 'strongpassword', 'existingUser');
+
+      //then
       expect(result, equals("Email is already in use"));
     });
 
     test('Other errors', () async {
+      //given
       when(firebaseAuth.createUserWithEmailAndPassword(
         email: 'error@example.com',
         password: 'password123',
       )).thenThrow(Exception("Unexpected error"));
 
+      //when
       final result = await authService.signUp('error@example.com', 'password123', 'errorUser');
+
+      //then
       expect(result, equals("Error: Exception: Unexpected error. Please try again"));
     });
   });
