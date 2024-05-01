@@ -30,11 +30,12 @@ class EditPageViewer extends State<EditPage> {
   late DataBaseUsers dataBaseUsers = DataBaseUsers();
   DateTime birthDate = DateTime(DateTime.now().year - 18);
   String photoUrl = "";
+  late final Future<bool> isInitialized;
 
   @override
   void initState() {
     super.initState();
-    initializeUserVariables();
+    isInitialized = initializeUserVariables();
   }
   void setUsersDB(DataBaseUsers newDB){
     dataBaseUsers = newDB;
@@ -53,7 +54,7 @@ class EditPageViewer extends State<EditPage> {
   void setCloudStorage(CloudStorage newStorage){
     cloudStorage = newStorage;
   }
-  Future<void> initializeUserVariables() async {
+  Future<bool> initializeUserVariables() async {
     UserModel userData = await fetcher.getCurrentUserData();
     String defaultPhotoUrl = await cloudStorage.downloadFileURL("icons/Default_pfp.png");
     usernameController.text = userData.username;
@@ -66,6 +67,7 @@ class EditPageViewer extends State<EditPage> {
     else{
       photoUrl = userData.photoUrl;
     }
+    return true;
   }
   
   void saveChangesAndUpdateProfile() async {
@@ -280,7 +282,7 @@ class EditPageViewer extends State<EditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-        future: Future.wait([initializeUserVariables()]),
+        future: Future.wait([isInitialized]),//Future.wait([initializeUserVariables()]),
         builder: (context, snapshot) {
           if(snapshot.hasData){
         return Padding(
