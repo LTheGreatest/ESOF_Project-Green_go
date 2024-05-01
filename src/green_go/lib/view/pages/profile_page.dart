@@ -16,9 +16,10 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  final AuthService authService = AuthService();
-  final DataBaseUsers dataBaseUsers = DataBaseUsers();
+  late AuthService authService = AuthService();
+  late DataBaseUsers dataBaseUsers = DataBaseUsers();
   late CloudStorage storage = CloudStorage();
+  late UserFetcher fetcher = UserFetcher();
   String? photoUrl;
   String? name;
   String? nationality;
@@ -31,9 +32,15 @@ class ProfilePageState extends State<ProfilePage> {
     super.initState();
     initializeUserVariables();
   }
+  void setUserFetcher(UserFetcher newFetcher){
+    fetcher = newFetcher;
+  }
+  void setCloudStorage(CloudStorage newStorage){
+    storage = newStorage;
+  }
   Future<void> initializeUserVariables() async {
     //initializes the global variables
-    UserModel userData = await UserFetcher().getCurrentUserData();
+    UserModel userData = await fetcher.getCurrentUserData();
     String defaultPhotoUrl = await storage.downloadFileURL("icons/Default_pfp.png");
     if (userData.photoUrl != "") {
       photoUrl = userData.photoUrl;
