@@ -147,3 +147,6 @@ You can find below information and references related with the project managemen
   * [Iteration 2](docs/Iteration2.md)
 * Increment description:
   * [ChangeLog](docs/ChangeLog.md)
+ 
+## Important notes
+[Notes](docs/Notes.md)
