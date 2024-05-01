@@ -22,74 +22,83 @@ void main(){
 
     
     test("get Data For Leaderboard", () async{
-    UserFetcher fetcher = UserFetcher();
-    DataBaseUsers db = MockDataBaseUsers();
-    final instance =  FakeFirebaseFirestore();
-    await instance.collection('users').add({
-      'username' : "Lucas",
-      "totalPoints": 100,
-      "weeklyPoints" : 10,
-      "monthlyPoints": 16
+      //given
+      UserFetcher fetcher = UserFetcher();
+      DataBaseUsers db = MockDataBaseUsers();
+      final instance =  FakeFirebaseFirestore();
+      await instance.collection('users').add({
+        'username' : "Lucas",
+        "totalPoints": 100,
+        "weeklyPoints" : 10,
+        "monthlyPoints": 16
+      });
+      await instance.collection('users').add({
+        'username' : "Rafael",
+        "totalPoints": 101,
+        "weeklyPoints" : 20,
+        "monthlyPoints": 36
+      });
+
+      when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
+      fetcher.setDB(db);
+
+      //when
+      final users = await fetcher.getDataForLeaderboard();
+
+      //then
+      expectLater(users[0].username, "Lucas");
+      expectLater(users[0].totalPoints, 100);
+      expectLater(users[0].weeklyPoints, 10 );
+      expectLater(users[0].monthlyPoints, 16);
+      expectLater(users[1].username, "Rafael");
+      expectLater(users[1].totalPoints, 101);
+      expectLater(users[1].weeklyPoints, 20 );
+      expectLater(users[1].monthlyPoints, 36);
+
     });
-    await instance.collection('users').add({
-      'username' : "Rafael",
-      "totalPoints": 101,
-      "weeklyPoints" : 20,
-      "monthlyPoints": 36
-    });
-
-    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
-    fetcher.setDB(db);
-
-    final users = await fetcher.getDataForLeaderboard();
-
-    expectLater(users[0].username, "Lucas");
-    expectLater(users[0].totalPoints, 100);
-    expectLater(users[0].weeklyPoints, 10 );
-    expectLater(users[0].monthlyPoints, 16);
-    expectLater(users[1].username, "Rafael");
-    expectLater(users[1].totalPoints, 101);
-    expectLater(users[1].weeklyPoints, 20 );
-    expectLater(users[1].monthlyPoints, 36);
-
-  });
 
     test("get Data For Leaderboard but user parameters are missing", () async{
-    UserFetcher fetcher = UserFetcher();
-    DataBaseUsers db = MockDataBaseUsers();
-    final instance =  FakeFirebaseFirestore();
-    await instance.collection('users').add({
-      'username' : "Lucas",
-      "totalPoints": 100,
+      //given
+      UserFetcher fetcher = UserFetcher();
+      DataBaseUsers db = MockDataBaseUsers();
+      final instance =  FakeFirebaseFirestore();
+      await instance.collection('users').add({
+        'username' : "Lucas",
+        "totalPoints": 100,
 
-      "monthlyPoints": 16
+        "monthlyPoints": 16
+      });
+      await instance.collection('users').add({
+        "totalPoints": 101,
+        "weeklyPoints" : 20,
+        "monthlyPoints": 36
+      });
+
+      when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
+      fetcher.setDB(db);
+
+      //when
+      final users = await fetcher.getDataForLeaderboard();
+
+      //then
+      expectLater(users.length, 0);
     });
-    await instance.collection('users').add({
-      "totalPoints": 101,
-      "weeklyPoints" : 20,
-      "monthlyPoints": 36
-    });
-
-    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
-    fetcher.setDB(db);
-
-    final users = await fetcher.getDataForLeaderboard();
-
-    expectLater(users.length, 0);
-  });
 
     test("get Data For Leaderboard but there are no users", () async{
-    UserFetcher fetcher = UserFetcher();
-    DataBaseUsers db = MockDataBaseUsers();
-    final instance =  FakeFirebaseFirestore();
+      //given
+      UserFetcher fetcher = UserFetcher();
+      DataBaseUsers db = MockDataBaseUsers();
+      final instance =  FakeFirebaseFirestore();
 
-    when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
-    fetcher.setDB(db);
+      when(db.getAllData()).thenAnswer((realInvocation) => instance.collection('users').get());
+      fetcher.setDB(db);
 
-    final users = await fetcher.getDataForLeaderboard();
+      //when
+      final users = await fetcher.getDataForLeaderboard();
 
-    expectLater(users.length, 0);
-  });
+      //then
+      expectLater(users.length, 0);
+    });
   });
 
   group("get user data", (){
@@ -100,6 +109,7 @@ void main(){
       AuthService auth = MockAuthService();
       User user = MockUser();
     test("get user data", () async{
+      //given
       await instance.collection("users").doc("1234").set(
         {
       'username' : "Lucas",
@@ -122,8 +132,10 @@ void main(){
       fetcher.setDB(db);
       fetcher.setAuth(auth);
 
+      //when
       UserModel model = await fetcher.getCurrentUserData();
 
+      //then
       expectLater(model.username, "Lucas");
       expectLater(model.totalPoints, 100);
       expectLater(model.firstTime, true);
@@ -137,6 +149,7 @@ void main(){
     });
 
     test("get user data but some parameter is missig", () async{
+      //given
       await instance.collection("users").doc("1234").set(
         {
       "totalPoints": 100,
@@ -158,22 +171,26 @@ void main(){
       fetcher.setDB(db);
       fetcher.setAuth(auth);
 
+      //when
       UserModel model = await fetcher.getCurrentUserData();
 
+      //then
       expectLater(model.username, "notDefined");
 
 
     });
 
     test("get user data but user doesn't exists", () async{
-
+      //given
       when(auth.getCurrentUser()).thenAnswer((realInvocation) => user);
       when(db.getUserData("1234")).thenAnswer((realInvocation) => instance.collection("users").doc("1234").get());
       fetcher.setDB(db);
       fetcher.setAuth(auth);
 
+      //when
       UserModel model = await fetcher.getCurrentUserData();
 
+      //then
       expectLater(model.username, "notDefined");
 
 

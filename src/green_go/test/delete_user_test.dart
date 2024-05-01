@@ -31,44 +31,58 @@ void main(){
 
   group('delete tests', ()  {
     test('delete faild source: database', () async {
+      //given
       when(mockDataBaseUsers.deleteUser("failtest")).thenThrow("deletion from database faild");
 
+      //when
       final result = await authService.deleteUser();
 
+      //then
       expect(result, equals("Invalid deletion from database"));
     });
 
     
 
     test('delete - faild source: auth', () async {
+      //given
       when(mockUser.uid).thenReturn('123');
       when(firebaseAuth.currentUser).thenReturn(mockUser);
-      
-      
       when(mockUser.delete()).thenThrow(FirebaseAuthException(code: 'user-not-found'));
+
+      //when
       final result= await authService.deleteUser();
+
+      //then
       expect(result, equals('user-not-found'));
     });
     
 
     test('deletion success',  () async{
+      //given
       when(mockUser.uid).thenReturn('123');
       when(firebaseAuth.currentUser).thenReturn(mockUser);
+
+      //when
       final result =await authService.deleteUser();
+
+      //then
       verify(mockDataBaseUsers.deleteUser('123'));
       verify(firebaseAuth.currentUser?.delete());
-
       expect(result, equals("Delete successful"));
     });
 
     test('deletion after update', () async {
+      //given
       when(mockUser.uid).thenReturn('123');
       when(firebaseAuth.currentUser).thenReturn(mockUser);
       mockDataBaseUsers.updateUserProfile('123', 'teste', 'teste', 'teste', DateTime.now());
+
+      //when
       final result =await authService.deleteUser();
+
+      //then
       verify(mockDataBaseUsers.deleteUser('123'));
       verify(firebaseAuth.currentUser?.delete());
-
       expect(result, equals("Delete successful"));
 
     });

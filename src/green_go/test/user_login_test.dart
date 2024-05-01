@@ -38,32 +38,44 @@ void main() {
 
   group('Sign in - ', () {
     test('Successful', () async {
+      //given
       when(firebaseAuth.signInWithEmailAndPassword(
         email: 'test@example.com',
         password: '123456',
       )).thenAnswer((_) async => MockUserCredential()); // MockUserCredential should be defined or use a real UserCredential instance
 
+      //when
       final result = await authService.signIn('test@example.com', '123456');
+
+      //then
       expect(result, equals("Successfully logged in"));
     });
 
     test('User not found', () async {
+      //given
       when(firebaseAuth.signInWithEmailAndPassword(
         email: 'wrong@example.com',
         password: 'incorrect',
       )).thenThrow(FirebaseAuthException(code: 'user-not-found'));
 
+      //when
       final result = await authService.signIn('wrong@example.com', 'incorrect');
+
+      //then
       expect(result, equals("User not found: Double check your email"));
     });
 
     test('Wrong password', () async {
+      //given
       when(firebaseAuth.signInWithEmailAndPassword(
         email: 'test@example.com',
         password: 'wrongpassword',
       )).thenThrow(FirebaseAuthException(code: 'wrong-password'));
 
+      //when
       final result = await authService.signIn('test@example.com', 'wrongpassword');
+
+      //then
       expect(result, equals("Wrong password, try again"));
     });
   });
