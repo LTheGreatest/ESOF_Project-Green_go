@@ -7,14 +7,20 @@
 ## Sprint Retrospective
 
 ### What went well?
-
+- We completed every proposed issue.
+- Every one worked hard to complete this sprint.
+- The unit tests worked well this time.
 
 ### What should we do differently?
-
-
+- We should distribute better the work in some situations.
 
 ### What still puzzles me?
+- The unit tests related to the camera and the location services are basicly impossible to test because this services need some functions and methods that cannot be mocked (for example, the availabel cameras method).
+- The acceptance tests are still not automated because of the compability problems between flutter gherkin and dart3.
 
+### How are we going to improve?
+- We will distribute better the work between the team, avoiding excessive work for some team members.
+- We will try to find some possible solutions to the camera tests and location tests. This could envolve 
 
 
 ## Project Board
