@@ -144,5 +144,6 @@ You can find below information and references related with the project managemen
 * Sprint planning and retrospectives:
   * [Iteration 0](docs/Iteration0.md)
   * [Iteration 1](docs/Iteration1.md)
-* Incremente description:
+  * [Iteration 2](docs/Iteration2.md)
+* Increment description:
   * [ChangeLog](docs/ChangeLog.md)
