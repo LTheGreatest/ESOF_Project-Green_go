@@ -20,13 +20,14 @@ class EditPage extends StatefulWidget {
 }
 
 class EditPageViewer extends State<EditPage> {
-  final TextEditingController usernameController = TextEditingController();
-  final TextEditingController nationalityController = TextEditingController();
-  final TextEditingController jobController = TextEditingController();
+  late TextEditingController usernameController = TextEditingController();
+  late TextEditingController nationalityController = TextEditingController();
+  late TextEditingController jobController = TextEditingController();
+  late UserFetcher fetcher = UserFetcher();
   final CameraService cameraService = CameraService();
-  AuthService auth = AuthService();
-  CloudStorage cloudStorage = CloudStorage();
-  DataBaseUsers dataBaseUsers = DataBaseUsers();
+  late AuthService auth = AuthService();
+  late CloudStorage cloudStorage = CloudStorage();
+  late DataBaseUsers dataBaseUsers = DataBaseUsers();
   DateTime birthDate = DateTime(DateTime.now().year - 18);
   String photoUrl = "";
 
@@ -38,22 +39,35 @@ class EditPageViewer extends State<EditPage> {
   void setUsersDB(DataBaseUsers newDB){
     dataBaseUsers = newDB;
   }
-  void initializeUserVariables() async {
-    UserModel userData = await UserFetcher().getCurrentUserData();
-    String defaultPhotoUrl = await cloudStorage.downloadFileURL("icons/Default_pfp.png");
-    setState(() {
-      usernameController.text = userData.username;
-      nationalityController.text = userData.nationality;
-      jobController.text = userData.job;
-      birthDate = userData.birthDate;
-      if (userData.photoUrl == "") {
-        photoUrl = defaultPhotoUrl;
-      }
-      else{
-        photoUrl = userData.photoUrl;
-      }
-    });
+  void setControllers(TextEditingController newUserCont,TextEditingController newNatioCont, TextEditingController newJobCont){
+    usernameController = newUserCont;
+    nationalityController = newNatioCont;
+    jobController = newJobCont;
   }
+  void setAuth(AuthService newAuth){
+    auth = newAuth;
+  }
+  void setUserFetcher(UserFetcher newUserFetcher){
+    fetcher = newUserFetcher;
+  }
+  void setCloudStorage(CloudStorage newStorage){
+    cloudStorage = newStorage;
+  }
+  Future<void> initializeUserVariables() async {
+    UserModel userData = await fetcher.getCurrentUserData();
+    String defaultPhotoUrl = await cloudStorage.downloadFileURL("icons/Default_pfp.png");
+    usernameController.text = userData.username;
+    nationalityController.text = userData.nationality;
+    jobController.text = userData.job;
+    birthDate = userData.birthDate;
+    if (userData.photoUrl == "") {
+      photoUrl = defaultPhotoUrl;
+    }
+    else{
+      photoUrl = userData.photoUrl;
+    }
+  }
+  
   void saveChangesAndUpdateProfile() async {
     //saves the changes made
     String newName = usernameController.text.trim();
@@ -92,7 +106,7 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-  Widget buildProfilePicture() {
+  Widget buildProfilePicture(BuildContext context) {
     //builds the profile picture
     return Stack(
       children: [
@@ -148,7 +162,7 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-  Widget buildNameField() {
+  Widget buildNameField(BuildContext context) {
     //builds the name field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -168,7 +182,7 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-  Widget buildNationalityField() {
+  Widget buildNationalityField(BuildContext context) {
     //builds the nationality field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,7 +202,7 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-  Widget buildJobField() {
+  Widget buildJobField(BuildContext context) {
     //builds the job field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -208,7 +222,7 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-  Widget buildDateOfBirthField() {
+  Widget buildDateOfBirthField(BuildContext context) {
     //builds the date of birth field
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -242,7 +256,7 @@ class EditPageViewer extends State<EditPage> {
       ],
     );
   }
-  Widget buildSaveChangesButton() {
+  Widget buildSaveChangesButton(BuildContext context) {
     //builds the button used to save the changes made
     return Padding(
       padding: const EdgeInsets.only(top: 50),
@@ -265,37 +279,48 @@ class EditPageViewer extends State<EditPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 35, 10, 10),
-        child: SingleChildScrollView(
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                width: 2,
+      body: FutureBuilder(
+        future: Future.wait([initializeUserVariables()]),
+        builder: (context, snapshot) {
+          if(snapshot.hasData){
+        return Padding(
+          padding: const EdgeInsets.fromLTRB(10, 35, 10, 10),
+          child: SingleChildScrollView(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2,
+                ),
+                borderRadius: const BorderRadius.all(Radius.elliptical(20, 15)),
               ),
-              borderRadius: const BorderRadius.all(Radius.elliptical(20, 15)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  buildHeader(context),
-                  const SizedBox(height: 20),
-                  buildProfilePicture(),
-                  const SizedBox(height: 20),
-                  buildNameField(),
-                  const SizedBox(height: 20),
-                  buildNationalityField(),
-                  const SizedBox(height: 20),
-                  buildJobField(),
-                  const SizedBox(height: 20),
-                  buildDateOfBirthField(),
-                  buildSaveChangesButton(),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    buildHeader(context),
+                    const SizedBox(height: 20),
+                    buildProfilePicture(context),
+                    const SizedBox(height: 20),
+                    buildNameField(context),
+                    const SizedBox(height: 20),
+                    buildNationalityField(context),
+                    const SizedBox(height: 20),
+                    buildJobField(context),
+                    const SizedBox(height: 20),
+                    buildDateOfBirthField(context),
+                    buildSaveChangesButton(context),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+        );
+        } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+        }
       ),
     );
   }
