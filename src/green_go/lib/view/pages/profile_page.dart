@@ -87,6 +87,7 @@ class ProfilePageState extends State<ProfilePage> {
                   child: Text(title,
                     style: const TextStyle(
                       fontSize: 20,
+                      fontWeight: FontWeight.w500
                     ),
                   ),
                 ),
@@ -144,6 +145,40 @@ class ProfilePageState extends State<ProfilePage> {
           );
   }
 
+  Widget usernameAndMoreButton(BuildContext context){
+    //container with the username and a button to open the popmenu
+    return Container(
+            decoration: const BoxDecoration(
+              color: lightGrey,
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+            ),
+            width: MediaQuery.of(context).size.width * 0.9,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      name!,
+                      style: const TextStyle(
+                        fontSize: 30,
+                        fontWeight: FontWeight.w600
+                      ),
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: PopUpMenu(authService: authService),
+                    )),
+                ]
+              ),
+            ),
+          );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -171,39 +206,18 @@ class ProfilePageState extends State<ProfilePage> {
                         //username
                           Padding(
                             padding: const EdgeInsets.only(top: 20, bottom: 20),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      name!,
-                                      style: const TextStyle(
-                                        fontSize: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        color: darkGrey,
-                                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                                      child: PopUpMenu(authService: authService))),
-                                ]
-                              ),
-                            ),
+                            child: usernameAndMoreButton(context),
                           ),
                         //Box with the profile details
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
+                          padding: const EdgeInsets.only(top: 10),
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
                             child: Card(
                               color: lightGrey,
                               child: Column(
                                 children: [
+                                  const Padding(padding: EdgeInsets.only(top:15)),
                                   const Text('Profile Details',
                                     style: TextStyle(
                                       fontSize: 24,
@@ -215,16 +229,25 @@ class ProfilePageState extends State<ProfilePage> {
                                   detailsRow(context, "Nationality: ", nationality.toString()),
                                   
                                   //Age row
-                                  const Divider(thickness: 1, color: Colors.black),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 10, right: 10),
+                                    child: Divider(thickness: 1.5, color: Colors.black45),
+                                  ),
                                   const Padding(padding: EdgeInsets.only(top:30)),
                                   detailsRow(context, "Age: ", age.toString()),
                                   
                                   //Job row
-                                  const Divider(thickness: 1, color: Colors.black),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 10, right: 10),
+                                    child: Divider(thickness: 1.5, color: Colors.black45),
+                                  ),
                                   const Padding(padding: EdgeInsets.only(top:30)),
                                   detailsRow(context, "Job: ", job.toString()),
                                  
-                                  const Divider(thickness: 1, color: Colors.black),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
+                                    child: Divider(thickness: 1.5, color: Colors.black45),
+                                  ),
                                 ],
                               ),
                             ),

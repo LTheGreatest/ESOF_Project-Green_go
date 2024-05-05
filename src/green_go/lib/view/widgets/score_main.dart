@@ -45,6 +45,44 @@ class ScoreMainState extends State<ScoreMain> {
     streakIcon = await CloudStorage().downloadFileURL('icons/Streak.png');
   }
 
+  Widget scoreDetailsValues(BuildContext context, String title, String imagePath, int detailValue){
+    //builds the score detaisl that appear on the right side of the widget
+    return Row(
+          children: [
+            Image.network(imagePath),
+            const Padding(padding: EdgeInsets.only(left: 10, bottom: 5)),
+            Column(
+              children: [
+                Text(title,
+                  textAlign: TextAlign.right,
+                ),
+                Text("$detailValue",
+                  textAlign: TextAlign.right,
+                ),
+              ],
+            ),
+          ],
+        );
+  }
+
+  Widget remainingScore(BuildContext context){
+    return  Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('${(goal - score) > 0 ? (goal - score) : 0}',
+                  style: const TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                const Text("Remaining",
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ],
+            );
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -113,79 +151,19 @@ class ScoreMainState extends State<ScoreMain> {
                               backgroundColor: lightGrey,
                               value: completionPercentage,
                               strokeWidth: 8,
-                              valueColor: const AlwaysStoppedAnimation<Color>(darkGreen),
+                              valueColor: const AlwaysStoppedAnimation<Color>(Colors.amber),
                             ),
                           ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text('${(goal - score) > 0 ? (goal - score) : 0}',
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w900,
-                                ),
-                              ),
-                              const Text("Remaining",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ],
-                          ),
+                          remainingScore(context),
                         ],
                       ),
                       Padding(padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width * 0.1)),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Image.network(goalIcon),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                children: [
-                                  const Text("Goal",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Text("$goal",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Image.network(scoreIcon),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                children: [
-                                  const Text("Score",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Text("$score",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Row(
-                            children: [
-                              Image.network(streakIcon),
-                              const Padding(padding: EdgeInsets.only(left: 10)),
-                              Column(
-                                children: [
-                                  const Text("Streak",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  Text("$streak",
-                                    textAlign: TextAlign.right,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                         scoreDetailsValues(context, "Goal", goalIcon, goal),
+                         scoreDetailsValues(context, "Score", scoreIcon, score),
+                         scoreDetailsValues(context, "Streak", streakIcon, streak),
                         ],
                       )
                     ],
