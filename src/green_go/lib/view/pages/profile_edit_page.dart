@@ -93,7 +93,12 @@ class EditPageViewer extends State<EditPage> {
       children: [
         IconButton(
           onPressed: () {
-            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+            Navigator.pushReplacement(context, 
+             PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>const ProfilePage(), 
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                ));
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -269,7 +274,12 @@ class EditPageViewer extends State<EditPage> {
         ),
         onPressed: () {
           saveChangesAndUpdateProfile();
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+          Navigator.pushReplacement(context, 
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const ProfilePage(), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ));
         },
         child: const Text(
           'Save Changes',

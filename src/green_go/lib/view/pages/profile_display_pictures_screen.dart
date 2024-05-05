@@ -80,7 +80,12 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
             minimumSize: MaterialStatePropertyAll(Size(150, 50))
         ),
         onPressed: () {
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfileTakePictureScreen()));
+          Navigator.pushReplacement(context,
+           PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const ProfileTakePictureScreen(), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ) );
         },
         child: const Text("Try again",
           style: TextStyle(
@@ -101,7 +106,12 @@ class _ProfileDisplayPictureScreenState extends State<ProfileDisplayPictureScree
         String imageUrl = await cloudStorage.uploadImageToFirebaseStorage(widget.imagePath);
         dataBaseUsers.updateUserPicture(auth.getCurrentUser()!.uid,imageUrl);
         if (!context.mounted) return;
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+        Navigator.pushReplacement(context,
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>const ProfilePage(), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ));
       },
       child: const Text("Send Image",
         style: TextStyle(

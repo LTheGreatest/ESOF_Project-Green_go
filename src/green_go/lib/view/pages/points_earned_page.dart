@@ -220,9 +220,11 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
         if (!context.mounted) return;
         //ends the trip and returns to the trips page
         Navigator.pushReplacement(context,
-          MaterialPageRoute(
-            builder: (context) => const TripPage(),
-          ),
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const TripPage(), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          )
         );
         },
       child: const Text("Continue",

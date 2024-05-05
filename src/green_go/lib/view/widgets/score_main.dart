@@ -81,7 +81,12 @@ class ScoreMainState extends State<ScoreMain> {
                             backgroundColor: MaterialStateProperty.all<Color>(darkGreen),
                           ),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const ScorePage()));
+                            Navigator.push(context, 
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => const ScorePage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            ),);
                           },
                           child: const Text("+",
                             style: TextStyle(

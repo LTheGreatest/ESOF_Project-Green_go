@@ -40,7 +40,11 @@ class PopUpMenu extends StatelessWidget{
           case 1:
              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const EditPage()),
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) => const EditPage(),
+                  transitionDuration: Duration.zero,
+                  reverseTransitionDuration: Duration.zero,
+                )
               );
           break;
           //logout
@@ -49,7 +53,11 @@ class PopUpMenu extends StatelessWidget{
               if(!context.mounted) return;
               if(logoutResult == "logout_success"){
                 Navigator.pushAndRemoveUntil(context,
-                  MaterialPageRoute(builder: (context) => const StartPage()),
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => const StartPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
                   (Route route) => false
                 );
               }

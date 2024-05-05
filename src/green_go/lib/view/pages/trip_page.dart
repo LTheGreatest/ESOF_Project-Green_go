@@ -72,8 +72,12 @@ class TripPageState extends State<TripPage> {
     //button used to start a trip
     return TextButton(
         onPressed: (){
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => TakePictureScreen(isStarting: true, distance: 0, pointsPerDist: transportModel.pointsPerDist,)));
+          Navigator.push(context,
+            PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>  TakePictureScreen(isStarting: true, distance: 0, pointsPerDist: transportModel.pointsPerDist),
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ));
           },
         style: const ButtonStyle(
             backgroundColor: MaterialStatePropertyAll(Color.fromARGB(249, 94, 226, 76)),
