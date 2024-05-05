@@ -6,7 +6,6 @@ import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/pages/profile_edit_page.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -32,7 +31,6 @@ class JobControllerMock extends Mock implements TextEditingController{
   String get text => "Engineer";
 }
 
-@GenerateNiceMocks([MockSpec<TextEditingController>()])
 void main(){
 
   test("store data behaviour", (){
