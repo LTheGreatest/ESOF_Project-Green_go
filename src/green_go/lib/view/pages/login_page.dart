@@ -102,7 +102,11 @@ class LoginPageViewState extends State<LoginPage> {
                       ..onTap = () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const RegisterPage()),
+                          PageRouteBuilder(
+                            pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(), 
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                          ) 
                         );
                       },
                   ),
@@ -126,7 +130,12 @@ class LoginPageViewState extends State<LoginPage> {
                 if (!context.mounted) return;
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const MainPage())
+                  Navigator.push(context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation, secondaryAnimation) => const MainPage(), 
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ) 
                   );
                 } else if (signInResult == 'User not found: Double check your email') {
                   emailController.clear();

@@ -39,9 +39,11 @@ class DisplayPictureScreen extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.pushReplacement(context,
-            MaterialPageRoute(
-              builder: (context) => TakePictureScreen(isStarting: isStarting, distance: distance, pointsPerDist: pointsPerDist,),
-            ),);
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => TakePictureScreen(isStarting: isStarting, distance: distance, pointsPerDist: pointsPerDist,), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ) );
           },
         child: const Text("Try again",
           style: TextStyle(
@@ -61,9 +63,11 @@ class DisplayPictureScreen extends StatelessWidget {
         ),
         onPressed: () {
           Navigator.pushReplacement(context,
-            MaterialPageRoute(
-                builder: (context) => isStarting? OngoingTripPage(pointsPerDist: pointsPerDist) : PointsEarnedPage(distance: distance,pointsPerDist: pointsPerDist, ),
-            ),);
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>  isStarting? OngoingTripPage(pointsPerDist: pointsPerDist) : PointsEarnedPage(distance: distance,pointsPerDist: pointsPerDist,), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ));
           },
         child: const Text("Send Image",
           style: TextStyle(

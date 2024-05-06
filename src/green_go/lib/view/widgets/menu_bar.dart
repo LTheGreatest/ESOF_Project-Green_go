@@ -50,7 +50,11 @@ class CustomMenuBar extends StatelessWidget {
       case MenuPage.other:
         break;
     }
-    Navigator.push(context, MaterialPageRoute(builder: (context) => destinationPage));
+    Navigator.push(context, PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => destinationPage,
+      transitionDuration: Duration.zero,
+      reverseTransitionDuration: Duration.zero,
+    ));
   }
   @override
   Widget build(BuildContext context) {

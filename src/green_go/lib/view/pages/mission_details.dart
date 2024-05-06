@@ -31,37 +31,41 @@ class MissionDetails extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
+             color: lightGrey,
             width: 2,
           ),
         ),
       ),
-      child: Column(
-        children:[
-          Row(
-              children: [
-                Text(title,
-                  style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500
-                  ),
-                )
-              ]
-          ),
-          Row(
-              children:[
-                Expanded(
-                  child: Text(content,
-                    softWrap: true,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: Column(
+          children:[
+            Row(
+                children: [
+                  Text(title,
                     style: const TextStyle(
-                        color: darkGrey,
                         fontSize: 20,
                         fontWeight: FontWeight.w500
                     ),
-                  ),
-                )
-              ]
-          ),
-        ],
+                  )
+                ]
+            ),
+            Row(
+                children:[
+                  Expanded(
+                    child: Text(content,
+                      softWrap: true,
+                      style: const TextStyle(
+                          color: darkGrey,
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
+                  )
+                ]
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -71,37 +75,41 @@ class MissionDetails extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
+            color: lightGrey,
             width: 2,
           ),
         ),
       ),
-      child:Column(
-        children: [
-          const Row(
-              children: [
-                Text("Types",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500
-                  ),
-                )
-              ]
-          ),
-          Column(
-            children: getTypes(types).map(
-                  (e) => Row(
-                      children:[
-                        Text(e,
-                          style: const TextStyle(
-                              color: darkGrey,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500
-                        ),
-                      )]
-                  ),
-            ).toList(),
-          ),
-        ],
+      child:Padding(
+        padding: const EdgeInsets.only(bottom: 15),
+        child: Column(
+          children: [
+            const Row(
+                children: [
+                  Text("Types",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500
+                    ),
+                  )
+                ]
+            ),
+            Column(
+              children: getTypes(types).map(
+                    (e) => Row(
+                        children:[
+                          Text(e,
+                            style: const TextStyle(
+                                color: darkGrey,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500
+                          ),
+                        )]
+                    ),
+              ).toList(),
+            ),
+          ],
+        ),
       ),
     );
   }

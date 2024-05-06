@@ -108,17 +108,20 @@ class TakePictureScreenState extends State<TakePictureScreen> {
               if (!context.mounted) return;
               // If the picture was taken, display it on a new screen.
               await Navigator.of(context).pushReplacement(
-                MaterialPageRoute(
-                  builder: (context) => DisplayPictureScreen(
-                    // Pass the automatically generated path to
-                    // the DisplayPictureScreen widget.
-                    key: null,
-                    imagePath: image.path,
-                    isStarting: widget.isStarting,
-                    distance: widget.distance,
-                    pointsPerDist: widget.pointsPerDist,
-                  ),
-                ),
+                 PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) =>  
+                          DisplayPictureScreen(
+                            // Pass the automatically generated path to
+                            // the DisplayPictureScreen widget.
+                            key: null,
+                            imagePath: image.path,
+                            isStarting: widget.isStarting,
+                            distance: widget.distance,
+                            pointsPerDist: widget.pointsPerDist,
+                          ),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  )
               );
             } catch (e) {
               // If an error occurs, log the error to the console.

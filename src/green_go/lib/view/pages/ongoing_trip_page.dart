@@ -45,13 +45,15 @@ class OngoingTripPageState extends State<OngoingTripPage> {
         double dist = calculateDistance(initialLocation!, finalLocation!);
         //Redirects the user to take the final photo
         await Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-                builder: (context) => TakePictureScreen(
+          PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => TakePictureScreen(
                   isStarting: false,
                   distance: dist,
                   pointsPerDist: widget.pointsPerDist
-                )
-            )
+                ), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ) 
         );
         },
       style: const ButtonStyle(
@@ -71,7 +73,12 @@ class OngoingTripPageState extends State<OngoingTripPage> {
     // Button to cancel the trip
     return TextButton(
       onPressed: () {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const TripPage()));
+        Navigator.pushReplacement(context, 
+        PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) => const TripPage(), 
+            transitionDuration: Duration.zero,
+            reverseTransitionDuration: Duration.zero,
+          ) );
         },
       style: const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Color.fromARGB(248, 82, 83, 85)),

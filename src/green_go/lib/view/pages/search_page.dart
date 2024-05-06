@@ -77,7 +77,14 @@ class SearchPageState extends State<SearchPage> {
       ),
       child: TextButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missionsModel)));
+          Navigator.push(context, 
+            PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>  MissionDetails(model: missionsModel) ,
+                    
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              )
+          );
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

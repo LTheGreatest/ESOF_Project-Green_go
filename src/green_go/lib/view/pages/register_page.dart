@@ -131,7 +131,12 @@ class RegisterPageViewState extends State<RegisterPage> {
                         ..onTap = () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const LoginPage()),
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) =>  const LoginPage(),
+                                  
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            )
                           );
                         },
                     ),
@@ -187,7 +192,12 @@ class RegisterPageViewState extends State<RegisterPage> {
                       // Registration and login successful, navigate to Main page
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const MainPage()),
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) =>  const MainPage(),
+                              
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        )
                       );
                     } else if (signUpResult == 'Email is already in use') {
                       emailController.clear();

@@ -28,7 +28,12 @@ class MissionMainState extends State<MissionMain> {
     //Button to access a specific mission information
     return  TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: missions[index])));
+              Navigator.push(context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) => MissionDetails(model: missions[index]),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +124,12 @@ class MissionMainState extends State<MissionMain> {
               backgroundColor: MaterialStateProperty.all<Color>(darkGrey),
             ),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchPage()));
+              Navigator.push(context, 
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>  const SearchPage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ));
             },
             child: const Text("+",
               style: TextStyle(

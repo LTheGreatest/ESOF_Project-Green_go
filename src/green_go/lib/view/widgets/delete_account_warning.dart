@@ -47,7 +47,11 @@ class DeleteWarning extends StatelessWidget{
 
               if (result == "Delete successful") {
                Navigator.pushAndRemoveUntil(context,
-                  MaterialPageRoute(builder: (context) => const StartPage()),
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => const StartPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
                   (Route route) => false
                 );
               } else {

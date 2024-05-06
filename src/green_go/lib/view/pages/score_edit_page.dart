@@ -48,7 +48,13 @@ class ScoreEditPageState extends State<ScoreEditPage> {
               String goal = goalController.text.trim();
               if (isNumeric(goal)) {
                 await dataBaseUsers.updateUserGoal(user.uid, int.parse(goal)).then((value) =>
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const ScorePage()))
+                    Navigator.pushReplacement(context, 
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) =>  const ScorePage(),
+                            
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      ))
                 );
               } else {
                 goalController.clear();
@@ -92,69 +98,69 @@ class ScoreEditPageState extends State<ScoreEditPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Future.wait([getCurrentUserData()]),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Scaffold(
-              body: Center(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.8,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              width: 1
-                          ),
-                          borderRadius: const BorderRadius.all(Radius.elliptical(20, 20))
-                      ),
-                      child: Column(
-                        children:[
-                          Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01)),
-                          //Back button and title
-                          Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: backButton(context),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 25),
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child: TitleWidget(text: "Score Details")),
-                              ),
-                            ],
-                          ),
-                          //label text
-                          Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1)),
-                          const Text("Personal Goal:",
-                              style: TextStyle(
-                                color: darkerGrey,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w500
-                              )
-                          ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.05, 20, MediaQuery.of(context).size.height * 0.05),
-                            child: textForm(context),
-                          ),
-                          saveButton(context),
-                        ],
+    return Scaffold(
+      body: FutureBuilder(
+          future: Future.wait([getCurrentUserData()]),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Center(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.8,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.elliptical(20, 20))
+                        ),
+                        child: Column(
+                          children:[
+                            Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01)),
+                            //Back button and title
+                            Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: backButton(context),
+                                ),
+                                const Padding(
+                                  padding: EdgeInsets.only(left: 25),
+                                  child: Align(
+                                      alignment: Alignment.center,
+                                      child: TitleWidget(text: "Score Details")),
+                                ),
+                              ],
+                            ),
+                            //label text
+                            Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1)),
+                            const Text("Personal Goal:",
+                                style: TextStyle(
+                                  color: darkerGrey,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w500
+                                )
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(20, MediaQuery.of(context).size.height * 0.05, 20, MediaQuery.of(context).size.height * 0.05),
+                              child: textForm(context),
+                            ),
+                            saveButton(context),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.other,),
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+                  )
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           }
-        }
+      ),
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.other,),
     );
   }
 }

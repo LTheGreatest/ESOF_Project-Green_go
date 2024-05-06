@@ -35,7 +35,13 @@ class StartPage extends StatelessWidget {
                       foregroundColor: MaterialStateProperty.all(const Color.fromRGBO(0, 0, 0, 1)),
                     ),
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => const RegisterPage())
+                      Navigator.push(context, 
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(),
+                              
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        )
                       );
                       // first button action
                     },
@@ -50,7 +56,12 @@ class StartPage extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => const LoginPage())
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) =>  const LoginPage(),
+                              
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        )
                       );
                       // second button action
                     },
