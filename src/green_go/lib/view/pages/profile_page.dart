@@ -7,6 +7,7 @@ import 'package:green_go/view/constants.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/view/widgets/profile_popup_menu.dart';
+import 'package:green_go/view/pages/mission_history_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -113,6 +114,7 @@ class ProfilePageState extends State<ProfilePage> {
             ),
             onPressed: () {
               // Implement Mission History functionality
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const MissionHistoryPage()), );
             },
             child: const Text('Mission History',
               style: TextStyle(
