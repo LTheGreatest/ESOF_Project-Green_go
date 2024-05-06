@@ -3,9 +3,10 @@ import 'package:green_go/model/user_model.dart';
 
 class DataBaseUsers {
   static final CollectionReference userCollection = FirebaseFirestore.instance.collection("users");
+  static final CollectionReference userMissionsCollection = FirebaseFirestore.instance.collection("user_missions");
 
   Future addUser(UserModel user) async {
-    await FirebaseFirestore.instance.collection("user_missions").doc(user.uid).set({
+    await userMissionsCollection.doc(user.uid).set({
       'missions': [],
       'completedMissions': {},
     });
@@ -66,6 +67,7 @@ class DataBaseUsers {
     return await userCollection.doc(uid).get();
   }
   void deleteUser(String uid) {
+    userMissionsCollection.doc(uid).delete();
     userCollection.doc(uid).delete();
   }
 }

@@ -30,14 +30,12 @@ class ScoreMainState extends State<ScoreMain> {
     getCurrentUserData();
     fetchIcons();
   }
-
-  void setFetcher(UserFetcher newFetcher){
+  void setFetcher(UserFetcher newFetcher) {
     fetcher = newFetcher;
   }
-  void setStorage(CloudStorage newStorage){
+  void setStorage(CloudStorage newStorage) {
     storage = newStorage;
   }
-
   Future<void> getCurrentUserData() async {
     user = await fetcher.getCurrentUserData();
     score = user!.totalPoints;
@@ -54,47 +52,44 @@ class ScoreMainState extends State<ScoreMain> {
     goalIcon = await storage.downloadFileURL('icons/Goal.png');
     streakIcon = await storage.downloadFileURL('icons/Streak.png');
   }
-
-  Widget scoreDetailsValues(BuildContext context, String title, String imagePath, int detailValue){
-    //builds the score detaisl that appear on the right side of the widget
+  Widget scoreDetailsValues(BuildContext context, String title, String imagePath, int detailValue) {
+    //builds the score details that appear on the right side of the widget
     return Row(
+      children: [
+        Image.network(imagePath),
+        const Padding(padding: EdgeInsets.only(left: 10, bottom: 5)),
+        Column(
           children: [
-            Image.network(imagePath),
-            const Padding(padding: EdgeInsets.only(left: 10, bottom: 5)),
-            Column(
-              children: [
-                Text(title,
-                  textAlign: TextAlign.right,
-                ),
-                Text("$detailValue",
-                  textAlign: TextAlign.right,
-                ),
-              ],
+            Text(title,
+              textAlign: TextAlign.right,
+            ),
+            Text("$detailValue",
+              textAlign: TextAlign.right,
             ),
           ],
-        );
+        ),
+      ],
+    );
   }
-
-  Widget remainingScore(BuildContext context){
+  Widget remainingScore(BuildContext context) {
     //display the remaining score
     return  Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('${(goal! - score!) > 0 ? (goal! - score!) : 0}',
-                  style: const TextStyle(
-                    fontSize: 30,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                const Text("Remaining",
-                  style: TextStyle(
-                    fontSize: 20,
-                  ),
-                ),
-              ],
-            );
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('${(goal! - score!) > 0 ? (goal! - score!) : 0}',
+          style: const TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        const Text("Remaining",
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+      ],
+    );
   }
-  
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

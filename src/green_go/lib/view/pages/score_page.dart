@@ -57,47 +57,43 @@ class ScorePageState extends State<ScorePage> {
       ),
     );
   }
-
-  Widget backButton(BuildContext context){
+  Widget backButton(BuildContext context) {
     //button to go back to the main page
     return IconButton(
-            onPressed: () {
-              Navigator.push(context, 
-               PageRouteBuilder(
-                pageBuilder: (context, animation, secondaryAnimation) =>  const MainPage(),
-                    
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ));
-              },
-            icon: const Icon(Icons.arrow_back, size: 40),
-          );
+      onPressed: () {
+        Navigator.push(context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>  const MainPage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ));
+        },
+      icon: const Icon(Icons.arrow_back, size: 40),
+    );
   }
-
-  Widget updateButton(BuildContext context){
+  Widget updateButton(BuildContext context) {
     //button to access the score edit page
-    return  ElevatedButton(
-            style: ButtonStyle(
-              padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(25, 5, 25, 5)),
-              backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
-            ),
-            onPressed: () {
-              Navigator.push(context, 
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>  const ScoreEditPage(),
-                      
-                  transitionDuration: Duration.zero,
-                  reverseTransitionDuration: Duration.zero,
-                ));
-              },
-            child: const Text("Update Goal",
-              style: TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.w500,
-                fontSize: 30,
-              ),
-            ),
-          );
+    return ElevatedButton(
+      style: ButtonStyle(
+        padding: MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.fromLTRB(25, 5, 25, 5)),
+        backgroundColor: MaterialStateProperty.all<Color>(lightGreen),
+      ),
+      onPressed: () {
+        Navigator.push(context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) =>  const ScoreEditPage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ));
+        },
+      child: const Text("Update Goal",
+        style: TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          fontSize: 30,
+        ),
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {

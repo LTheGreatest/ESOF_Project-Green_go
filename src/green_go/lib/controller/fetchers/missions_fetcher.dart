@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pair/pair.dart';
 import 'package:green_go/controller/database/database_missions.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/model/missions_model.dart';
@@ -8,6 +9,8 @@ class MissionsFetcher {
   DataBaseMissions db = DataBaseMissions();
   DataBaseUserMissions dbUser = DataBaseUserMissions();
   List<MissionsModel> missions = [];
+  List<Pair<String, MissionsModel>> missionsId = [];
+  List<Pair<MissionsModel, Timestamp>> completedMissions = [];
 
   void setDB(DataBaseMissions newDB) {
     db = newDB;
@@ -20,6 +23,7 @@ class MissionsFetcher {
     await db.getAllMissions().then((querySnapshot) {
       for (var docSnapshot in querySnapshot.docs) {
         try {
+          String uid = docSnapshot.id;
           String title = docSnapshot["title"];
           String description = docSnapshot["description"];
           String frequency = docSnapshot["frequency"];
@@ -27,6 +31,7 @@ class MissionsFetcher {
           List<dynamic> types = docSnapshot["types"];
 
           missions.add(MissionsModel(title, description, frequency, types, points));
+          missionsId.add(Pair(uid, MissionsModel(title, description, frequency, types, points)));
         } catch (e) {
           if (kDebugMode) {
              print("Failed with error '${e.toString()}'");
@@ -36,52 +41,32 @@ class MissionsFetcher {
     });
     return missions;
   }
-
-  Future<Map<String, MissionsModel>> getAllMissionsWithID() async {
-    Map<String, MissionsModel> missionsWithID = {};
-    //gets all missions available at the firebase firestore database
-    await db.getAllMissions().then((querySnapshot) {
-      for (var docSnapshot in querySnapshot.docs) {
+  Future<List<Pair<MissionsModel, Timestamp>>> getCompleteMissions(String userId) async {
+    await getAllMissions();
+    //gets all the mission that the user completed
+    await dbUser.getUserMissions(userId).then((docSnapshot) {
         try {
-          String title = docSnapshot["title"];
-          String description = docSnapshot["description"];
-          String frequency = docSnapshot["frequency"];
-          int points = docSnapshot["points"];
-          List<dynamic> types = docSnapshot["types"];
-          MissionsModel missionsModel = MissionsModel(title, description, frequency, types, points);
-          missionsWithID[docSnapshot.id]=missionsModel;
-          //missionsWithID.addEntries({docSnapshot.id : missionsModel} as Iterable<MapEntry<String, MissionsModel>>);
+          Map<String, dynamic> completed = docSnapshot["completedMissions"];
+          completed.forEach((key, value) {
+            for (int i = 0; i < missionsId.length; i++) {
+              if (missionsId[i].key == key) {
+                String title = missionsId[i].value.title;
+                String description = missionsId[i].value.description;
+                String frequency = missionsId[i].value.frequency;
+                List<dynamic> types = missionsId[i].value.types;
+                int points = missionsId[i].value.points;
+
+                completedMissions.add(Pair(MissionsModel(title, description, frequency, types, points), value));
+              }
+            }
+          });
         } catch (e) {
           if (kDebugMode) {
              print("Failed with error '${e.toString()}'");
            }
         }
       }
-    });
-    return missionsWithID;
-  }
-
-  Future<Map<String, MissionsModel>> getUserMissions(String userId) async {
-    Map<String, MissionsModel> missions = await getAllMissionsWithID();
-    Map<String, MissionsModel> completedMissions={};
-    //gets all the mission that the user completed
-    await dbUser.getUserMissions(userId).then((querySnapshot) {
-      Map<String, dynamic> completedMission = querySnapshot["completedMissions"];
-
-      
-      for (MapEntry<String,dynamic> mission in completedMission.entries) {
-        completedMissions[mission.key]=missions[mission.key]!;
-      }
-      
-    });
+    );
     return completedMissions;
-  }
-  Future<Timestamp> getTimeOfMission(String missionId , String userId) async {
-    Timestamp time;
-    DocumentSnapshot querySnapshot = await dbUser.getUserMissions(userId);
-    Map<String, dynamic> completedMission = querySnapshot["completedMissions"];
-    time=completedMission[missionId]!;
-    
-    return time;
   }
 }

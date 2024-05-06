@@ -80,7 +80,6 @@ class SearchPageState extends State<SearchPage> {
           Navigator.push(context, 
             PageRouteBuilder(
                 pageBuilder: (context, animation, secondaryAnimation) =>  MissionDetails(model: missionsModel) ,
-                    
                 transitionDuration: Duration.zero,
                 reverseTransitionDuration: Duration.zero,
               )
