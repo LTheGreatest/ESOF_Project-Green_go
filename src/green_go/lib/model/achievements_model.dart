@@ -1,5 +1,6 @@
-class AchievementModel {
+class AchievementsModel {
   String name;
-  String details;
-  AchievementModel(this.name, this.details);
+  String description;
+  List<dynamic> types;
+  AchievementsModel(this.name, this.description, this.types);
 }
