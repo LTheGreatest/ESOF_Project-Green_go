@@ -8,17 +8,19 @@ import 'package:green_go/view/pages/trip_page.dart';
 import 'package:green_go/view/widgets/problem_widget.dart';
 import 'package:green_go/view/widgets/subtitle_widget.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
+import 'package:green_go/model/transport_model.dart';
 
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     super.key,
     required this.isStarting,
     required this.distance,
-    required this.pointsPerDist,
+    required this.transport,
   });
   final bool isStarting;
   final double distance;
-  final double pointsPerDist;
+  final TransportModel transport;
+  
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -117,7 +119,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                             imagePath: image.path,
                             isStarting: widget.isStarting,
                             distance: widget.distance,
-                            pointsPerDist: widget.pointsPerDist,
+                            transport: widget.transport,
                           ),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,

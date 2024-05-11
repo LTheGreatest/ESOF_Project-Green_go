@@ -1,18 +1,23 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
+import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/controller/database/database_users.dart';
+import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/trip_page.dart';
 import 'package:green_go/view/widgets/problem_widget.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
+import 'package:green_go/model/transport_model.dart';
+import 'package:green_go/controller/fetchers/missions_fetcher.dart';
+import 'package:pair/pair.dart';
 
 class PointsEarnedPage extends StatefulWidget {
   final double distance;
-  final double pointsPerDist;
-  const PointsEarnedPage({super.key, required this.distance, required this.pointsPerDist});
+  final TransportModel transport;
+  const PointsEarnedPage({super.key, required this.distance, required this.transport});
 
   @override
   PointsEarnedPageState createState() => PointsEarnedPageState();
@@ -22,11 +27,14 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
   UserFetcher fetcher = UserFetcher();
   late Future<UserModel> futureUser;
   bool hasWaitedTooLong = false;
+  late MissionsFetcher missionsFetcher = MissionsFetcher();
+  late DataBaseUserMissions udb = DataBaseUserMissions();
 
   @override
   void initState() {
     super.initState();
     futureUser = fetcher.getCurrentUserData();
+
     //waits 10 second for the future methods
     Future.delayed(const Duration(seconds: 10),(){
         hasWaitedTooLong = true;
@@ -42,13 +50,72 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       return (distance * pointsPerDist).toInt();
     }
   }
+  Future<void> updateCompletedMissions() async{
+    List<Pair<String, MissionsModel>> missions;
+    List<Pair<String, MissionsModel>> missionAlreadyCompleted=[];
+    await missionsFetcher.getAllMissions();
+    missions=missionsFetcher.missionsId;
+    //List<Pair<String,int>> missionsInProgress = await missionsFetcher.getMissionsInProgress(AuthService().getCurrentUser()!.uid);
+    Map<String,dynamic> completedMissionsId = await missionsFetcher.getCompletedMissionsId(AuthService().getCurrentUser()!.uid);
+
+    //checks already completed missions and takes them out
+    for(final mission in missions){
+      if(completedMissionsId.containsKey(mission.key)){
+        missionAlreadyCompleted.add(mission);
+      }
+    }
+    for(final mission in missionAlreadyCompleted){
+      missions.remove(mission);
+    }
+    missionAlreadyCompleted=[];
+
+    //checks if missions already have progress and if they can be completed with that progress otherwise update progress
+    /*
+    for(final mission in missions){
+      for(Pair<String,int> missionInProgress in missionsInProgress){
+        if(mission.key==missionInProgress.key){
+          if(calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgress.value>=mission.value.points){
+            udb.deleteUserMission(AuthService().getCurrentUser()!.uid, missionInProgress.key, missionInProgress.value);
+            udb.addCompletedMission(AuthService().getCurrentUser()!.uid, missionInProgress.key);
+          }else{
+            udb.deleteUserMission(AuthService().getCurrentUser()!.uid, missionInProgress.key, missionInProgress.value);
+            int newPoints = calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgress.value;
+            udb.addUserMission(AuthService().getCurrentUser()!.uid, missionInProgress.key, newPoints);
+          }
+          
+          if(!missionAlreadyCompleted.contains(mission)){
+            missionAlreadyCompleted.add(mission);
+          }
+        }
+        
+      }
+    }
+
+    for(final mission in missionAlreadyCompleted){
+      missions.remove(mission);
+    }
+    */
+
+    //checks missions that dont have progress and either complets them or adds progress
+    for(final mission in missions){
+      int points = calculatePoints(widget.distance, widget.transport.pointsPerDist);
+      if(points>=mission.value.points){
+        udb.addCompletedMission(AuthService().getCurrentUser()!.uid, mission.key);
+      }
+      else{
+        //udb.addUserMission(AuthService().getCurrentUser()!.uid, mission.key, points);
+      }
+    }
+
+
+  }
   Future<void> updatePoints() async {
     //calls the database services to update the user points in the database
-   await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.pointsPerDist));
+   await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.transport.pointsPerDist));
   }
   Widget pointsEarnedText(BuildContext context){
     //Text with the number of points earned in the trip
-    return Text("You earned ${calculatePoints(widget.distance, widget.pointsPerDist)} points",
+    return Text("You earned ${calculatePoints(widget.distance, widget.transport.pointsPerDist)} points",
       style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.w500
@@ -90,7 +157,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
             ),
           ),
           //number of points earned during the trip
-          Text("+${calculatePoints(widget.distance, widget.pointsPerDist)}",
+          Text("+${calculatePoints(widget.distance, widget.transport.pointsPerDist)}",
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -128,7 +195,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
                 ),
               ),
               //number of points earned during the trip
-              Text("+${calculatePoints(widget.distance, widget.pointsPerDist)}",
+              Text("+${calculatePoints(widget.distance, widget.transport.pointsPerDist)}",
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -165,7 +232,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
               ),
             ),
             //number of points earned during the trip
-            Text("+${calculatePoints(widget.distance, widget.pointsPerDist)}",
+            Text("+${calculatePoints(widget.distance, widget.transport.pointsPerDist)}",
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -190,17 +257,17 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
           //weekly points row
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 50, 20, 25),
-            child: weeklyPoints(context, user.weeklyPoints + calculatePoints(widget.distance, widget.pointsPerDist)),
+            child: weeklyPoints(context, user.weeklyPoints + calculatePoints(widget.distance, widget.transport.pointsPerDist)),
           ),
           //monthly points row
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 25),
-            child: monthlyPoints(context, user.monthlyPoints + calculatePoints(widget.distance, widget.pointsPerDist)),
+            child: monthlyPoints(context, user.monthlyPoints + calculatePoints(widget.distance, widget.transport.pointsPerDist)),
           ),
           //total points row
           Padding(
             padding: const EdgeInsets.fromLTRB(20, 25, 20, 50),
-            child: totalPoints(context, user.totalPoints + calculatePoints(widget.distance, widget.pointsPerDist)),
+            child: totalPoints(context, user.totalPoints + calculatePoints(widget.distance, widget.transport.pointsPerDist)),
           ),
         ],
       ),
@@ -216,6 +283,9 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       onPressed: () async{
         //update the points before leaving the page
         await updatePoints();
+
+        //updates missions
+        await updateCompletedMissions();
         //verifies if the context is mounted. If it is not, we cannot continue
         if (!context.mounted) return;
         //ends the trip and returns to the trips page

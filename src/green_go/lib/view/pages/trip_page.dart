@@ -74,7 +74,7 @@ class TripPageState extends State<TripPage> {
         onPressed: (){
           Navigator.push(context,
             PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>  TakePictureScreen(isStarting: true, distance: 0, pointsPerDist: transportModel.pointsPerDist),
+            pageBuilder: (context, animation, secondaryAnimation) =>  TakePictureScreen(isStarting: true, distance: 0, transport: transportModel),
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
           ));

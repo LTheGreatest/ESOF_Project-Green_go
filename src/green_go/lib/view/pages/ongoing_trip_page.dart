@@ -7,10 +7,11 @@ import 'package:green_go/view/pages/trip_page.dart';
 import 'package:green_go/view/widgets/problem_widget.dart';
 import 'package:green_go/view/widgets/subtitle_widget.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
+import 'package:green_go/model/transport_model.dart';
 
 class OngoingTripPage extends StatefulWidget {
-  const OngoingTripPage({super.key, required this.pointsPerDist});
-  final double pointsPerDist;
+  const OngoingTripPage({super.key, required this.transport});
+  final TransportModel transport;
 
  @override
   OngoingTripPageState createState() => OngoingTripPageState();
@@ -49,7 +50,7 @@ class OngoingTripPageState extends State<OngoingTripPage> {
             pageBuilder: (context, animation, secondaryAnimation) => TakePictureScreen(
                   isStarting: false,
                   distance: dist,
-                  pointsPerDist: widget.pointsPerDist
+                  transport: widget.transport
                 ), 
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,

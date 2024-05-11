@@ -1,4 +1,5 @@
 import 'package:green_go/controller/location/location.dart';
+import 'package:green_go/model/transport_model.dart';
 import 'package:green_go/view/pages/points_earned_page.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -142,7 +143,8 @@ void main(){
 
     test("calculate points distance", (){
       //given
-      PointsEarnedPage page = const PointsEarnedPage(distance: 20, pointsPerDist: 1.2);
+      final TransportModel transportModel = TransportModel("teste", 1.2);
+      PointsEarnedPage page =  PointsEarnedPage(distance: 20, transport: transportModel);
       PointsEarnedPageState state = page.createState();
 
       //then
@@ -151,7 +153,8 @@ void main(){
 
     test("distance to small (residual distance)", (){
       //given
-      PointsEarnedPage page = const PointsEarnedPage(distance: 0.002, pointsPerDist: 1.2);
+      final TransportModel transportModel = TransportModel("teste", 1.2);
+      PointsEarnedPage page = PointsEarnedPage(distance: 0.002, transport: transportModel);
       PointsEarnedPageState state = page.createState();
 
       //then
@@ -160,7 +163,8 @@ void main(){
 
     test("negative distance should return 0 points", (){
       //given
-      PointsEarnedPage page = const PointsEarnedPage(distance: -10, pointsPerDist: 1.2);
+      final TransportModel transportModel = TransportModel("teste", 1.2);
+      PointsEarnedPage page = PointsEarnedPage(distance: -10, transport: transportModel);
       PointsEarnedPageState state = page.createState();
 
       //then
@@ -169,7 +173,8 @@ void main(){
 
     test("negative pointPerDist should return 0 points", (){
       //given
-      PointsEarnedPage page = const PointsEarnedPage(distance: 10, pointsPerDist: -1.2);
+      final TransportModel transportModel = TransportModel("teste", -1.2);
+      PointsEarnedPage page = PointsEarnedPage(distance: 10, transport: transportModel);
       PointsEarnedPageState state = page.createState();
 
       //then
@@ -178,7 +183,8 @@ void main(){
 
     test("both negative distance and pointsPerDist should return 0 points", (){
       //given
-      PointsEarnedPage page = const PointsEarnedPage(distance: -10, pointsPerDist: -1.2);
+      final TransportModel transportModel = TransportModel("teste", -1.2);
+      PointsEarnedPage page = PointsEarnedPage(distance: -10, transport: transportModel);
       PointsEarnedPageState state = page.createState();
 
       //then

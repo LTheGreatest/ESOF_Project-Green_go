@@ -5,13 +5,14 @@ import 'package:green_go/view/pages/ongoing_trip_page.dart';
 import 'package:green_go/view/pages/points_earned_page.dart';
 import 'package:green_go/view/pages/take_picture_screen.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
+import 'package:green_go/model/transport_model.dart';
 
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   final bool isStarting;
   final double distance;
-  final double pointsPerDist;
-  const DisplayPictureScreen({super.key, required this.imagePath, required this.isStarting, required this.distance, required this.pointsPerDist});
+  final TransportModel transport;
+  const DisplayPictureScreen({super.key, required this.imagePath, required this.isStarting, required this.distance, required this.transport});
 
   Widget buildImageContainer(BuildContext context) {
     //Widget containing the image taken before
@@ -40,7 +41,7 @@ class DisplayPictureScreen extends StatelessWidget {
         onPressed: () {
           Navigator.pushReplacement(context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => TakePictureScreen(isStarting: isStarting, distance: distance, pointsPerDist: pointsPerDist,), 
+            pageBuilder: (context, animation, secondaryAnimation) => TakePictureScreen(isStarting: isStarting, distance: distance, transport: transport,), 
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
           ) );
@@ -64,7 +65,7 @@ class DisplayPictureScreen extends StatelessWidget {
         onPressed: () {
           Navigator.pushReplacement(context,
           PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) =>  isStarting? OngoingTripPage(pointsPerDist: pointsPerDist) : PointsEarnedPage(distance: distance,pointsPerDist: pointsPerDist,), 
+            pageBuilder: (context, animation, secondaryAnimation) =>  isStarting? OngoingTripPage(transport: transport) : PointsEarnedPage(distance: distance,transport: transport,), 
             transitionDuration: Duration.zero,
             reverseTransitionDuration: Duration.zero,
           ));
