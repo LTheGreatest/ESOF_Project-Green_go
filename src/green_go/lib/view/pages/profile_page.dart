@@ -10,6 +10,8 @@ import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/view/widgets/profile_popup_menu.dart';
 import 'package:green_go/view/pages/mission_history_page.dart';
 
+import 'achievements_page.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -116,7 +118,12 @@ class ProfilePageState extends State<ProfilePage> {
                 reverseTransitionDuration: Duration.zero,
               ));
         } else if (buttonText == 'Achievements') {
-          // Implement Achievements page
+          Navigator.push(context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>  const AchievementsPage (),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ));
         } else {
           if (kDebugMode) {
             print("Error: Button text not recognized");
