@@ -55,7 +55,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
     List<Pair<String, MissionsModel>> missionAlreadyCompleted=[];
     await missionsFetcher.getAllMissions();
     missions=missionsFetcher.missionsId;
-    //List<Pair<String,int>> missionsInProgress = await missionsFetcher.getMissionsInProgress(AuthService().getCurrentUser()!.uid);
+    List<dynamic> missionsInProgress = await missionsFetcher.getMissionsInProgress(AuthService().getCurrentUser()!.uid);
     Map<String,dynamic> completedMissionsId = await missionsFetcher.getCompletedMissionsId(AuthService().getCurrentUser()!.uid);
 
     //checks already completed missions and takes them out
@@ -70,22 +70,28 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
     missionAlreadyCompleted=[];
 
     //checks if missions already have progress and if they can be completed with that progress otherwise update progress
-    /*
+    
     for(final mission in missions){
-      for(Pair<String,int> missionInProgress in missionsInProgress){
-        if(mission.key==missionInProgress.key){
-          if(calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgress.value>=mission.value.points){
-            udb.deleteUserMission(AuthService().getCurrentUser()!.uid, missionInProgress.key, missionInProgress.value);
-            udb.addCompletedMission(AuthService().getCurrentUser()!.uid, missionInProgress.key);
+      for(Map<String,dynamic> missionInProgress in missionsInProgress){
+        MapEntry missionInProgressEntry = missionInProgress.entries.first;
+        if(mission.key==missionInProgressEntry.key){
+          if(calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgressEntry.value>=mission.value.points){
+
+            udb.deleteUserMission(AuthService().getCurrentUser()!.uid, {missionInProgressEntry.key : missionInProgressEntry.value});
+
+            udb.addCompletedMission(AuthService().getCurrentUser()!.uid, missionInProgressEntry.key);
+
+            if(!missionAlreadyCompleted.contains(mission)){
+              missionAlreadyCompleted.add(mission);
+            }
           }else{
-            udb.deleteUserMission(AuthService().getCurrentUser()!.uid, missionInProgress.key, missionInProgress.value);
-            int newPoints = calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgress.value;
-            udb.addUserMission(AuthService().getCurrentUser()!.uid, missionInProgress.key, newPoints);
+            
+            udb.deleteUserMission(AuthService().getCurrentUser()!.uid, {missionInProgressEntry.key : missionInProgressEntry.value});
+            int newPoints = (calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgressEntry.value) as int;
+            udb.addUserMission(AuthService().getCurrentUser()!.uid, {missionInProgressEntry.key : newPoints});
           }
           
-          if(!missionAlreadyCompleted.contains(mission)){
-            missionAlreadyCompleted.add(mission);
-          }
+          
         }
         
       }
@@ -94,16 +100,17 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
     for(final mission in missionAlreadyCompleted){
       missions.remove(mission);
     }
-    */
+    
 
     //checks missions that dont have progress and either complets them or adds progress
     for(final mission in missions){
       int points = calculatePoints(widget.distance, widget.transport.pointsPerDist);
-      if(points>=mission.value.points){
+      if(points>=mission.value.points && mission.value.types.contains(widget.transport)){
         udb.addCompletedMission(AuthService().getCurrentUser()!.uid, mission.key);
       }
       else{
-        //udb.addUserMission(AuthService().getCurrentUser()!.uid, mission.key, points);
+        
+        udb.addUserMission(AuthService().getCurrentUser()!.uid, {mission.key:points});
       }
     }
 

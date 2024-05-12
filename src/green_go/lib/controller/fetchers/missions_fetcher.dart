@@ -76,8 +76,8 @@ class MissionsFetcher {
     });
     return completedMissionsId;
   }
-  Future<List<Pair<String,int>>> getMissionsInProgress(String userId) async{
-    List<Pair<String,int>> missionsInProgress=[];
+  Future<List<dynamic>> getMissionsInProgress(String userId) async{
+    List<dynamic> missionsInProgress=[];
     await dbUser.getUserMissions(userId).then((querySnapshot) {
         missionsInProgress=querySnapshot['missions'];
     });

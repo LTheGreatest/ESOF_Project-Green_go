@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:pair/pair.dart';
 
 class DataBaseUserMissions {
@@ -7,16 +8,16 @@ class DataBaseUserMissions {
   Future getUserMissions(String uid) async {
     return await userMissionsCollection.doc(uid).get();
   }
-  Future deleteUserMission(String userId, String missionId, int points) async {
+  Future deleteUserMission(String userId, Map<String,int> missionPoints) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
-    List<Pair<String,int>> missions = doc['missions'];
-    missions.remove(Pair(missionId, points));
+    List<dynamic> missions = doc['missions'];
+    missions.remove(missionPoints);
     return await userMissionsCollection.doc(userId).update({'missions': missions});
   }
-  Future addUserMission(String userId, String missionID, int points) async {
+  Future addUserMission(String userId, Map<String,int> missionPoints) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
-    List<Pair<String,int>> missions = doc['missions'];
-    missions.add(Pair(missionID, points));
+    List<dynamic> missions = doc['missions'];
+    missions.add(missionPoints);
     return await userMissionsCollection.doc(userId).update({'missions': missions});
   }
   Future addCompletedMission(String userId, String missionId) async {
