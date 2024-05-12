@@ -19,13 +19,6 @@ class ScoreEditPageState extends State<ScoreEditPage> {
   final DataBaseUsers dataBaseUsers = DataBaseUsers();
   late UserModel user;
 
-  bool isNumeric(String str) {
-    final numericRegex = RegExp(r'^-?[0-9]+$');
-    return numericRegex.hasMatch(str);
-  }
-  Future<void> getCurrentUserData() async {
-    user = await UserFetcher().getCurrentUserData();
-  }
   @override
   void initState() {
     super.initState();
@@ -35,6 +28,14 @@ class ScoreEditPageState extends State<ScoreEditPage> {
   void dispose() {
     goalController.dispose();
     super.dispose();
+  }
+
+  bool isNumeric(String str) {
+    final numericRegex = RegExp(r'^-?[0-9]+$');
+    return numericRegex.hasMatch(str);
+  }
+  Future<void> getCurrentUserData() async {
+    user = await UserFetcher().getCurrentUserData();
   }
 
   Widget saveButton(BuildContext context){

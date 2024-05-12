@@ -21,8 +21,92 @@ class MissionHistoryState extends State<MissionHistoryPage > {
   late List<Pair<MissionsModel, Timestamp>> completedMissions;
 
   Future<void> getCompletedMissions() async {
+    //gets the completed missions
     UserModel user = await UserFetcher().getCurrentUserData();
     completedMissions = await MissionsFetcher().getCompleteMissions(user.uid);
+  }
+
+  Widget missionRow(BuildContext contextn, int index){
+    //row with the mission details
+    return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //mission title
+              Flexible(
+                child: Text(completedMissions[index].key.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600
+                  )
+                ),
+              ),
+              //completion date
+              Text(completedMissions[index].value.toDate().toString().substring(0, 10),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 15,
+                ),
+              )
+            ],
+          );
+  }
+  Widget missionContainer(BuildContext context, int index){
+    //container with a button that redirects to the mission details
+    return Container(
+              width: MediaQuery.of(context).size.width * 0.6,
+              height: MediaQuery.of(context).size.height * 0.05,
+              decoration: BoxDecoration(
+                color: lightGrey,
+                border: Border.all(
+                    width: 1
+                ),
+                borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
+              ),
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: completedMissions[index].key)));
+                },
+                child: missionRow(context, index),
+              ),
+            );
+  }
+  Widget backButtonAndTitle(BuildContext context){
+    //return the back button and the title
+    return Stack(
+            children: [
+              //back button
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) =>  const ProfilePage(),
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                        ));
+                  },
+                  icon: const Icon(Icons.arrow_back, size: 40),
+                ),
+              ),
+              //title
+              const Padding(
+                padding: EdgeInsets.only(left: 35, top: 5),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: Text("Completed Missions",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                )
+              ),
+            ],
+          );
   }
   @override
   Widget build(BuildContext context) {
@@ -48,37 +132,7 @@ class MissionHistoryState extends State<MissionHistoryPage > {
                         children:[
                           Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02)),
                           //Back button and title
-                          Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.push(context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, animation, secondaryAnimation) =>  const ProfilePage(),
-                                          transitionDuration: Duration.zero,
-                                          reverseTransitionDuration: Duration.zero,
-                                        ));
-                                  },
-                                  icon: const Icon(Icons.arrow_back, size: 40),
-                                ),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 35, top: 5),
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text("Completed Missions",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          fontSize: 32,
-                                          fontWeight: FontWeight.bold
-                                      ),
-                                    )
-                                )
-                              ),
-                            ],
-                          ),
+                          backButtonAndTitle(context),
                           Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04)),
                           //List of completed missions
                           Expanded(
@@ -88,43 +142,7 @@ class MissionHistoryState extends State<MissionHistoryPage > {
                                   itemBuilder: (context, index) {
                                     return Padding(
                                         padding: const EdgeInsets.only(top: 15),
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width * 0.6,
-                                          height: MediaQuery.of(context).size.height * 0.05,
-                                          decoration: BoxDecoration(
-                                            color: lightGrey,
-                                            border: Border.all(
-                                                width: 1
-                                            ),
-                                            borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
-                                          ),
-                                          child: TextButton(
-                                            onPressed: () {
-                                              Navigator.push(context, MaterialPageRoute(builder: (context) => MissionDetails(model: completedMissions[index].key)));
-                                            },
-                                            child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                              children: [
-                                                Flexible(
-                                                  child: Text(completedMissions[index].key.title,
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 18,
-                                                        fontWeight: FontWeight.w600
-                                                    )
-                                                  ),
-                                                ),
-                                                Text(completedMissions[index].value.toDate().toString().substring(0, 10),
-                                                  style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 15,
-                                                  ),
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        )
+                                        child: missionContainer(context, index),
                                     );
                                   })
                           )
