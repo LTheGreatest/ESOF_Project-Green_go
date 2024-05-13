@@ -22,7 +22,7 @@ class DataBaseUserMissions {
   }
   Future addCompletedMission(String userId, String missionId) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
-    Map<String, Timestamp> completedMissions = doc['completedMissions'];
+    Map<String, dynamic> completedMissions = doc['completedMissions'];
     completedMissions[missionId] = Timestamp.now();
     return await userMissionsCollection.doc(userId).update({'completedMissions': completedMissions});
   }
