@@ -18,6 +18,7 @@ class AchievementsFetcher {
   void setDBUser(DataBaseUserAchievements newDBUser) {
     dbUser = newDBUser;
   }
+
   Future<List<AchievementsModel>> getAllAchievements() async {
     //gets all achievements available at the firebase firestore database
     await db.getAllAchievements().then((querySnapshot) {
@@ -39,6 +40,7 @@ class AchievementsFetcher {
     });
     return achievements;
   }
+
   Future<List<Pair<AchievementsModel, Timestamp>>> getCompleteAchievements(String userId) async {
     await getAllAchievements();
     //gets all the mission that the user completed
@@ -65,4 +67,20 @@ class AchievementsFetcher {
     );
     return completedAchievements;
   }
+  Future<Map<String,dynamic>> getCompletedAchievementsId(String userId) async{
+    Map<String,dynamic> completedAchievementsId={};
+    await dbUser.getUserAchivements(userId).then((querySnapshot) {
+      completedAchievementsId= querySnapshot['completedMissions'];
+    });
+    return completedAchievementsId;
+  }
+
+  Future<List<dynamic>> getAchievementsInProgress(String userId) async{
+    List<dynamic> achievementsInProgress=[];
+    await dbUser.getUserAchivements(userId).then((querySnapshot) {
+      achievementsInProgress=querySnapshot['achievements'];
+    });
+    return achievementsInProgress;
+  }
+
 }
