@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:pair/pair.dart';
-
 class DataBaseUserMissions {
   static final CollectionReference userMissionsCollection = FirebaseFirestore.instance.collection("user_missions");
 

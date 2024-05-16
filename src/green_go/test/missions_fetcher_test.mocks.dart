@@ -6,6 +6,8 @@
 import 'dart:async' as _i3;
 
 import 'package:green_go/controller/database/database_missions.dart' as _i2;
+import 'package:green_go/controller/database/database_user_missions.dart'
+    as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -30,6 +32,73 @@ class MockDataBaseMissions extends _i1.Mock implements _i2.DataBaseMissions {
         Invocation.method(
           #getAllMissions,
           [],
+        ),
+        returnValue: _i3.Future<dynamic>.value(),
+        returnValueForMissingStub: _i3.Future<dynamic>.value(),
+      ) as _i3.Future<dynamic>);
+}
+
+/// A class which mocks [DataBaseUserMissions].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDataBaseUserMissions extends _i1.Mock
+    implements _i4.DataBaseUserMissions {
+  @override
+  _i3.Future<dynamic> getUserMissions(String? uid) => (super.noSuchMethod(
+        Invocation.method(
+          #getUserMissions,
+          [uid],
+        ),
+        returnValue: _i3.Future<dynamic>.value(),
+        returnValueForMissingStub: _i3.Future<dynamic>.value(),
+      ) as _i3.Future<dynamic>);
+
+  @override
+  _i3.Future<dynamic> deleteUserMission(
+    String? userId,
+    Map<String, int>? missionPoints,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteUserMission,
+          [
+            userId,
+            missionPoints,
+          ],
+        ),
+        returnValue: _i3.Future<dynamic>.value(),
+        returnValueForMissingStub: _i3.Future<dynamic>.value(),
+      ) as _i3.Future<dynamic>);
+
+  @override
+  _i3.Future<dynamic> addUserMission(
+    String? userId,
+    Map<String, int>? missionPoints,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addUserMission,
+          [
+            userId,
+            missionPoints,
+          ],
+        ),
+        returnValue: _i3.Future<dynamic>.value(),
+        returnValueForMissingStub: _i3.Future<dynamic>.value(),
+      ) as _i3.Future<dynamic>);
+
+  @override
+  _i3.Future<dynamic> addCompletedMission(
+    String? userId,
+    String? missionId,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addCompletedMission,
+          [
+            userId,
+            missionId,
+          ],
         ),
         returnValue: _i3.Future<dynamic>.value(),
         returnValueForMissingStub: _i3.Future<dynamic>.value(),
