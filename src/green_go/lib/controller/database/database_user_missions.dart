@@ -9,7 +9,13 @@ class DataBaseUserMissions {
   Future deleteUserMission(String userId, Map<String,int> missionPoints) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
     List<dynamic> missions = doc['missions'];
-    missions.remove(missionPoints);
+    for (var element in missions) {
+      if(element.entries.first.key == missionPoints.entries.first.key){
+        missions.remove(element);
+        break;
+      }
+    }
+    await userMissionsCollection.doc(userId).update({'missions': FieldValue.delete()});
     return await userMissionsCollection.doc(userId).update({'missions': missions});
   }
   Future addUserMission(String userId, Map<String,int> missionPoints) async {

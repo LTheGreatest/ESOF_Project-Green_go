@@ -7,13 +7,15 @@
 ## Sprint Retrospective
 
 ### What went well?
-
+- We completed everything we proposed for this sprint
+- Every team member worked for this Sprint
+- The work was well distributed among the team
 
 ### What should we do differently?
+- We should better manage our time because we had a lot of work for the other courses and the quality of our work was affected by that.
 
 ### What still puzzles me?
-
-### How are we going to improve?
+- The problems with the unit tests and the acceptance tests continued on this sprint
 
 ## Project Board
 
