@@ -16,6 +16,19 @@ class MissionVerifier{
   late DataBaseUsers dataBaseUsers = DataBaseUsers();
   late AuthService auth = AuthService();
 
+  void setMissionsFetcher(MissionsFetcher mf){
+    missionsFetcher = mf;
+  }
+  void setDataBaseUserMissions(DataBaseUserMissions dataBaseUserMissions){
+    udb = dataBaseUserMissions;
+  }
+  void setDataBaseUsers(DataBaseUsers dbu){
+    dataBaseUsers=dbu;
+  }
+  void setAuth(AuthService authService){
+    auth = authService;
+  }
+
 
   bool compatibleTransport(List<dynamic> types , TransportModel transport){
     
