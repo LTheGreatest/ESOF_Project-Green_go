@@ -18,6 +18,9 @@ class MissionsFetcher {
   void setDBUser(DataBaseUserMissions newDBUser) {
     dbUser = newDBUser;
   }
+  void setMissionsID(List<Pair<String, MissionsModel>> newMissionsID){
+    missionsId = newMissionsID;
+  }
   Future<List<MissionsModel>> getAllMissions() async {
     //gets all missions available at the firebase firestore database
     await db.getAllMissions().then((querySnapshot) {
