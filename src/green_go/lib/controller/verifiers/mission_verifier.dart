@@ -86,7 +86,7 @@ class MissionVerifier{
       for(Map<String,dynamic> missionInProgress in missionsInProgress){
         MapEntry missionInProgressEntry = missionInProgress.entries.first;
         if(mission.key==missionInProgressEntry.key && compatibleTransport(mission.value.types, transport)){
-          Map<String , dynamic> missionToDelete ={};
+          Map<String , int> missionToDelete ={};
           missionToDelete[missionInProgressEntry.key]=missionInProgressEntry.value;
           if(type.key == "Distance"){
             

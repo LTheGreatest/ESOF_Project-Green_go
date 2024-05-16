@@ -8,7 +8,7 @@ class DataBaseUserMissions {
   Future getUserMissions(String uid) async {
     return await userMissionsCollection.doc(uid).get();
   }
-  Future deleteUserMission(String userId, Map<String,dynamic> missionPoints) async {
+  Future deleteUserMission(String userId, Map<String,int> missionPoints) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
     List<dynamic> missions = doc['missions'];
     
