@@ -1,4 +1,6 @@
+import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
+import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/controller/verifiers/mission_verifier.dart';
@@ -10,7 +12,7 @@ import 'package:pair/pair.dart';
 
 
 
-
+@GenerateNiceMocks([MockSpec<MissionsFetcher>(), MockSpec<DataBaseUserMissions>(), MockSpec<DataBaseUsers>(), MockSpec<AuthService>()])
 
 void main(){
   late MissionVerifier missionVerifier;
