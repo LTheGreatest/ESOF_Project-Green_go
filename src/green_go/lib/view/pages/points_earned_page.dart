@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
-import 'package:green_go/controller/database/database_user_achievements.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
-import 'package:green_go/controller/fetchers/achievements_fetcher.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/controller/database/database_users.dart';
-import 'package:green_go/model/achievements_model.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/constants.dart';
@@ -15,8 +11,8 @@ import 'package:green_go/view/pages/trip_page.dart';
 import 'package:green_go/view/widgets/problem_widget.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
 import 'package:green_go/model/transport_model.dart';
-import 'package:green_go/controller/fetchers/missions_fetcher.dart';
-import 'package:pair/pair.dart';
+import 'package:green_go/controller/verifiers/mission_verifier.dart';
+
 
 class PointsEarnedPage extends StatefulWidget {
   final double distance;
@@ -31,10 +27,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
   UserFetcher fetcher = UserFetcher();
   late Future<UserModel> futureUser;
   bool hasWaitedTooLong = false;
-  late MissionsFetcher missionsFetcher = MissionsFetcher();
-  late AchievementsFetcher achievementsFetcher = AchievementsFetcher(); //TODO PARA OS UPDATES ACHIEVEMENTS
-  late DataBaseUserAchievements uadb = DataBaseUserAchievements();
-  late DataBaseUserMissions udb = DataBaseUserMissions();
+  MissionVerifier missionVerifier = MissionVerifier();
 
   @override
   void initState() {
@@ -56,131 +49,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       return (distance * pointsPerDist).toInt();
     }
   }
-  bool compatibleTransport(List<dynamic> types , TransportModel transport){
 
-    for(dynamic type in types){
-      if(type.runtimeType == String){
-        String name = type as String;
-        if(name == transport.name){
-          return true;
-        }
-
-      }
-    }
-    return false;
-  }
-
-  Pair<String,double> getMissionType(List<dynamic> types){
-    Pair<String ,double> res = const Pair("", 0);
-    for(dynamic type in types){
-      if(type is Map){
-        String key = type.entries.first.key;
-        double value = type.entries.first.value + .0;
-        res=Pair(key,value);
-      }
-    }
-    return res;
-  }
-  //TODO FALTA FAZER O UPDATE ACHIEVEMENTS AQUI E TA BOM (MISSIONS E TRIPS)
-  Pair<String,double> getAchievementType(List<dynamic> types){
-    Pair<String ,double> res = const Pair("", 0);
-    for(dynamic type in types){
-      if(type is Map){
-        String key = type.entries.first.key;
-        double value = type.entries.first.value + .0;
-        res=Pair(key,value);
-      }
-    }
-    return res;
-  }
-
-  Future<void> updateMissionsWithDistance(double distanceRequired, double currentDistance,Pair<String,MissionsModel> mission) async{
-    if(currentDistance >= distanceRequired){
-      await udb.addCompletedMission(AuthService().getCurrentUser()!.uid, mission.key);
-      await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, mission.value.points);
-    }
-    else{
-      await udb.addUserMission(AuthService().getCurrentUser()!.uid, {mission.key:currentDistance.toInt()});
-    }
-  }
-  Future<void> updateMissionsWithPoints(int pointsRequired, int currentPoints,Pair<String,MissionsModel> mission) async{
-    if(currentPoints >= pointsRequired){
-      await udb.addCompletedMission(AuthService().getCurrentUser()!.uid, mission.key);
-      await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, mission.value.points);
-    }
-    else{
-      await udb.addUserMission(AuthService().getCurrentUser()!.uid, {mission.key:currentPoints});
-    }
-  }
-  Future<void> updateCompletedMissions() async{
-    List<Pair<String, MissionsModel>> missions;
-    List<Pair<String, MissionsModel>> missionAlreadyCompleted=[];
-    await missionsFetcher.getAllMissions();
-    missions=missionsFetcher.missionsId;
-    List<dynamic> missionsInProgress = await missionsFetcher.getMissionsInProgress(AuthService().getCurrentUser()!.uid);
-    Map<String,dynamic> completedMissionsId = await missionsFetcher.getCompletedMissionsId(AuthService().getCurrentUser()!.uid);
-
-    //checks already completed missions and takes them out
-    for(final mission in missions){
-      if(completedMissionsId.containsKey(mission.key)){
-        missionAlreadyCompleted.add(mission);
-      }
-    }
-    for(final mission in missionAlreadyCompleted){
-      missions.remove(mission);
-    }
-    missionAlreadyCompleted=[];
-
-    //checks if missions already have progress and if they can be completed with that progress otherwise update progress
-
-    for(final mission in missions){
-      Pair<String,double> type = getMissionType(mission.value.types);
-      for(Map<String,dynamic> missionInProgress in missionsInProgress){
-        MapEntry missionInProgressEntry = missionInProgress.entries.first;
-        if(mission.key==missionInProgressEntry.key){
-          if(type.key == "Distance"){
-            await udb.deleteUserMission(AuthService().getCurrentUser()!.uid, {missionInProgressEntry.key : missionInProgressEntry.value});
-            await updateMissionsWithDistance(type.value, missionInProgressEntry.value+widget.distance, mission);
-          }
-          else if(type.key =="Points"){
-            await udb.deleteUserMission(AuthService().getCurrentUser()!.uid, {missionInProgressEntry.key : missionInProgressEntry.value});
-            int newPoints = calculatePoints(widget.distance, widget.transport.pointsPerDist)+missionInProgressEntry.value as int;
-            await updateMissionsWithPoints(type.value.toInt(), newPoints, mission);
-          }
-          missionAlreadyCompleted.add(mission);
-
-
-        }
-
-      }
-    }
-
-    for(final mission in missionAlreadyCompleted){
-      missions.remove(mission);
-    }
-
-    //checks missions that dont have progress and either complets them or adds progress
-    for(final mission in missions){
-      int points = calculatePoints(widget.distance, widget.transport.pointsPerDist);
-      if(compatibleTransport(mission.value.types, widget.transport)){
-        Pair<String,double> type = getMissionType(mission.value.types);
-        if(type.key == "Distance" ){
-          await updateMissionsWithDistance(type.value, widget.distance,mission);
-        }
-        else if(type.key == "Points"){
-          await updateMissionsWithPoints(type.value.toInt(),points , mission);
-        }
-        else{
-          await udb.addCompletedMission(AuthService().getCurrentUser()!.uid, mission.key);
-          await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, mission.value.points);
-        }
-
-      }
-
-    }
-
-
-  }
   Future<void> updatePoints() async {
     //calls the database services to update the user points in the database
     await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.transport.pointsPerDist));
@@ -357,7 +226,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
         await updatePoints();
 
         //updates missions
-        await updateCompletedMissions();
+        await missionVerifier.updateCompletedMissions(widget.distance, widget.transport, calculatePoints(widget.distance, widget.transport.pointsPerDist));
         //verifies if the context is mounted. If it is not, we cannot continue
         if (!context.mounted) return;
         //ends the trip and returns to the trips page
