@@ -1,9 +1,13 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
+import 'package:green_go/controller/database/database_user_achievements.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
+import 'package:green_go/controller/fetchers/achievements_fetcher.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/controller/database/database_users.dart';
+import 'package:green_go/model/achievements_model.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/constants.dart';
@@ -28,6 +32,8 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
   late Future<UserModel> futureUser;
   bool hasWaitedTooLong = false;
   late MissionsFetcher missionsFetcher = MissionsFetcher();
+  late AchievementsFetcher achievementsFetcher = AchievementsFetcher(); //TODO PARA OS UPDATES ACHIEVEMENTS
+  late DataBaseUserAchievements uadb = DataBaseUserAchievements();
   late DataBaseUserMissions udb = DataBaseUserMissions();
 
   @override
@@ -75,6 +81,19 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
     }
     return res;
   }
+  //TODO FALTA FAZER O UPDATE ACHIEVEMENTS AQUI E TA BOM (MISSIONS E TRIPS)
+  Pair<String,double> getAchievementType(List<dynamic> types){
+    Pair<String ,double> res = const Pair("", 0);
+    for(dynamic type in types){
+      if(type is Map){
+        String key = type.entries.first.key;
+        double value = type.entries.first.value + .0;
+        res=Pair(key,value);
+      }
+    }
+    return res;
+  }
+
   Future<void> updateMissionsWithDistance(double distanceRequired, double currentDistance,Pair<String,MissionsModel> mission) async{
     if(currentDistance >= distanceRequired){
       await udb.addCompletedMission(AuthService().getCurrentUser()!.uid, mission.key);
