@@ -26,7 +26,6 @@ class LoginPageViewState extends State<LoginPage> {
   late AchievementsFetcher achievementsFetcher = AchievementsFetcher();
   Future<void> updateLoginAchievement(String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
-    List<Pair<String, AchievementsModel>> achievementsAlreadyCompleted=[];
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.achievementsId;
     for (final achievement in achievements) {
