@@ -20,7 +20,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   AchievementsFetcher achievementsFetcher = AchievementsFetcher();
   UserFetcher userFetcher = UserFetcher();
   List<Pair<AchievementsModel, Timestamp>>? completedAchievements;
-  List<Pair<AchievementsModel, Timestamp>>? uncompletedAchievements;
+  List<Pair<AchievementsModel, int>>? uncompletedAchievements;
   late bool showCompleted;
 
   @override
@@ -40,14 +40,12 @@ class AchievementsPageState extends State<AchievementsPage> {
 
   Future<void> initializeUserAchievements() async {
     UserModel userData = await userFetcher.getCurrentUserData();
-    completedAchievements =
-    await achievementsFetcher.getCompleteAchievements(userData.uid);
-    //uncompletedAchievements = {};
-    //await achievementsFetcher.getUncompletedAchievements(userData.uid);
+    completedAchievements = await achievementsFetcher.getCompleteAchievements(userData.uid);
+    uncompletedAchievements = await achievementsFetcher.getUncompletedAchievements(userData.uid);
     setState(() {});
   }
 
-  Widget achievementRow(BuildContext context, Pair<AchievementsModel, Timestamp> achievement, bool isCompleted) {
+  Widget achievementRow(BuildContext context, Pair<AchievementsModel, dynamic> achievement, bool isCompleted) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -64,7 +62,15 @@ class AchievementsPageState extends State<AchievementsPage> {
         ),
         if (isCompleted)
           Text(
-            achievement.value.toDate().toString().substring(0, 10),
+            (achievement.value as Timestamp).toDate().toString().substring(0, 10),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+            ),
+          )
+        else
+          Text(
+            '${achievement.value}/${achievement.key.types[1]}',
             style: const TextStyle(
               color: Colors.black,
               fontSize: 15,
@@ -74,7 +80,7 @@ class AchievementsPageState extends State<AchievementsPage> {
     );
   }
 
-  Widget achievementContainer(BuildContext context, Pair<AchievementsModel, Timestamp> achievement, bool isCompleted) {
+  Widget achievementContainer(BuildContext context, Pair<AchievementsModel, dynamic> achievement, bool isCompleted) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.05,
@@ -180,6 +186,10 @@ class AchievementsPageState extends State<AchievementsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: backButtonAndTitle(context),
+      ),
       body: completedAchievements == null || uncompletedAchievements == null
           ? const Center(
         child: CircularProgressIndicator(),
@@ -205,12 +215,6 @@ class AchievementsPageState extends State<AchievementsPage> {
                       top: MediaQuery.of(context).size.height * 0.02,
                     ),
                   ),
-                  backButtonAndTitle(context),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.04,
-                    ),
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -225,13 +229,19 @@ class AchievementsPageState extends State<AchievementsPage> {
                           ? completedAchievements!.length
                           : uncompletedAchievements!.length,
                       itemBuilder: (context, index) {
-                        final achievement = showCompleted
-                            ? completedAchievements![index]
-                            : uncompletedAchievements![index];
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: achievementContainer(context, achievement, showCompleted),
-                        );
+                        if (showCompleted) {
+                          final achievement = completedAchievements![index];
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: achievementContainer(context, achievement, true),
+                          );
+                        } else {
+                          final achievement = uncompletedAchievements![index];
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: achievementContainer(context, Pair(achievement.key, achievement.value), false),
+                          );
+                        }
                       },
                     ),
                   ),

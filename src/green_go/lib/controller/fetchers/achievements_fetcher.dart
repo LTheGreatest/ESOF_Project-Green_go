@@ -11,11 +11,12 @@ class AchievementsFetcher {
   List<AchievementsModel> achievements = [];
   List<Pair<String, AchievementsModel>> achievementsId = [];
   List<Pair<AchievementsModel, Timestamp>> completedAchievements = [];
-  List<Pair<AchievementsModel, int>> uncompletedAchievements= [];
+  List<Pair<AchievementsModel, int>> uncompletedAchievements = [];
 
   void setDB(DataBaseAchievements newDB) {
     db = newDB;
   }
+
   void setDBUser(DataBaseUserAchievements newDBUser) {
     dbUser = newDBUser;
   }
@@ -43,54 +44,63 @@ class AchievementsFetcher {
   }
 
   Future<List<Pair<AchievementsModel, Timestamp>>> getCompleteAchievements(String userId) async {
+    // Clear previous data
+    completedAchievements.clear();
+
+    // Ensure we have the latest achievements
     await getAllAchievements();
+
+    // Get user achievements from the database
     await dbUser.getUserAchievements(userId).then((docSnapshot) {
-      try {
+      if (docSnapshot.exists && docSnapshot.data() != null) {
         Map<String, dynamic> completed = docSnapshot["completedAchievements"];
         completed.forEach((key, value) {
-          for (int i = 0; i < achievementsId.length; i++) {
-            if (achievementsId[i].key == key) {
-              String name = achievementsId[i].value.name;
-              String description = achievementsId[i].value.description;
-              List<dynamic> types = achievementsId[i].value.types;
-
-              completedAchievements.add(Pair(AchievementsModel(name, description, types), value));
+          for (var achievement in achievementsId) {
+            if (achievement.key == key) {
+              completedAchievements.add(Pair(achievement.value, value));
+              break;
             }
           }
         });
-      } catch (e) {
-        if (kDebugMode) {
-          print("Failed with error '${e.toString()}'");
-        }
       }
-    }
-    );
+    }).catchError((e) {
+      if (kDebugMode) {
+        print("Failed with error '${e.toString()}'");
+      }
+    });
+
     return completedAchievements;
   }
+
   Future<List<Pair<AchievementsModel, int>>> getUncompletedAchievements(String userId) async {
+    // Clear previous data
+    uncompletedAchievements.clear();
+
+    // Ensure we have the latest achievements
     await getAllAchievements();
+
+    // Get user achievements from the database
     await dbUser.getUserAchievements(userId).then((docSnapshot) {
-      try {
-        Map<String, int> uncompleted = docSnapshot["achievements"];
+      if (docSnapshot.exists && docSnapshot.data() != null) {
+        Map<String, dynamic> uncompleted = docSnapshot["achievements"];
         uncompleted.forEach((key, value) {
-          for (int i = 0; i < achievementsId.length; i++) {
-            if (achievementsId[i].key == key) {
-              String name = achievementsId[i].value.name;
-              String description = achievementsId[i].value.description;
-              List<dynamic> types = achievementsId[i].value.types;
-              uncompletedAchievements.add(Pair(AchievementsModel(name, description, types), value));
+          for (var achievement in achievementsId) {
+            if (achievement.key == key) {
+              uncompletedAchievements.add(Pair(achievement.value, value));
+              break;
             }
           }
         });
-      } catch (e) {
-        if (kDebugMode) {
-          print("Failed with error '${e.toString()}'");
-        }
       }
-    }
-    );
+    }).catchError((e) {
+      if (kDebugMode) {
+        print("Failed with error '${e.toString()}'");
+      }
+    });
+
     return uncompletedAchievements;
   }
+
   Future<Map<String, dynamic>> getCompletedAchievementsId(String userId) async{
     Map<String, dynamic> completedAchievementsId={};
     await dbUser.getUserAchievements(userId).then((querySnapshot) {
