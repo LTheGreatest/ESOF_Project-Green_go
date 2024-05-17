@@ -34,7 +34,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
 
     //waits 10 second for the future methods
     Future.delayed(const Duration(seconds: 10),(){
-        hasWaitedTooLong = true;
+      hasWaitedTooLong = true;
     });
   }
 
@@ -50,7 +50,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
   
   Future<void> updatePoints() async {
     //calls the database services to update the user points in the database
-   await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.transport.pointsPerDist));
+    await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.transport.pointsPerDist));
   }
   Widget pointsEarnedText(BuildContext context){
     //Text with the number of points earned in the trip
@@ -229,13 +229,13 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
         if (!context.mounted) return;
         //ends the trip and returns to the trips page
         Navigator.pushReplacement(context,
-        PageRouteBuilder(
-            pageBuilder: (context, animation, secondaryAnimation) => const TripPage(), 
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-          )
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => const TripPage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            )
         );
-        },
+      },
       child: const Text("Continue",
         style: TextStyle(
             color: Colors.black,
@@ -255,36 +255,36 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
             child: TitleWidget(text: "Congratulations!"),
           ),
           FutureBuilder(
-            future: futureUser,
-            builder: (context, snapshot){
-              if (snapshot.hasData) {
-                return Column(
-                    children:[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 50),
-                        child: pointsEarnedText(context),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: pointsContainer(context, snapshot.data!),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 100),
-                        child: continueButton(context),
-                      ),
-                    ]
-                );
-              } else {
+              future: futureUser,
+              builder: (context, snapshot){
+                if (snapshot.hasData) {
+                  return Column(
+                      children:[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 50),
+                          child: pointsEarnedText(context),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: pointsContainer(context, snapshot.data!),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 100),
+                          child: continueButton(context),
+                        ),
+                      ]
+                  );
+                } else {
                   return hasWaitedTooLong ?
                   // if the system waited too long, it will show a problem widget
                   Row(
-                    children: [
-                      const ProblemWidget(text: "Cannot verify your trip. Please check your Internet Connection or contact us"),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 100),
-                        child: continueButton(context),
-                      ),
-                    ]
+                      children: [
+                        const ProblemWidget(text: "Cannot verify your trip. Please check your Internet Connection or contact us"),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 100),
+                          child: continueButton(context),
+                        ),
+                      ]
                   ) :
                   // if the system is still verifying the trip, it will show a loading circle
                   Column(
@@ -296,8 +296,8 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
                       const Center(child: CircularProgressIndicator()),
                     ],
                   );
+                }
               }
-            }
           ),
         ],
       ),
