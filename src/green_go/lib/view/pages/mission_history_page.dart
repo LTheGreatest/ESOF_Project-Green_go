@@ -26,7 +26,7 @@ class MissionHistoryState extends State<MissionHistoryPage > {
     completedMissions = await MissionsFetcher().getCompleteMissions(user.uid);
   }
 
-  Widget missionRow(BuildContext contextn, int index){
+  Widget missionRow(BuildContext context, int index){
     //row with the mission details
     return Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -140,8 +140,8 @@ class MissionHistoryState extends State<MissionHistoryPage > {
                           Padding(
                             padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10, top: 5), // Adjusted top padding
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10, top: 5), // Adjusted top padding
                             child: Text(
                               "Missions Completed",
                               style: TextStyle(

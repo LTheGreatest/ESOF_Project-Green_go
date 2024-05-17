@@ -70,7 +70,7 @@ class AchievementsPageState extends State<AchievementsPage> {
           )
         else
           Text(
-            '${achievement.value}/${achievement.key.types[1]}',
+            '${achievement.value}/${achievement.key.types[1]["number"]}',
             style: const TextStyle(
               color: Colors.black,
               fontSize: 15,

@@ -44,13 +44,10 @@ class AchievementsFetcher {
   }
 
   Future<List<Pair<AchievementsModel, Timestamp>>> getCompleteAchievements(String userId) async {
-    // Clear previous data
     completedAchievements.clear();
 
-    // Ensure we have the latest achievements
     await getAllAchievements();
 
-    // Get user achievements from the database
     await dbUser.getUserAchievements(userId).then((docSnapshot) {
       if (docSnapshot.exists && docSnapshot.data() != null) {
         Map<String, dynamic> completed = docSnapshot["completedAchievements"];
@@ -73,13 +70,10 @@ class AchievementsFetcher {
   }
 
   Future<List<Pair<AchievementsModel, int>>> getUncompletedAchievements(String userId) async {
-    // Clear previous data
     uncompletedAchievements.clear();
 
-    // Ensure we have the latest achievements
     await getAllAchievements();
 
-    // Get user achievements from the database
     await dbUser.getUserAchievements(userId).then((docSnapshot) {
       if (docSnapshot.exists && docSnapshot.data() != null) {
         Map<String, dynamic> uncompleted = docSnapshot["achievements"];
