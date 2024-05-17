@@ -75,10 +75,7 @@ class MissionsFetcher {
   Future<Map<String, dynamic>> getCompletedMissionsId(String userId) async {
     Map<String, dynamic> completedMissionsId = {};
     await dbUser.getUserMissions(userId).then((querySnapshot) {
-      final completedMissions = querySnapshot['completedMissions'];
-      if (completedMissions != null && completedMissions is Map<String, dynamic>) {
-        completedMissionsId = completedMissions;
-      }
+      completedMissionsId= querySnapshot['completedMissions'];
     });
     return completedMissionsId;
   }
