@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
+import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/main_page.dart';
 import 'package:green_go/view/pages/register_page.dart';
@@ -21,21 +22,8 @@ class LoginPageViewState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
+  final AchievementVerifier achievementVerifier = AchievementVerifier();
 
-  late DataBaseUserAchievements uadb = DataBaseUserAchievements();
-  late AchievementsFetcher achievementsFetcher = AchievementsFetcher();
-  Future<void> updateLoginAchievement(String userId) async {
-    List<Pair<String, AchievementsModel>> achievements;
-    await achievementsFetcher.getAllAchievements();
-    achievements = achievementsFetcher.achievementsId;
-    for (final achievement in achievements) {
-      if (achievement.value.types[0] == "NumberLogins") {
-        uadb.addCompletedAchievement(userId, achievement.key);
-        uadb.deleteUserAchievement(userId, achievement.key);
-        break; //breaks because we only have one achievement
-      }
-    }
-  }
 
   Widget labelText(BuildContext context, String text) {
     //label of the input forms
@@ -150,7 +138,7 @@ class LoginPageViewState extends State<LoginPage> {
                 if (!context.mounted) return;
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
-                  await updateLoginAchievement(authService.getCurrentUser()!.uid);
+                  await achievementVerifier.updateLoginAchievement(authService.getCurrentUser()!.uid);
                   Navigator.push(context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) => const MainPage(), 
