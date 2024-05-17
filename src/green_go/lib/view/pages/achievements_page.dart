@@ -42,8 +42,8 @@ class AchievementsPageState extends State<AchievementsPage> {
     UserModel userData = await userFetcher.getCurrentUserData();
     completedAchievements =
     await achievementsFetcher.getCompleteAchievements(userData.uid);
-    uncompletedAchievements =
-    await achievementsFetcher.getUncompletedAchievements(userData.uid);
+    //uncompletedAchievements = {};
+    //await achievementsFetcher.getUncompletedAchievements(userData.uid);
     setState(() {});
   }
 

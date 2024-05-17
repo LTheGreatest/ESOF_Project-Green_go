@@ -133,7 +133,7 @@ class LoginPageViewState extends State<LoginPage> {
                 if (!context.mounted) return;
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
-                  await achievementVerifier.updateLoginAchievement(authService.getCurrentUser()!.uid);
+                  await achievementVerifier.updateCompletedLoginAchievements(authService.getCurrentUser()!.uid);
                   Navigator.push(context,
                     PageRouteBuilder(
                       pageBuilder: (context, animation, secondaryAnimation) => const MainPage(), 

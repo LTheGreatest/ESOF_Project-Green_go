@@ -4,6 +4,7 @@ import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
+import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/model/transport_model.dart';
 import 'package:pair/pair.dart';
@@ -15,6 +16,7 @@ class MissionVerifier{
   late DataBaseUserMissions udb = DataBaseUserMissions();
   late DataBaseUsers dataBaseUsers = DataBaseUsers();
   late AuthService auth = AuthService();
+  late AchievementVerifier achievementVerifier = AchievementVerifier();
 
   void setMissionsFetcher(MissionsFetcher mf){
     missionsFetcher = mf;
@@ -28,7 +30,9 @@ class MissionVerifier{
   void setAuth(AuthService authService){
     auth = authService;
   }
-
+  void setAchievementVerifier(AchievementVerifier achVer) {
+    achievementVerifier = achVer;
+  }
 
   bool compatibleTransport(List<dynamic> types , TransportModel transport){
     
@@ -59,6 +63,7 @@ class MissionVerifier{
     if(currentDistance >= distanceRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+      await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
     }
     else{
       await udb.addUserMission(auth.getCurrentUser()!.uid, {mission.key:currentDistance.toInt()});
@@ -68,6 +73,7 @@ class MissionVerifier{
     if(currentPoints >= pointsRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+      await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
     }
     else{
       await udb.addUserMission(auth.getCurrentUser()!.uid, {mission.key:currentPoints});
@@ -137,6 +143,7 @@ class MissionVerifier{
         else{
           await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
           await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+          await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
         }
         
       }

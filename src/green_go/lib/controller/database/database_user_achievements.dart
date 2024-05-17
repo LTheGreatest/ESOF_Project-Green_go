@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class DataBaseUserAchievements {
   static final CollectionReference userAchievementsCollection = FirebaseFirestore.instance.collection("user_achievements");
 
-  Future getUserAchivements(String uid) async {
+  Future getUserAchievements(String uid) async {
     return await userAchievementsCollection.doc(uid).get();
   }
 
