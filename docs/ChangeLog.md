@@ -6,13 +6,13 @@
 
 For this version of the app (the final sprint version) we added the final functionalities related to the missions and the achievements and also improved and polished some other details related to the app aesthetics and functionality.
 
-Firstly, the user can now complete missions and check his completed missions. The section with the completed missions can be accessed throw the profile page.
+Firstly, the user can now complete missions and check his completed missions. The section with the completed missions can be accessed through the profile page.
 
 <p align="center">
     <img src= "images/changelogScreenshots/v.0.3.0/CompletedMissions.jpg" height = 600>
 </p>
 
-The second big functionality implemented was the achivements/rewards system. The user can now receive achievements and rewards when he completes a certain number of missions, achieves a certain number of points or login a certain amount of times. The achivements section can be accessed throw the profile page. The achivements section is divided in completed and imcompleted missions. 
+The second big functionality implemented was the achievements/rewards system. The user can now receive achievements and rewards when he completes a certain number of missions, achieves a certain number of points or logins a certain amount of times. The achievements section can be accessed through the profile page. The achievements section is divided into completed and incompleted missions. 
 
 <p align="center">
     <img src= "images/changelogScreenshots/v.0.3.0/Achievements1.jpg" height = 600>
@@ -27,7 +27,7 @@ The second big functionality implemented was the achivements/rewards system. The
 </p>
 
 
-Besides the achivements and the missions systems, we also work on some refinements to improve the user experience. 
+Besides the achievements and the missions systems, we also worked on some refinements to improve the user experience. 
 
 The default animations were removed from the page transitions. 
 
