@@ -49,6 +49,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   Widget achievementRow(BuildContext context, Pair<AchievementsModel, dynamic> achievement, bool isCompleted) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
           child: Text(
@@ -62,19 +63,25 @@ class AchievementsPageState extends State<AchievementsPage> {
           ),
         ),
         if (isCompleted)
-          Text(
-            (achievement.value as Timestamp).toDate().toString().substring(0, 10),
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 15,
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              (achievement.value as Timestamp).toDate().toString().substring(0, 10),
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
             ),
           )
         else
-          Text(
-            '${achievement.value}/${achievement.key.types[1]["number"]}',
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 15,
+          Padding(
+            padding: const EdgeInsets.only(left: 10),
+            child: Text(
+              '${achievement.value}/${achievement.key.types[1]["number"]}',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 15,
+              ),
             ),
           ),
       ],
@@ -145,7 +152,7 @@ class AchievementsPageState extends State<AchievementsPage> {
 
   Widget completedButton(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.3,
+      width: 140,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
         color: showCompleted ? lightGreen : lightGrey,
@@ -170,7 +177,7 @@ class AchievementsPageState extends State<AchievementsPage> {
 
   Widget uncompletedButton(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.3,
+      width: 140,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
         color: showCompleted ? lightGrey : lightGreen,
@@ -206,11 +213,11 @@ class AchievementsPageState extends State<AchievementsPage> {
       )
           : Center(
         child: Padding(
-          padding: const EdgeInsets.only(top: 60),
+          padding: const EdgeInsets.only(top: 30),
           child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width * 0.88,
-              height: MediaQuery.of(context).size.height * 0.82,
+              height: MediaQuery.of(context).size.height * 0.75,
               decoration: BoxDecoration(
                 border: Border.all(width: 1),
                 borderRadius: const BorderRadius.all(

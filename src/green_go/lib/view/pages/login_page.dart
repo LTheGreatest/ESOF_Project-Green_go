@@ -129,11 +129,12 @@ class LoginPageViewState extends State<LoginPage> {
                   emailController.text,
                   passwordController.text,
                 );
-                //Verifies if the context is mounted in order to continue
-                if (!context.mounted) return;
+                
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
                   await achievementVerifier.updateCompletedLoginAchievements(authService.getCurrentUser()!.uid);
+                  //Verifies if the context is mounted in order to continue
+                  if (!context.mounted) return;
                   Navigator.push(context,
                       PageRouteBuilder(
                         pageBuilder: (context, animation, secondaryAnimation) => const MainPage(),
@@ -149,6 +150,8 @@ class LoginPageViewState extends State<LoginPage> {
                   emailController.clear();
                   passwordController.clear();
                 }
+                //Verifies if the context is mounted in order to continue
+                if (!context.mounted) return;
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text(signInResult!),

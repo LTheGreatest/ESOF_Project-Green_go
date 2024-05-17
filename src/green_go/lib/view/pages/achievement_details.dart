@@ -112,9 +112,12 @@ class AchievementDetails extends StatelessWidget {
                           icon: const Icon(Icons.arrow_back, size: 40),
                         ),
                       ),
-                      const Align(
-                          alignment: Alignment.center,
-                          child: TitleWidget(text: "Achievement")
+                      const Padding(
+                        padding: EdgeInsets.only(left:20),
+                        child: Align(
+                            alignment: Alignment.center,
+                            child: TitleWidget(text: "Achievement")
+                        ),
                       ),
                     ],
                   ),
