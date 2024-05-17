@@ -28,22 +28,9 @@ class DataBaseUsers {
   Future<void> addAchievements(String userId) async {
     await achievementsFetcher.getAllAchievements();
     achievementsPair =  achievementsFetcher.achievementsId;
-    Map<String, int> missionAchievements= {};
-    Map<String, int> loginAchievements = {};
-    Map<String, int> tripAchievements = {};
     for (final achievement in achievementsPair) {
-      String achievementType = getAchievementType(achievement.value.types);
-      if(achievementType == "NumberMissions") {
-        missionAchievements[achievement.key] = 0;
-      } else if (achievementType == "NumberTrips") {
-        tripAchievements[achievement.key] = 0;
-      } else if (achievementType == "NumberLogins") {
-        loginAchievements[achievement.key] = 0;
-      }
+      await dbUserAch.addUserAchievement(userId, achievement.key, 0);
     }
-    await dbUserAch.addUserAchievement(userId, missionAchievements);
-    await dbUserAch.addUserAchievement(userId, loginAchievements);
-    await dbUserAch.addUserAchievement(userId, tripAchievements);
   }
 
   Future addUser(UserModel user) async {
@@ -52,7 +39,7 @@ class DataBaseUsers {
       'completedMissions': {},
     });
     await userAchievementsCollection.doc(user.uid).set({
-      'achievements': [],
+      'achievements': {},
       'completedAchievements': {},
     });
     await addAchievements(user.uid);
