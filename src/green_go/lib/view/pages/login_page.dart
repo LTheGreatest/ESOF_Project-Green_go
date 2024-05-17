@@ -5,11 +5,6 @@ import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/main_page.dart';
 import 'package:green_go/view/pages/register_page.dart';
-import 'package:pair/pair.dart';
-
-import '../../controller/database/database_user_achievements.dart';
-import '../../controller/fetchers/achievements_fetcher.dart';
-import '../../model/achievements_model.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
-import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/controller/fetchers/user_fetcher.dart';
 import 'package:green_go/controller/database/database_users.dart';
-import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/model/user_model.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/trip_page.dart';

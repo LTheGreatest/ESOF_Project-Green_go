@@ -1,12 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:green_go/controller/database/database_achievements.dart';
 import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/model/user_model.dart';
-import 'package:pair/pair.dart';
 
-import '../../model/achievements_model.dart';
-import '../fetchers/achievements_fetcher.dart';
-import 'database_user_achievements.dart';
 
 class DataBaseUsers {
   static final CollectionReference userCollection = FirebaseFirestore.instance.collection("users");
