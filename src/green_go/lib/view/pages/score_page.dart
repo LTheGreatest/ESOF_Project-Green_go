@@ -34,26 +34,30 @@ class ScorePageState extends State<ScorePage> {
         border: Border(
           bottom: BorderSide(
             width: 2,
+            color: lightGrey
           ),
         ),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title,
-              style: const TextStyle(
-                  color: darkerGrey,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500
-              )
-          ),
-          Text(content,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500
-              )
-          ),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(title,
+                style: const TextStyle(
+                    color: darkerGrey,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500
+                )
+            ),
+            Text(content,
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500
+                )
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -104,7 +108,7 @@ class ScorePageState extends State<ScorePage> {
             if (snapshot.hasData) {
               return Center(
                   child: Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                      padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
                       child: SingleChildScrollView(
                         child: Container(
                           decoration: BoxDecoration(

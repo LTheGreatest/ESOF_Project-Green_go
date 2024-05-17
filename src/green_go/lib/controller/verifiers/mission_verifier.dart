@@ -4,6 +4,7 @@ import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
+import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/model/transport_model.dart';
 import 'package:pair/pair.dart';
@@ -15,6 +16,7 @@ class MissionVerifier{
   late DataBaseUserMissions udb = DataBaseUserMissions();
   late DataBaseUsers dataBaseUsers = DataBaseUsers();
   late AuthService auth = AuthService();
+  late AchievementVerifier achievementVerifier = AchievementVerifier();
 
   void setMissionsFetcher(MissionsFetcher mf){
     missionsFetcher = mf;
@@ -28,17 +30,19 @@ class MissionVerifier{
   void setAuth(AuthService authService){
     auth = authService;
   }
-
+  void setAchievementVerifier(AchievementVerifier achVer) {
+    achievementVerifier = achVer;
+  }
 
   bool compatibleTransport(List<dynamic> types , TransportModel transport){
-    
+
     for(dynamic type in types){
       if(type.runtimeType == String){
         String name = type as String;
         if(name == transport.name){
           return true;
         }
-        
+
       }
     }
     return false;
@@ -59,6 +63,7 @@ class MissionVerifier{
     if(currentDistance >= distanceRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+      await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
     }
     else{
       await udb.addUserMission(auth.getCurrentUser()!.uid, {mission.key:currentDistance.toInt()});
@@ -68,6 +73,7 @@ class MissionVerifier{
     if(currentPoints >= pointsRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+      await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
     }
     else{
       await udb.addUserMission(auth.getCurrentUser()!.uid, {mission.key:currentPoints});
@@ -93,7 +99,7 @@ class MissionVerifier{
     missionAlreadyCompleted=[];
 
     //checks if missions already have progress and if they can be completed with that progress otherwise update progress
-    
+
     for(final mission in missions){
       Pair<String,double> type = getMissionType(mission.value.types);
       for(Map<String,dynamic> missionInProgress in missionsInProgress){
@@ -102,7 +108,7 @@ class MissionVerifier{
           Map<String , int> missionToDelete ={};
           missionToDelete[missionInProgressEntry.key]=missionInProgressEntry.value;
           if(type.key == "Distance"){
-            
+
             await udb.deleteUserMission(auth.getCurrentUser()!.uid, missionToDelete);
             await updateMissionsWithDistance(type.value, missionInProgressEntry.value+distance, mission);
           }
@@ -112,20 +118,20 @@ class MissionVerifier{
             await updateMissionsWithPoints(type.value.toInt(), newPoints, mission);
           }
           missionAlreadyCompleted.add(mission);
-          
-          
+
+
         }
-        
+
       }
     }
 
     for(final mission in missionAlreadyCompleted){
       missions.remove(mission);
     }
-    
+
     //checks missions that dont have progress and either complets them or adds progress
     for(final mission in missions){
-      
+
       if(compatibleTransport(mission.value.types, transport)){
         Pair<String,double> type = getMissionType(mission.value.types);
         if(type.key == "Distance" ){
@@ -137,12 +143,11 @@ class MissionVerifier{
         else{
           await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
           await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+          await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
         }
-        
+
       }
-      
+
     }
-
-
   }
 }

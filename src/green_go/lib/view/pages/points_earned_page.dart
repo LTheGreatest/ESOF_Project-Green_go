@@ -10,6 +10,7 @@ import 'package:green_go/view/widgets/problem_widget.dart';
 import 'package:green_go/view/widgets/title_widget.dart';
 import 'package:green_go/model/transport_model.dart';
 import 'package:green_go/controller/verifiers/mission_verifier.dart';
+import '../../controller/verifiers/achievement_verifier.dart';
 
 
 class PointsEarnedPage extends StatefulWidget {
@@ -26,6 +27,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
   late Future<UserModel> futureUser;
   bool hasWaitedTooLong = false;
   MissionVerifier missionVerifier = MissionVerifier();
+  AchievementVerifier achievementVerifier = AchievementVerifier();
 
   @override
   void initState() {
@@ -47,7 +49,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
       return (distance * pointsPerDist).toInt();
     }
   }
-  
+
   Future<void> updatePoints() async {
     //calls the database services to update the user points in the database
     await DataBaseUsers().updateUserPoints(AuthService().getCurrentUser()!.uid, calculatePoints(widget.distance, widget.transport.pointsPerDist));
@@ -225,6 +227,7 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
 
         //updates missions
         await missionVerifier.updateCompletedMissions(widget.distance, widget.transport, calculatePoints(widget.distance, widget.transport.pointsPerDist));
+        await achievementVerifier.updateCompletedTripAchievements(fetcher.auth.getCurrentUser()!.uid);
         //verifies if the context is mounted. If it is not, we cannot continue
         if (!context.mounted) return;
         //ends the trip and returns to the trips page

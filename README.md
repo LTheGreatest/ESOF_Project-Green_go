@@ -74,13 +74,9 @@ For FEUP students who need an incentive to use transports in a sustainable way, 
 
 ### Elevator Pitch
 
-Draft a small text to help you quickly introduce and describe your product in a short time (lift travel time ~90 seconds) and a few words (~800 characters), a technique usually known as elevator pitch.
+**Note:** the following section is in portuguese because it was used for pitch presentation.
 
-Take a look at the following links to learn some techniques:
-
-* [Crafting an Elevator Pitch](https://www.mindtools.com/pages/article/elevator-pitch.htm)
-* [The Best Elevator Pitch Examples, Templates, and Tactics - A Guide to Writing an Unforgettable Elevator Speech, by strategypeak.com](https://strategypeak.com/elevator-pitch-examples/)
-* [Top 7 Killer Elevator Pitch Examples, by toggl.com](https://blog.toggl.com/elevator-pitch-examples/)
+Cada vez mais, estamos mais apegados aos nossos veículos pessoais, contribuindo dessa forma para o agravamento da crise ambiental. Devido a alguns inconvenientes como o maior tempo de viagem e menor conforto no uso de transportes mais sustentáveis, temos dado preferência ao uso dos nossos veículos privados. Mas como podemos tornar o uso de transportes sustentáveis mais interessante? A nossa app soluciona este problema tornando as viagens sustentáveis em um jogo competitivo entre os utilizadores. Cada viagem é recompensada com pontos. Todos os utilizadores competem pelos melhores lugares num leaderboard de pontuações. Além disso, existem várias missões e achievements que recompensam os utilizadores pelo seu esforço. Assim, se quiserem tornar as vossas viagens mais sustentáveis mas ao mesmo tempo querem que estas não sejam entediantes, a app GreenGo é a solução.
 
 ## Requirements
 
@@ -146,6 +142,7 @@ You can find below information and references related with the project managemen
   * [Iteration 0](docs/Iteration0.md)
   * [Iteration 1](docs/Iteration1.md)
   * [Iteration 2](docs/Iteration2.md)
+  * [Iteration 3](docs/Iteration3.md)
 * Increment description:
   * [ChangeLog](docs/ChangeLog.md)
  

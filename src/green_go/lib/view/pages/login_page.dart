@@ -1,14 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:green_go/controller/authentication/auth.dart';
+import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/view/constants.dart';
 import 'package:green_go/view/pages/main_page.dart';
 import 'package:green_go/view/pages/register_page.dart';
-import 'package:pair/pair.dart';
-
-import '../../controller/database/database_user_achievements.dart';
-import '../../controller/fetchers/achievements_fetcher.dart';
-import '../../model/achievements_model.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -21,44 +17,31 @@ class LoginPageViewState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
+  final AchievementVerifier achievementVerifier = AchievementVerifier();
 
-  late DataBaseUserAchievements uadb = DataBaseUserAchievements();
-  late AchievementsFetcher achievementsFetcher = AchievementsFetcher();
-  Future<void> updateLoginAchievement(String userId) async {
-    List<Pair<String, AchievementsModel>> achievements;
-    await achievementsFetcher.getAllAchievements();
-    achievements = achievementsFetcher.achievementsId;
-    for (final achievement in achievements) {
-      if (achievement.value.types[0] == "NumberLogins") {
-        uadb.addCompletedAchievement(userId, achievement.key);
-        uadb.deleteUserAchievement(userId, achievement.key);
-        break; //breaks because we only have one achievement
-      }
-    }
-  }
 
   Widget labelText(BuildContext context, String text) {
     //label of the input forms
     return Text(
-            text,
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-          );
+      text,
+      style: const TextStyle(
+        fontSize: 20,
+      ),
+    );
   }
   Widget inputForm(BuildContext context, TextEditingController controller, bool obscure) {
     //Where the user enter it's credentials
     return TextFormField(
-        textAlign: TextAlign.center,
-        controller: controller,
-        obscureText: obscure ,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0)
-          ),
+      textAlign: TextAlign.center,
+      controller: controller,
+      obscureText: obscure ,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0)
         ),
-      );
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -121,12 +104,12 @@ class LoginPageViewState extends State<LoginPage> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(), 
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ) 
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            )
                         );
                       },
                   ),
@@ -150,13 +133,13 @@ class LoginPageViewState extends State<LoginPage> {
                 if (!context.mounted) return;
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
-                  await updateLoginAchievement(authService.getCurrentUser()!.uid);
+                  await achievementVerifier.updateCompletedLoginAchievements(authService.getCurrentUser()!.uid);
                   Navigator.push(context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => const MainPage(), 
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ) 
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => const MainPage(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      )
                   );
                 } else if (signInResult == 'User not found: Double check your email') {
                   emailController.clear();

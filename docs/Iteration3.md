@@ -1,4 +1,4 @@
-# Iteration 2 Log
+# Iteration 3 Log
 
 ## Release
 
@@ -7,15 +7,15 @@
 ## Sprint Retrospective
 
 ### What went well?
-- We completed everything we proposed for this sprint
-- Every team member worked for this Sprint
-- The work was well distributed among the team
+- We completed everything we proposed for this sprint.
+- Every team member worked in this sprint.
+- The work was well distributed among the team.
 
 ### What should we do differently?
-- We should better manage our time because we had a lot of work for the other courses and the quality of our work was affected by that.
+- We should better manage our time because we had a lot of work for the other courses and the quality of our work was affected by that. To improve this topic, we should plan our schedule better as a team in order to avoid conflicts between the team members and their work for the other courses.
 
 ### What still puzzles me?
-- The problems with the unit tests and the acceptance tests continued on this sprint
+- The problems with the unit tests and the acceptance tests from the last sprint continued on this sprint.
 
 ## Project Board
 

@@ -26,8 +26,8 @@ class AchievementsPageState extends State<AchievementsPage> {
   @override
   void initState() {
     super.initState();
-    initializeUserAchievements();
     showCompleted = true;
+    initializeUserAchievements();
   }
 
   void setAchievementsFetcher(AchievementsFetcher newFetcher) {
@@ -42,12 +42,12 @@ class AchievementsPageState extends State<AchievementsPage> {
     UserModel userData = await userFetcher.getCurrentUserData();
     completedAchievements =
     await achievementsFetcher.getCompleteAchievements(userData.uid);
-    uncompletedAchievements =
-    await achievementsFetcher.getUncompletedAchievements(userData.uid);
+    //uncompletedAchievements = {};
+    //await achievementsFetcher.getUncompletedAchievements(userData.uid);
     setState(() {});
   }
 
-  Widget achievementRow(BuildContext context, Pair<AchievementsModel, Timestamp> achievement) {
+  Widget achievementRow(BuildContext context, Pair<AchievementsModel, Timestamp> achievement, bool isCompleted) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -62,19 +62,19 @@ class AchievementsPageState extends State<AchievementsPage> {
             ),
           ),
         ),
-        Text(
-          achievement.value.toDate().toString().substring(0, 10),
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 15,
+        if (isCompleted)
+          Text(
+            achievement.value.toDate().toString().substring(0, 10),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+            ),
           ),
-        )
       ],
     );
   }
 
-
-  Widget achievementContainer(BuildContext context, Pair<AchievementsModel, Timestamp> achievement) {
+  Widget achievementContainer(BuildContext context, Pair<AchievementsModel, Timestamp> achievement, bool isCompleted) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.05,
@@ -85,7 +85,7 @@ class AchievementsPageState extends State<AchievementsPage> {
       ),
       child: TextButton(
         onPressed: () {},
-        child: achievementRow(context, achievement),
+        child: achievementRow(context, achievement, isCompleted),
       ),
     );
   }
@@ -100,8 +100,7 @@ class AchievementsPageState extends State<AchievementsPage> {
               Navigator.push(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (context, animation,
-                      secondaryAnimation) => const ProfilePage(),
+                  pageBuilder: (context, animation, secondaryAnimation) => const ProfilePage(),
                   transitionDuration: Duration.zero,
                   reverseTransitionDuration: Duration.zero,
                 ),
@@ -130,14 +129,8 @@ class AchievementsPageState extends State<AchievementsPage> {
 
   Widget completedButton(BuildContext context) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.3,
       decoration: BoxDecoration(
-        border: const Border(
-          right: BorderSide(width: 2),
-        ),
         borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
         color: showCompleted ? lightGreen : lightGrey,
       ),
@@ -161,14 +154,8 @@ class AchievementsPageState extends State<AchievementsPage> {
 
   Widget uncompletedButton(BuildContext context) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.3,
+      width: MediaQuery.of(context).size.width * 0.3,
       decoration: BoxDecoration(
-        border: const Border(
-          left: BorderSide(width: 2),
-        ),
         borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
         color: showCompleted ? lightGrey : lightGreen,
       ),
@@ -189,6 +176,7 @@ class AchievementsPageState extends State<AchievementsPage> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -242,7 +230,7 @@ class AchievementsPageState extends State<AchievementsPage> {
                             : uncompletedAchievements![index];
                         return Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: achievementContainer(context, achievement),
+                          child: achievementContainer(context, achievement, showCompleted),
                         );
                       },
                     ),
