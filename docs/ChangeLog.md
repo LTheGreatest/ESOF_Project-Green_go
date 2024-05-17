@@ -8,11 +8,35 @@ For this version of the app (the final sprint version) we added the final functi
 
 Firstly, the user can now complete missions and check his completed missions. The section with the completed missions can be accessed throw the profile page.
 
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/CompletedMissions.jpg" height = 600>
+</p>
 
 The second big functionality implemented was the achivements/rewards system. The user can now receive achievements and rewards when he completes a certain number of missions, achieves a certain number of points or login a certain amount of times. The achivements section can be accessed throw the profile page. The achivements section is divided in completed and imcompleted missions.
 
 
-Besides the achivements and the missions systems, we also work on some refinements to improve the user experience. The default animations were removed from the page transitions. The circle with the completion percentage of the current score goal has now a different color that contrasts better with the background. The dividers in the missions details have now a less agressive color. Lastly, the profile page was also a bit refined with a small improvement in the profile details board, a new top bar with the username and a button to access the pop menu that contains the logout, delete account and edit profile options.
+
+Besides the achivements and the missions systems, we also work on some refinements to improve the user experience. The default animations were removed from the page transitions. 
+
+The circle with the completion percentage of the current score goal has now a different color that contrasts better with the background. 
+
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/ScoreWidget.jpg" height = 300>
+</p>
+
+The dividers in the missions details have now a less agressive color. 
+
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/MissionDetails.jpg" height = 600>
+</p>
+
+Lastly, the profile page was also a bit refined with a small improvement in the profile details board, a new top bar with the username and a button to access the pop menu that contains the logout, delete account and edit profile options.
+
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/Profile.jpg" height = 600>
+</p>
+
+
 
 ### Fixes
 
