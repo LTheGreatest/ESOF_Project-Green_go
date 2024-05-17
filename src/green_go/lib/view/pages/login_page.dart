@@ -23,25 +23,25 @@ class LoginPageViewState extends State<LoginPage> {
   Widget labelText(BuildContext context, String text) {
     //label of the input forms
     return Text(
-            text,
-            style: const TextStyle(
-              fontSize: 20,
-            ),
-          );
+      text,
+      style: const TextStyle(
+        fontSize: 20,
+      ),
+    );
   }
   Widget inputForm(BuildContext context, TextEditingController controller, bool obscure) {
     //Where the user enter it's credentials
     return TextFormField(
-        textAlign: TextAlign.center,
-        controller: controller,
-        obscureText: obscure ,
-        decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-          border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10.0)
-          ),
+      textAlign: TextAlign.center,
+      controller: controller,
+      obscureText: obscure ,
+      decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0)
         ),
-      );
+      ),
+    );
   }
   @override
   Widget build(BuildContext context) {
@@ -104,12 +104,12 @@ class LoginPageViewState extends State<LoginPage> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(), 
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                          ) 
+                            context,
+                            PageRouteBuilder(
+                              pageBuilder: (context, animation, secondaryAnimation) => const RegisterPage(),
+                              transitionDuration: Duration.zero,
+                              reverseTransitionDuration: Duration.zero,
+                            )
                         );
                       },
                   ),
@@ -133,13 +133,13 @@ class LoginPageViewState extends State<LoginPage> {
                 if (!context.mounted) return;
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
-                  await achievementVerifier.updateLoginAchievement(authService.getCurrentUser()!.uid);
+                  await achievementVerifier.updateCompletedLoginAchievements(authService.getCurrentUser()!.uid);
                   Navigator.push(context,
-                    PageRouteBuilder(
-                      pageBuilder: (context, animation, secondaryAnimation) => const MainPage(), 
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                    ) 
+                      PageRouteBuilder(
+                        pageBuilder: (context, animation, secondaryAnimation) => const MainPage(),
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                      )
                   );
                 } else if (signInResult == 'User not found: Double check your email') {
                   emailController.clear();

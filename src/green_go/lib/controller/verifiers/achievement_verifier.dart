@@ -34,15 +34,54 @@ class AchievementVerifier {
     }
   }
 
-  Future<void> updateLoginAchievement(String userId) async {
+  Future<void> updateCompletedAchievement(String userId, int numberRequired, int currentNumber, String achievementId) async{
+    if(currentNumber >= numberRequired){
+      await uadb.addCompletedAchievement(userId, achievementId);
+      await uadb.deleteUserAchievement(userId, achievementId);
+    } else {
+      await uadb.addUserAchievement(userId, achievementId, currentNumber);
+    }
+  }
+  Future<void> updateCompletedLoginAchievements(String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.achievementsId;
-    for (final achievement in achievements) {
-      if (achievement.value.types[0] == "NumberLogins") {
-        uadb.addCompletedAchievement(userId, achievement.key);
-        uadb.deleteUserAchievement(userId, achievement.key);
-        break; //breaks because we only have one achievement
+    Map<String, dynamic> uncompletedAchievementsId = await achievementsFetcher
+        .getUncompletedAchievementsId(userId);
+    for (Pair<String, AchievementsModel> achievement in achievements) {
+      if (uncompletedAchievementsId.containsKey(achievement.key)) {
+        if (achievement.value.types[0] == "NumberLogins") {
+          await updateCompletedAchievement(
+              userId, achievement.value.types[1]["number"]!,
+              uncompletedAchievementsId[achievement.key]! + 1, achievement.key);
+        }
+      }
+    }
+  }
+
+  Future<void> updateCompletedTripAchievements(String userId) async {
+    List<Pair<String, AchievementsModel>> achievements;
+    await achievementsFetcher.getAllAchievements();
+    achievements = achievementsFetcher.achievementsId;
+    Map<String, dynamic> uncompletedAchievementsId = await achievementsFetcher.getUncompletedAchievementsId(userId);
+    for (Pair<String, AchievementsModel> achievement in achievements) {
+      if (uncompletedAchievementsId.containsKey(achievement.key)) {
+        if (achievement.value.types[0] == "NumberTrips") {
+          await updateCompletedAchievement(userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key);
+        }
+      }
+    }
+  }
+  Future<void> updateCompletedMissionAchievements(String userId) async {
+    List<Pair<String, AchievementsModel>> achievements;
+    await achievementsFetcher.getAllAchievements();
+    achievements = achievementsFetcher.achievementsId;
+    Map<String, dynamic> uncompletedAchievementsId = await achievementsFetcher.getUncompletedAchievementsId(userId);
+    for (Pair<String, AchievementsModel> achievement in achievements) {
+      if (uncompletedAchievementsId.containsKey(achievement.key)) {
+        if (achievement.value.types[0] == "NumberMissions") {
+          await updateCompletedAchievement(userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key);
+        }
       }
     }
   }
