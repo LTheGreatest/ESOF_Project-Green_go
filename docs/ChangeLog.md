@@ -32,6 +32,12 @@ The dividers in the missions details have now a less agressive color.
     <img src= "images/changelogScreenshots/v.0.3.0/MissionDetails.jpg" height = 600>
 </p>
 
+The dividers in the score details page have now also a less agressive color.
+
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/ScoreDetails.jpg" height = 600>
+</p>
+
 Lastly, the profile page was also a bit refined with a small improvement in the profile details board, a new top bar with the username and a button to access the pop menu that contains the logout, delete account and edit profile options.
 
 <p align="center">
