@@ -16,7 +16,9 @@ The second big functionality implemented was the achivements/rewards system. The
 
 
 
-Besides the achivements and the missions systems, we also work on some refinements to improve the user experience. The default animations were removed from the page transitions. 
+Besides the achivements and the missions systems, we also work on some refinements to improve the user experience. 
+
+The default animations were removed from the page transitions. 
 
 The circle with the completion percentage of the current score goal has now a different color that contrasts better with the background. 
 
