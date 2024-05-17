@@ -20,6 +20,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   AchievementsFetcher achievementsFetcher = AchievementsFetcher();
   UserFetcher userFetcher = UserFetcher();
   List<Pair<AchievementsModel, Timestamp>>? completedAchievements;
+  List<Pair<AchievementsModel, Timestamp>>? uncompletedAchievements;
   late bool showCompleted;
 
   @override
@@ -41,16 +42,18 @@ class AchievementsPageState extends State<AchievementsPage> {
     UserModel userData = await userFetcher.getCurrentUserData();
     completedAchievements =
     await achievementsFetcher.getCompleteAchievements(userData.uid);
+    uncompletedAchievements =
+    await achievementsFetcher.getUncompletedAchievements(userData.uid);
     setState(() {});
   }
 
-  Widget achievementRow(BuildContext context, int index) {
+  Widget achievementRow(BuildContext context, Pair<AchievementsModel, Timestamp> achievement) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
           child: Text(
-            completedAchievements![index].key.name,
+            achievement.key.name,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.black,
@@ -60,8 +63,7 @@ class AchievementsPageState extends State<AchievementsPage> {
           ),
         ),
         Text(
-          completedAchievements![index].value.toDate().toString().substring(
-              0, 10),
+          achievement.value.toDate().toString().substring(0, 10),
           style: const TextStyle(
             color: Colors.black,
             fontSize: 15,
@@ -71,16 +73,11 @@ class AchievementsPageState extends State<AchievementsPage> {
     );
   }
 
-  Widget achievementContainer(BuildContext context, int index) {
+
+  Widget achievementContainer(BuildContext context, Pair<AchievementsModel, Timestamp> achievement) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width * 0.6,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height * 0.05,
+      width: MediaQuery.of(context).size.width * 0.6,
+      height: MediaQuery.of(context).size.height * 0.05,
       decoration: BoxDecoration(
         color: lightGrey,
         border: Border.all(width: 1),
@@ -88,7 +85,7 @@ class AchievementsPageState extends State<AchievementsPage> {
       ),
       child: TextButton(
         onPressed: () {},
-        child: achievementRow(context, index),
+        child: achievementRow(context, achievement),
       ),
     );
   }
@@ -192,12 +189,10 @@ class AchievementsPageState extends State<AchievementsPage> {
       ),
     );
   }
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: completedAchievements == null
+      body: completedAchievements == null || uncompletedAchievements == null
           ? const Center(
         child: CircularProgressIndicator(),
       )
@@ -206,30 +201,28 @@ class AchievementsPageState extends State<AchievementsPage> {
           padding: const EdgeInsets.only(top: 60),
           child: SingleChildScrollView(
             child: Container(
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.88,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.82,
+              width: MediaQuery.of(context).size.width * 0.88,
+              height: MediaQuery.of(context).size.height * 0.82,
               decoration: BoxDecoration(
                 border: Border.all(width: 1),
-                borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
+                borderRadius: const BorderRadius.all(
+                  Radius.elliptical(20, 20),
+                ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(padding: EdgeInsets.only(top: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.02)),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                  ),
                   backButtonAndTitle(context),
-                  Padding(padding: EdgeInsets.only(top: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.04)),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -239,13 +232,17 @@ class AchievementsPageState extends State<AchievementsPage> {
                   ),
                   Expanded(
                     child: ListView.builder(
-                      padding: const EdgeInsets.only(
-                          left: 10, right: 10, top: 10),
-                      itemCount: completedAchievements!.length,
+                      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                      itemCount: showCompleted
+                          ? completedAchievements!.length
+                          : uncompletedAchievements!.length,
                       itemBuilder: (context, index) {
+                        final achievement = showCompleted
+                            ? completedAchievements![index]
+                            : uncompletedAchievements![index];
                         return Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: achievementContainer(context, index),
+                          child: achievementContainer(context, achievement),
                         );
                       },
                     ),
