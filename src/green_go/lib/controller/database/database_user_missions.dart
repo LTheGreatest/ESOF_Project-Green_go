@@ -6,6 +6,7 @@ class DataBaseUserMissions {
   Future getUserMissions(String uid) async {
     return await userMissionsCollection.doc(uid).get();
   }
+
   Future deleteUserMission(String userId, Map<String,int> missionPoints) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
     List<dynamic> missions = doc['missions'];
@@ -18,12 +19,14 @@ class DataBaseUserMissions {
     await userMissionsCollection.doc(userId).update({'missions': FieldValue.delete()});
     return await userMissionsCollection.doc(userId).update({'missions': missions});
   }
+
   Future addUserMission(String userId, Map<String,int> missionPoints) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
     List<dynamic> missions = doc['missions'];
     missions.add(missionPoints);
     return await userMissionsCollection.doc(userId).update({'missions': missions});
   }
+
   Future addCompletedMission(String userId, String missionId) async {
     DocumentSnapshot doc = await userMissionsCollection.doc(userId).get();
     Map<String, dynamic> completedMissions = doc['completedMissions'];

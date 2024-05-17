@@ -20,11 +20,14 @@ class AchievementsPageState extends State<AchievementsPage> {
   AchievementsFetcher achievementsFetcher = AchievementsFetcher();
   UserFetcher userFetcher = UserFetcher();
   List<Pair<AchievementsModel, Timestamp>>? completedAchievements;
+  List<Pair<AchievementsModel, Timestamp>>? uncompletedAchievements;
+  late bool showCompleted;
 
   @override
   void initState() {
     super.initState();
     initializeUserAchievements();
+    showCompleted = true;
   }
 
   void setAchievementsFetcher(AchievementsFetcher newFetcher) {
@@ -37,17 +40,20 @@ class AchievementsPageState extends State<AchievementsPage> {
 
   Future<void> initializeUserAchievements() async {
     UserModel userData = await userFetcher.getCurrentUserData();
-    completedAchievements = await achievementsFetcher.getCompleteAchievements(userData.uid);
+    completedAchievements =
+    await achievementsFetcher.getCompleteAchievements(userData.uid);
+    uncompletedAchievements =
+    await achievementsFetcher.getUncompletedAchievements(userData.uid);
     setState(() {});
   }
 
-  Widget achievementRow(BuildContext context, int index) {
+  Widget achievementRow(BuildContext context, Pair<AchievementsModel, Timestamp> achievement) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Flexible(
           child: Text(
-            completedAchievements![index].key.name,
+            achievement.key.name,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.black,
@@ -57,7 +63,7 @@ class AchievementsPageState extends State<AchievementsPage> {
           ),
         ),
         Text(
-          completedAchievements![index].value.toDate().toString().substring(0, 10),
+          achievement.value.toDate().toString().substring(0, 10),
           style: const TextStyle(
             color: Colors.black,
             fontSize: 15,
@@ -67,7 +73,8 @@ class AchievementsPageState extends State<AchievementsPage> {
     );
   }
 
-  Widget achievementContainer(BuildContext context, int index) {
+
+  Widget achievementContainer(BuildContext context, Pair<AchievementsModel, Timestamp> achievement) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.05,
@@ -78,7 +85,7 @@ class AchievementsPageState extends State<AchievementsPage> {
       ),
       child: TextButton(
         onPressed: () {},
-        child: achievementRow(context, index),
+        child: achievementRow(context, achievement),
       ),
     );
   }
@@ -93,7 +100,8 @@ class AchievementsPageState extends State<AchievementsPage> {
               Navigator.push(
                 context,
                 PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) => const ProfilePage(),
+                  pageBuilder: (context, animation,
+                      secondaryAnimation) => const ProfilePage(),
                   transitionDuration: Duration.zero,
                   reverseTransitionDuration: Duration.zero,
                 ),
@@ -102,14 +110,14 @@ class AchievementsPageState extends State<AchievementsPage> {
             icon: const Icon(Icons.arrow_back, size: 40),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 35, top: 5),
+        const Padding(
+          padding: EdgeInsets.only(left: 35, top: 5),
           child: Align(
             alignment: Alignment.center,
             child: Text(
               "Achievements",
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
@@ -120,11 +128,72 @@ class AchievementsPageState extends State<AchievementsPage> {
     );
   }
 
+  Widget completedButton(BuildContext context) {
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.3,
+      decoration: BoxDecoration(
+        border: const Border(
+          right: BorderSide(width: 2),
+        ),
+        borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
+        color: showCompleted ? lightGreen : lightGrey,
+      ),
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            showCompleted = true;
+          });
+        },
+        child: const Text(
+          "Completed",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget uncompletedButton(BuildContext context) {
+    return Container(
+      width: MediaQuery
+          .of(context)
+          .size
+          .width * 0.3,
+      decoration: BoxDecoration(
+        border: const Border(
+          left: BorderSide(width: 2),
+        ),
+        borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
+        color: showCompleted ? lightGrey : lightGreen,
+      ),
+      child: TextButton(
+        onPressed: () {
+          setState(() {
+            showCompleted = false;
+          });
+        },
+        child: const Text(
+          "Uncompleted",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: completedAchievements == null
-          ? Center(
+      body: completedAchievements == null || uncompletedAchievements == null
+          ? const Center(
         child: CircularProgressIndicator(),
       )
           : Center(
@@ -136,22 +205,44 @@ class AchievementsPageState extends State<AchievementsPage> {
               height: MediaQuery.of(context).size.height * 0.82,
               decoration: BoxDecoration(
                 border: Border.all(width: 1),
-                borderRadius: const BorderRadius.all(Radius.elliptical(20, 20)),
+                borderRadius: const BorderRadius.all(
+                  Radius.elliptical(20, 20),
+                ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02)),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.02,
+                    ),
+                  ),
                   backButtonAndTitle(context),
-                  Padding(padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04)),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.04,
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      completedButton(context),
+                      uncompletedButton(context),
+                    ],
+                  ),
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-                      itemCount: completedAchievements!.length,
+                      itemCount: showCompleted
+                          ? completedAchievements!.length
+                          : uncompletedAchievements!.length,
                       itemBuilder: (context, index) {
+                        final achievement = showCompleted
+                            ? completedAchievements![index]
+                            : uncompletedAchievements![index];
                         return Padding(
                           padding: const EdgeInsets.only(top: 15),
-                          child: achievementContainer(context, index),
+                          child: achievementContainer(context, achievement),
                         );
                       },
                     ),
@@ -162,7 +253,7 @@ class AchievementsPageState extends State<AchievementsPage> {
           ),
         ),
       ),
-      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.profile,),
+      bottomNavigationBar: const CustomMenuBar(currentPage: MenuPage.profile),
     );
   }
 }
