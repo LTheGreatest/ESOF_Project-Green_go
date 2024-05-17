@@ -47,6 +47,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   }
 
   Widget achievementRow(BuildContext context, Pair<AchievementsModel, dynamic> achievement, bool isCompleted) {
+    //row with the achibement detials inside the details container
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -89,6 +90,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   }
 
   Widget achievementContainer(BuildContext context, Pair<AchievementsModel, dynamic> achievement, bool isCompleted) {
+    //container with the achivement details and link to the details page
     return Container(
       width: MediaQuery.of(context).size.width * 0.6,
       height: MediaQuery.of(context).size.height * 0.05,
@@ -114,6 +116,7 @@ class AchievementsPageState extends State<AchievementsPage> {
 
 
   Widget backButtonAndTitle(BuildContext context) {
+    //title row
     return Stack(
       children: [
         Align(
@@ -151,6 +154,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   }
 
   Widget completedButton(BuildContext context) {
+    //builds the completed button
     return Container(
       width: 140,
       decoration: BoxDecoration(
@@ -176,6 +180,7 @@ class AchievementsPageState extends State<AchievementsPage> {
   }
 
   Widget uncompletedButton(BuildContext context) {
+    //builds the uncompleted button
     return Container(
       width: 140,
       decoration: BoxDecoration(
@@ -239,6 +244,7 @@ class AchievementsPageState extends State<AchievementsPage> {
                       uncompletedButton(context),
                     ],
                   ),
+                  //builds the list of achivements
                   Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(left: 10, right: 10, top: 10),

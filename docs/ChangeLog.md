@@ -12,8 +12,19 @@ Firstly, the user can now complete missions and check his completed missions. Th
     <img src= "images/changelogScreenshots/v.0.3.0/CompletedMissions.jpg" height = 600>
 </p>
 
-The second big functionality implemented was the achivements/rewards system. The user can now receive achievements and rewards when he completes a certain number of missions, achieves a certain number of points or login a certain amount of times. The achivements section can be accessed throw the profile page. The achivements section is divided in completed and imcompleted missions.
+The second big functionality implemented was the achivements/rewards system. The user can now receive achievements and rewards when he completes a certain number of missions, achieves a certain number of points or login a certain amount of times. The achivements section can be accessed throw the profile page. The achivements section is divided in completed and imcompleted missions. 
 
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/Achievements1.jpg" height = 600>
+</p>
+
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/Achievements2.jpg" height = 600>
+</p>
+
+<p align="center">
+    <img src= "images/changelogScreenshots/v.0.3.0/AchievementsDetails.jpg" height = 600>
+</p>
 
 
 Besides the achivements and the missions systems, we also work on some refinements to improve the user experience. 
