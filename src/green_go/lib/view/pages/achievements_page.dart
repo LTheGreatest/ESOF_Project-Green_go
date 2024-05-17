@@ -4,6 +4,7 @@ import 'package:pair/pair.dart';
 import '../../controller/fetchers/user_fetcher.dart';
 import '../../model/achievements_model.dart';
 import '../../controller/fetchers/achievements_fetcher.dart';
+import 'package:green_go/view/pages/achievement_details.dart';
 import '../../model/user_model.dart';
 import '../widgets/menu_bar.dart';
 import 'profile_page.dart';
@@ -90,11 +91,20 @@ class AchievementsPageState extends State<AchievementsPage> {
         borderRadius: const BorderRadius.all(Radius.elliptical(15, 15)),
       ),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          // Navigate to the achievement details page
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => AchievementDetails(model: achievement.key),
+            ),
+          );
+        },
         child: achievementRow(context, achievement, isCompleted),
       ),
     );
   }
+
 
   Widget backButtonAndTitle(BuildContext context) {
     return Stack(
