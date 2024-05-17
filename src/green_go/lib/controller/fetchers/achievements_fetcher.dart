@@ -78,7 +78,6 @@ class AchievementsFetcher {
               String name = achievementsId[i].value.name;
               String description = achievementsId[i].value.description;
               List<dynamic> types = achievementsId[i].value.types;
-
               uncompletedAchievements.add(Pair(AchievementsModel(name, description, types), value));
             }
           }

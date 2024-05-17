@@ -57,7 +57,6 @@ void main() {
       //then
       expect(result, equals("Successfully registered"));
     });
-
     test('Weak password', () async {
       //given
       when(firebaseAuth.createUserWithEmailAndPassword(
@@ -112,6 +111,13 @@ void main() {
     });
     test('isNotFilled() - all filled', () {
       expect(registerPageViewState.isNotFilled("example", "email@example.com", "password", "password"), false);
+    });
+    test('isInvalidUsername() - invalid', () {
+      expect(registerPageViewState.isInvalidUsername("aaaaaaaaaaaaaaaaaallll"), true);
+      expect(registerPageViewState.isInvalidUsername("abcdefghijklmopqrstuvwxyz123"), true);
+    });
+    test('isInvalidUsername() - valid', () {
+      expect(registerPageViewState.isInvalidUsername("amen"), false);
     });
     test('isInvalidEmail() - invalid', () {
       expect(registerPageViewState.isInvalidEmail("example.com"), true);

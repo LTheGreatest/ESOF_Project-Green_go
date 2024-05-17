@@ -24,6 +24,9 @@ class RegisterPageViewState extends State<RegisterPage> {
   bool isNotFilled(String username, String email, String password, String confirmPassword) {
     return username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty;
   }
+  bool isInvalidUsername(String username) {
+    return username.length > 21;
+  }
   bool isInvalidEmail(String email) {
     return !email.contains('@') || !email.contains('.');
   }
@@ -163,6 +166,16 @@ class RegisterPageViewState extends State<RegisterPage> {
                         content: Text('Please fill in all fields.'),
                       ),
                     );
+                    return;
+                  }
+                  //verifies if the username inserted does not pass the char limit
+                  if (isInvalidUsername(username)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Username too big.'),
+                      ),
+                    );
+                    usernameController.clear();
                     return;
                   }
                   //verifies if the email inserted is in fact an email
