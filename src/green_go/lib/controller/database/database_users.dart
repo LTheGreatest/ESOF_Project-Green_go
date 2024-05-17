@@ -79,5 +79,6 @@ class DataBaseUsers {
   void deleteUser(String uid) {
     userMissionsCollection.doc(uid).delete();
     userCollection.doc(uid).delete();
+    userAchievementsCollection.doc(uid).delete();
   }
 }

@@ -84,8 +84,8 @@ class MissionVerifier{
     List<Pair<String, MissionsModel>> missionAlreadyCompleted=[];
     await missionsFetcher.getAllMissions();
     missions=missionsFetcher.missionsId;
-    List<dynamic> missionsInProgress = await missionsFetcher.getMissionsInProgress(AuthService().getCurrentUser()!.uid);
-    Map<String,dynamic> completedMissionsId = await missionsFetcher.getCompletedMissionsId(AuthService().getCurrentUser()!.uid);
+    List<dynamic> missionsInProgress = await missionsFetcher.getMissionsInProgress(auth.getCurrentUser()!.uid);
+    Map<String,dynamic> completedMissionsId = await missionsFetcher.getCompletedMissionsId(auth.getCurrentUser()!.uid);
 
     //checks already completed missions and takes them out
     for(final mission in missions){
