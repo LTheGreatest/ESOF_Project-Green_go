@@ -144,7 +144,9 @@ class MissionDetails extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.fromLTRB(20, MediaQuery.sizeOf(context).height * 0.08, 20, 20),
           child: Container(
-            height: MediaQuery.of(context).size.height * 0.9,
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height * 0.8
+            ),
             decoration: BoxDecoration(
                 border: Border.all(
                     width: 1
