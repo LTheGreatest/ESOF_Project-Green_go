@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 
 class AchievementPopup {
 
-  static void show(BuildContext context, AchievementsModel achievement) async {
+  void show(BuildContext context, AchievementsModel achievement) async {
     OverlayEntry? entry;
     entry = OverlayEntry(
       builder: (context) => GestureDetector(

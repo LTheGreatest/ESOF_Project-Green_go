@@ -25,6 +25,11 @@ class AchievementsFetcher {
     achievementsId = newAchivementsID;
   }
 
+  List<Pair<String, AchievementsModel>> getAchievementsID(){
+    return achievementsId;
+  }
+
+
   Future<List<AchievementsModel>> getAllAchievements() async {
     //gets all achievements available at the firebase firestore database
     await db.getAllAchievements().then((querySnapshot) {

@@ -13,6 +13,7 @@ class AchievementVerifier {
   late DataBaseUserAchievements uadb = DataBaseUserAchievements();
   late DataBaseUsers dataBaseUsers = DataBaseUsers();
   late AuthService auth = AuthService();
+  AchievementPopup popUp = AchievementPopup();
 
   void setAchievementsFetcher(AchievementsFetcher af){
     achievementsFetcher = af;
@@ -25,6 +26,9 @@ class AchievementVerifier {
   }
   void setAuth(AuthService authService){
     auth = authService;
+  }
+  void setPopUp(AchievementPopup newPopUp){
+    popUp = newPopUp;
   }
 
   Future<void> initializeAllAchievements(String userId) async {
@@ -39,7 +43,7 @@ class AchievementVerifier {
   Future<void> updateCompletedAchievement(BuildContext context,String userId, int numberRequired, int currentNumber, String achievementId, AchievementsModel achievementsModel) async{
     if(currentNumber >= numberRequired){
       await uadb.addCompletedAchievement(userId, achievementId);
-      AchievementPopup.show(context, achievementsModel);
+      popUp.show(context, achievementsModel);
       await uadb.deleteUserAchievement(userId, achievementId);
     } else {
       await uadb.addUserAchievement(userId, achievementId, currentNumber);
@@ -48,7 +52,7 @@ class AchievementVerifier {
   Future<void> updateCompletedLoginAchievements(BuildContext context,String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
-    achievements = achievementsFetcher.achievementsId;
+    achievements = achievementsFetcher.getAchievementsID();
     Map<String, dynamic> uncompletedAchievementsId = await achievementsFetcher
         .getUncompletedAchievementsId(userId);
     for (Pair<String, AchievementsModel> achievement in achievements) {
@@ -65,7 +69,7 @@ class AchievementVerifier {
   Future<void> updateCompletedTripAchievements(BuildContext context,String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
-    achievements = achievementsFetcher.achievementsId;
+    achievements = achievementsFetcher.getAchievementsID();
     Map<String, dynamic> uncompletedAchievementsId = await achievementsFetcher.getUncompletedAchievementsId(userId);
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
@@ -78,7 +82,7 @@ class AchievementVerifier {
   Future<void> updateCompletedMissionAchievements(BuildContext context,String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
-    achievements = achievementsFetcher.achievementsId;
+    achievements = achievementsFetcher.getAchievementsID();
     Map<String, dynamic> uncompletedAchievementsId = await achievementsFetcher.getUncompletedAchievementsId(userId);
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {

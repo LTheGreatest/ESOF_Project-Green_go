@@ -175,7 +175,7 @@ void main(){
       verifyNever(dataBaseUserMissions.addUserMission("123", {"c" : 15}));
       verify(dataBaseUsers.updateUserPoints("123", 10)).called(1);
 
-      //tets if a mission has added when partily completed
+      //tests if a mission has added when partily completed
       verify(dataBaseUserMissions.addUserMission("123", {"a" : 10})).called(1);
 
       //tests that non compatible mission is not used
