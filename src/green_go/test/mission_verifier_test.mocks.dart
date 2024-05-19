@@ -7,17 +7,18 @@ import 'dart:async' as _i13;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as _i5;
 import 'package:firebase_auth/firebase_auth.dart' as _i15;
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' as _i16;
 import 'package:green_go/controller/authentication/auth.dart' as _i9;
 import 'package:green_go/controller/database/database_missions.dart' as _i2;
 import 'package:green_go/controller/database/database_user_achievements.dart'
-    as _i8;
+as _i8;
 import 'package:green_go/controller/database/database_user_missions.dart'
-    as _i3;
+as _i3;
 import 'package:green_go/controller/database/database_users.dart' as _i6;
 import 'package:green_go/controller/fetchers/achievements_fetcher.dart' as _i7;
 import 'package:green_go/controller/fetchers/missions_fetcher.dart' as _i10;
 import 'package:green_go/controller/verifiers/achievement_verifier.dart' as _i4;
+import 'package:green_go/model/achievements_model.dart' as _i17;
 import 'package:green_go/model/missions_model.dart' as _i11;
 import 'package:green_go/model/user_model.dart' as _i14;
 import 'package:mockito/mockito.dart' as _i1;
@@ -39,87 +40,87 @@ import 'package:pair/pair.dart' as _i12;
 class _FakeDataBaseMissions_0 extends _i1.SmartFake
     implements _i2.DataBaseMissions {
   _FakeDataBaseMissions_0(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeDataBaseUserMissions_1 extends _i1.SmartFake
     implements _i3.DataBaseUserMissions {
   _FakeDataBaseUserMissions_1(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeAchievementVerifier_2 extends _i1.SmartFake
     implements _i4.AchievementVerifier {
   _FakeAchievementVerifier_2(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeDocumentSnapshot_3<T extends Object?> extends _i1.SmartFake
     implements _i5.DocumentSnapshot<T> {
   _FakeDocumentSnapshot_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeDataBaseUsers_4 extends _i1.SmartFake implements _i6.DataBaseUsers {
   _FakeDataBaseUsers_4(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeAchievementsFetcher_5 extends _i1.SmartFake
     implements _i7.AchievementsFetcher {
   _FakeAchievementsFetcher_5(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeDataBaseUserAchievements_6 extends _i1.SmartFake
     implements _i8.DataBaseUserAchievements {
   _FakeDataBaseUserAchievements_6(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 class _FakeAuthService_7 extends _i1.SmartFake implements _i9.AuthService {
   _FakeAuthService_7(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
+      Object parent,
+      Invocation parentInvocation,
+      ) : super(
+    parent,
+    parentInvocation,
+  );
 }
 
 /// A class which mocks [MissionsFetcher].
@@ -128,63 +129,63 @@ class _FakeAuthService_7 extends _i1.SmartFake implements _i9.AuthService {
 class MockMissionsFetcher extends _i1.Mock implements _i10.MissionsFetcher {
   @override
   _i2.DataBaseMissions get db => (super.noSuchMethod(
-        Invocation.getter(#db),
-        returnValue: _FakeDataBaseMissions_0(
-          this,
-          Invocation.getter(#db),
-        ),
-        returnValueForMissingStub: _FakeDataBaseMissions_0(
-          this,
-          Invocation.getter(#db),
-        ),
-      ) as _i2.DataBaseMissions);
+    Invocation.getter(#db),
+    returnValue: _FakeDataBaseMissions_0(
+      this,
+      Invocation.getter(#db),
+    ),
+    returnValueForMissingStub: _FakeDataBaseMissions_0(
+      this,
+      Invocation.getter(#db),
+    ),
+  ) as _i2.DataBaseMissions);
 
   @override
   set db(_i2.DataBaseMissions? _db) => super.noSuchMethod(
-        Invocation.setter(
-          #db,
-          _db,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #db,
+      _db,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i3.DataBaseUserMissions get dbUser => (super.noSuchMethod(
-        Invocation.getter(#dbUser),
-        returnValue: _FakeDataBaseUserMissions_1(
-          this,
-          Invocation.getter(#dbUser),
-        ),
-        returnValueForMissingStub: _FakeDataBaseUserMissions_1(
-          this,
-          Invocation.getter(#dbUser),
-        ),
-      ) as _i3.DataBaseUserMissions);
+    Invocation.getter(#dbUser),
+    returnValue: _FakeDataBaseUserMissions_1(
+      this,
+      Invocation.getter(#dbUser),
+    ),
+    returnValueForMissingStub: _FakeDataBaseUserMissions_1(
+      this,
+      Invocation.getter(#dbUser),
+    ),
+  ) as _i3.DataBaseUserMissions);
 
   @override
   set dbUser(_i3.DataBaseUserMissions? _dbUser) => super.noSuchMethod(
-        Invocation.setter(
-          #dbUser,
-          _dbUser,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #dbUser,
+      _dbUser,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   List<_i11.MissionsModel> get missions => (super.noSuchMethod(
-        Invocation.getter(#missions),
-        returnValue: <_i11.MissionsModel>[],
-        returnValueForMissingStub: <_i11.MissionsModel>[],
-      ) as List<_i11.MissionsModel>);
+    Invocation.getter(#missions),
+    returnValue: <_i11.MissionsModel>[],
+    returnValueForMissingStub: <_i11.MissionsModel>[],
+  ) as List<_i11.MissionsModel>);
 
   @override
   set missions(List<_i11.MissionsModel>? _missions) => super.noSuchMethod(
-        Invocation.setter(
-          #missions,
-          _missions,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #missions,
+      _missions,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   List<_i12.Pair<String, _i11.MissionsModel>> get missionsId =>
@@ -215,8 +216,8 @@ class MockMissionsFetcher extends _i1.Mock implements _i10.MissionsFetcher {
 
   @override
   set completedMissions(
-          List<_i12.Pair<_i11.MissionsModel, _i5.Timestamp>>?
-              _completedMissions) =>
+      List<_i12.Pair<_i11.MissionsModel, _i5.Timestamp>>?
+      _completedMissions) =>
       super.noSuchMethod(
         Invocation.setter(
           #completedMissions,
@@ -227,25 +228,25 @@ class MockMissionsFetcher extends _i1.Mock implements _i10.MissionsFetcher {
 
   @override
   void setDB(_i2.DataBaseMissions? newDB) => super.noSuchMethod(
-        Invocation.method(
-          #setDB,
-          [newDB],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #setDB,
+      [newDB],
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void setDBUser(_i3.DataBaseUserMissions? newDBUser) => super.noSuchMethod(
-        Invocation.method(
-          #setDBUser,
-          [newDBUser],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #setDBUser,
+      [newDBUser],
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void setMissionsID(
-          List<_i12.Pair<String, _i11.MissionsModel>>? newMissionsID) =>
+      List<_i12.Pair<String, _i11.MissionsModel>>? newMissionsID) =>
       super.noSuchMethod(
         Invocation.method(
           #setMissionsID,
@@ -256,20 +257,20 @@ class MockMissionsFetcher extends _i1.Mock implements _i10.MissionsFetcher {
 
   @override
   _i13.Future<List<_i11.MissionsModel>> getAllMissions() => (super.noSuchMethod(
-        Invocation.method(
-          #getAllMissions,
-          [],
-        ),
-        returnValue:
-            _i13.Future<List<_i11.MissionsModel>>.value(<_i11.MissionsModel>[]),
-        returnValueForMissingStub:
-            _i13.Future<List<_i11.MissionsModel>>.value(<_i11.MissionsModel>[]),
-      ) as _i13.Future<List<_i11.MissionsModel>>);
+    Invocation.method(
+      #getAllMissions,
+      [],
+    ),
+    returnValue:
+    _i13.Future<List<_i11.MissionsModel>>.value(<_i11.MissionsModel>[]),
+    returnValueForMissingStub:
+    _i13.Future<List<_i11.MissionsModel>>.value(<_i11.MissionsModel>[]),
+  ) as _i13.Future<List<_i11.MissionsModel>>);
 
   @override
   _i13.Future<
       List<_i12.Pair<_i11.MissionsModel, _i5.Timestamp>>> getCompleteMissions(
-          String? userId) =>
+      String? userId) =>
       (super.noSuchMethod(
         Invocation.method(
           #getCompleteMissions,
@@ -291,9 +292,9 @@ class MockMissionsFetcher extends _i1.Mock implements _i10.MissionsFetcher {
           [userId],
         ),
         returnValue:
-            _i13.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        _i13.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
         returnValueForMissingStub:
-            _i13.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
+        _i13.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
       ) as _i13.Future<Map<String, dynamic>>);
 
   @override
@@ -305,7 +306,7 @@ class MockMissionsFetcher extends _i1.Mock implements _i10.MissionsFetcher {
         ),
         returnValue: _i13.Future<List<dynamic>>.value(<dynamic>[]),
         returnValueForMissingStub:
-            _i13.Future<List<dynamic>>.value(<dynamic>[]),
+        _i13.Future<List<dynamic>>.value(<dynamic>[]),
       ) as _i13.Future<List<dynamic>>);
 }
 
@@ -316,19 +317,19 @@ class MockDataBaseUserMissions extends _i1.Mock
     implements _i3.DataBaseUserMissions {
   @override
   _i13.Future<dynamic> getUserMissions(String? uid) => (super.noSuchMethod(
-        Invocation.method(
-          #getUserMissions,
-          [uid],
-        ),
-        returnValue: _i13.Future<dynamic>.value(),
-        returnValueForMissingStub: _i13.Future<dynamic>.value(),
-      ) as _i13.Future<dynamic>);
+    Invocation.method(
+      #getUserMissions,
+      [uid],
+    ),
+    returnValue: _i13.Future<dynamic>.value(),
+    returnValueForMissingStub: _i13.Future<dynamic>.value(),
+  ) as _i13.Future<dynamic>);
 
   @override
   _i13.Future<dynamic> deleteUserMission(
-    String? userId,
-    Map<String, int>? missionPoints,
-  ) =>
+      String? userId,
+      Map<String, int>? missionPoints,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #deleteUserMission,
@@ -343,9 +344,9 @@ class MockDataBaseUserMissions extends _i1.Mock
 
   @override
   _i13.Future<dynamic> addUserMission(
-    String? userId,
-    Map<String, int>? missionPoints,
-  ) =>
+      String? userId,
+      Map<String, int>? missionPoints,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #addUserMission,
@@ -360,9 +361,9 @@ class MockDataBaseUserMissions extends _i1.Mock
 
   @override
   _i13.Future<dynamic> addCompletedMission(
-    String? userId,
-    String? missionId,
-  ) =>
+      String? userId,
+      String? missionId,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #addCompletedMission,
@@ -382,16 +383,16 @@ class MockDataBaseUserMissions extends _i1.Mock
 class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
   @override
   _i4.AchievementVerifier get achievementVerifier => (super.noSuchMethod(
-        Invocation.getter(#achievementVerifier),
-        returnValue: _FakeAchievementVerifier_2(
-          this,
-          Invocation.getter(#achievementVerifier),
-        ),
-        returnValueForMissingStub: _FakeAchievementVerifier_2(
-          this,
-          Invocation.getter(#achievementVerifier),
-        ),
-      ) as _i4.AchievementVerifier);
+    Invocation.getter(#achievementVerifier),
+    returnValue: _FakeAchievementVerifier_2(
+      this,
+      Invocation.getter(#achievementVerifier),
+    ),
+    returnValueForMissingStub: _FakeAchievementVerifier_2(
+      this,
+      Invocation.getter(#achievementVerifier),
+    ),
+  ) as _i4.AchievementVerifier);
 
   @override
   set achievementVerifier(_i4.AchievementVerifier? _achievementVerifier) =>
@@ -405,19 +406,19 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> addUser(_i14.UserModel? user) => (super.noSuchMethod(
-        Invocation.method(
-          #addUser,
-          [user],
-        ),
-        returnValue: _i13.Future<dynamic>.value(),
-        returnValueForMissingStub: _i13.Future<dynamic>.value(),
-      ) as _i13.Future<dynamic>);
+    Invocation.method(
+      #addUser,
+      [user],
+    ),
+    returnValue: _i13.Future<dynamic>.value(),
+    returnValueForMissingStub: _i13.Future<dynamic>.value(),
+  ) as _i13.Future<dynamic>);
 
   @override
   _i13.Future<dynamic> updateUsername(
-    String? uid,
-    String? username,
-  ) =>
+      String? uid,
+      String? username,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUsername,
@@ -432,9 +433,9 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> updateUserPoints(
-    String? uid,
-    int? points,
-  ) =>
+      String? uid,
+      int? points,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUserPoints,
@@ -449,9 +450,9 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> updateUserGoal(
-    String? uid,
-    int? goal,
-  ) =>
+      String? uid,
+      int? goal,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUserGoal,
@@ -466,9 +467,9 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> updateUserFirstTime(
-    String? uid,
-    bool? firstTime,
-  ) =>
+      String? uid,
+      bool? firstTime,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUserFirstTime,
@@ -483,12 +484,12 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> updateUserProfile(
-    String? uid,
-    String? username,
-    String? nationality,
-    String? job,
-    DateTime? birthDate,
-  ) =>
+      String? uid,
+      String? username,
+      String? nationality,
+      String? job,
+      DateTime? birthDate,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUserProfile,
@@ -506,9 +507,9 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> updateUserPicture(
-    String? uid,
-    String? photoUrl,
-  ) =>
+      String? uid,
+      String? photoUrl,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateUserPicture,
@@ -523,33 +524,33 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 
   @override
   _i13.Future<dynamic> resetWeeklyPoints() => (super.noSuchMethod(
-        Invocation.method(
-          #resetWeeklyPoints,
-          [],
-        ),
-        returnValue: _i13.Future<dynamic>.value(),
-        returnValueForMissingStub: _i13.Future<dynamic>.value(),
-      ) as _i13.Future<dynamic>);
+    Invocation.method(
+      #resetWeeklyPoints,
+      [],
+    ),
+    returnValue: _i13.Future<dynamic>.value(),
+    returnValueForMissingStub: _i13.Future<dynamic>.value(),
+  ) as _i13.Future<dynamic>);
 
   @override
   _i13.Future<dynamic> resetMonthlyPoints() => (super.noSuchMethod(
-        Invocation.method(
-          #resetMonthlyPoints,
-          [],
-        ),
-        returnValue: _i13.Future<dynamic>.value(),
-        returnValueForMissingStub: _i13.Future<dynamic>.value(),
-      ) as _i13.Future<dynamic>);
+    Invocation.method(
+      #resetMonthlyPoints,
+      [],
+    ),
+    returnValue: _i13.Future<dynamic>.value(),
+    returnValueForMissingStub: _i13.Future<dynamic>.value(),
+  ) as _i13.Future<dynamic>);
 
   @override
   _i13.Future<dynamic> getAllData() => (super.noSuchMethod(
-        Invocation.method(
-          #getAllData,
-          [],
-        ),
-        returnValue: _i13.Future<dynamic>.value(),
-        returnValueForMissingStub: _i13.Future<dynamic>.value(),
-      ) as _i13.Future<dynamic>);
+    Invocation.method(
+      #getAllData,
+      [],
+    ),
+    returnValue: _i13.Future<dynamic>.value(),
+    returnValueForMissingStub: _i13.Future<dynamic>.value(),
+  ) as _i13.Future<dynamic>);
 
   @override
   _i13.Future<_i5.DocumentSnapshot<Object?>> getUserData(String? uid) =>
@@ -560,31 +561,31 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
         ),
         returnValue: _i13.Future<_i5.DocumentSnapshot<Object?>>.value(
             _FakeDocumentSnapshot_3<Object?>(
-          this,
-          Invocation.method(
-            #getUserData,
-            [uid],
-          ),
-        )),
+              this,
+              Invocation.method(
+                #getUserData,
+                [uid],
+              ),
+            )),
         returnValueForMissingStub:
-            _i13.Future<_i5.DocumentSnapshot<Object?>>.value(
-                _FakeDocumentSnapshot_3<Object?>(
-          this,
-          Invocation.method(
-            #getUserData,
-            [uid],
-          ),
-        )),
+        _i13.Future<_i5.DocumentSnapshot<Object?>>.value(
+            _FakeDocumentSnapshot_3<Object?>(
+              this,
+              Invocation.method(
+                #getUserData,
+                [uid],
+              ),
+            )),
       ) as _i13.Future<_i5.DocumentSnapshot<Object?>>);
 
   @override
   void deleteUser(String? uid) => super.noSuchMethod(
-        Invocation.method(
-          #deleteUser,
-          [uid],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #deleteUser,
+      [uid],
+    ),
+    returnValueForMissingStub: null,
+  );
 }
 
 /// A class which mocks [AuthService].
@@ -593,49 +594,49 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
 class MockAuthService extends _i1.Mock implements _i9.AuthService {
   @override
   _i6.DataBaseUsers get dataBaseUsers => (super.noSuchMethod(
-        Invocation.getter(#dataBaseUsers),
-        returnValue: _FakeDataBaseUsers_4(
-          this,
-          Invocation.getter(#dataBaseUsers),
-        ),
-        returnValueForMissingStub: _FakeDataBaseUsers_4(
-          this,
-          Invocation.getter(#dataBaseUsers),
-        ),
-      ) as _i6.DataBaseUsers);
+    Invocation.getter(#dataBaseUsers),
+    returnValue: _FakeDataBaseUsers_4(
+      this,
+      Invocation.getter(#dataBaseUsers),
+    ),
+    returnValueForMissingStub: _FakeDataBaseUsers_4(
+      this,
+      Invocation.getter(#dataBaseUsers),
+    ),
+  ) as _i6.DataBaseUsers);
 
   @override
   set dataBaseUsers(_i6.DataBaseUsers? _dataBaseUsers) => super.noSuchMethod(
-        Invocation.setter(
-          #dataBaseUsers,
-          _dataBaseUsers,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #dataBaseUsers,
+      _dataBaseUsers,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void setFirebaseAuth(_i15.FirebaseAuth? firebaseAuth) => super.noSuchMethod(
-        Invocation.method(
-          #setFirebaseAuth,
-          [firebaseAuth],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #setFirebaseAuth,
+      [firebaseAuth],
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void setDataBaseUsers(_i6.DataBaseUsers? dataBaseUsers) => super.noSuchMethod(
-        Invocation.method(
-          #setDataBaseUsers,
-          [dataBaseUsers],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #setDataBaseUsers,
+      [dataBaseUsers],
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i13.Future<String?> signIn(
-    String? email,
-    String? password,
-  ) =>
+      String? email,
+      String? password,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #signIn,
@@ -650,10 +651,10 @@ class MockAuthService extends _i1.Mock implements _i9.AuthService {
 
   @override
   _i13.Future<String?> signUp(
-    String? email,
-    String? password,
-    String? username,
-  ) =>
+      String? email,
+      String? password,
+      String? username,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #signUp,
@@ -669,23 +670,23 @@ class MockAuthService extends _i1.Mock implements _i9.AuthService {
 
   @override
   _i13.Future<String?> signOut() => (super.noSuchMethod(
-        Invocation.method(
-          #signOut,
-          [],
-        ),
-        returnValue: _i13.Future<String?>.value(),
-        returnValueForMissingStub: _i13.Future<String?>.value(),
-      ) as _i13.Future<String?>);
+    Invocation.method(
+      #signOut,
+      [],
+    ),
+    returnValue: _i13.Future<String?>.value(),
+    returnValueForMissingStub: _i13.Future<String?>.value(),
+  ) as _i13.Future<String?>);
 
   @override
   _i13.Future<dynamic> deleteUser() => (super.noSuchMethod(
-        Invocation.method(
-          #deleteUser,
-          [],
-        ),
-        returnValue: _i13.Future<dynamic>.value(),
-        returnValueForMissingStub: _i13.Future<dynamic>.value(),
-      ) as _i13.Future<dynamic>);
+    Invocation.method(
+      #deleteUser,
+      [],
+    ),
+    returnValue: _i13.Future<dynamic>.value(),
+    returnValueForMissingStub: _i13.Future<dynamic>.value(),
+  ) as _i13.Future<dynamic>);
 }
 
 /// A class which mocks [AchievementVerifier].
@@ -695,16 +696,16 @@ class MockAchievementVerifier extends _i1.Mock
     implements _i4.AchievementVerifier {
   @override
   _i7.AchievementsFetcher get achievementsFetcher => (super.noSuchMethod(
-        Invocation.getter(#achievementsFetcher),
-        returnValue: _FakeAchievementsFetcher_5(
-          this,
-          Invocation.getter(#achievementsFetcher),
-        ),
-        returnValueForMissingStub: _FakeAchievementsFetcher_5(
-          this,
-          Invocation.getter(#achievementsFetcher),
-        ),
-      ) as _i7.AchievementsFetcher);
+    Invocation.getter(#achievementsFetcher),
+    returnValue: _FakeAchievementsFetcher_5(
+      this,
+      Invocation.getter(#achievementsFetcher),
+    ),
+    returnValueForMissingStub: _FakeAchievementsFetcher_5(
+      this,
+      Invocation.getter(#achievementsFetcher),
+    ),
+  ) as _i7.AchievementsFetcher);
 
   @override
   set achievementsFetcher(_i7.AchievementsFetcher? _achievementsFetcher) =>
@@ -718,69 +719,69 @@ class MockAchievementVerifier extends _i1.Mock
 
   @override
   _i8.DataBaseUserAchievements get uadb => (super.noSuchMethod(
-        Invocation.getter(#uadb),
-        returnValue: _FakeDataBaseUserAchievements_6(
-          this,
-          Invocation.getter(#uadb),
-        ),
-        returnValueForMissingStub: _FakeDataBaseUserAchievements_6(
-          this,
-          Invocation.getter(#uadb),
-        ),
-      ) as _i8.DataBaseUserAchievements);
+    Invocation.getter(#uadb),
+    returnValue: _FakeDataBaseUserAchievements_6(
+      this,
+      Invocation.getter(#uadb),
+    ),
+    returnValueForMissingStub: _FakeDataBaseUserAchievements_6(
+      this,
+      Invocation.getter(#uadb),
+    ),
+  ) as _i8.DataBaseUserAchievements);
 
   @override
   set uadb(_i8.DataBaseUserAchievements? _uadb) => super.noSuchMethod(
-        Invocation.setter(
-          #uadb,
-          _uadb,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #uadb,
+      _uadb,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i6.DataBaseUsers get dataBaseUsers => (super.noSuchMethod(
-        Invocation.getter(#dataBaseUsers),
-        returnValue: _FakeDataBaseUsers_4(
-          this,
-          Invocation.getter(#dataBaseUsers),
-        ),
-        returnValueForMissingStub: _FakeDataBaseUsers_4(
-          this,
-          Invocation.getter(#dataBaseUsers),
-        ),
-      ) as _i6.DataBaseUsers);
+    Invocation.getter(#dataBaseUsers),
+    returnValue: _FakeDataBaseUsers_4(
+      this,
+      Invocation.getter(#dataBaseUsers),
+    ),
+    returnValueForMissingStub: _FakeDataBaseUsers_4(
+      this,
+      Invocation.getter(#dataBaseUsers),
+    ),
+  ) as _i6.DataBaseUsers);
 
   @override
   set dataBaseUsers(_i6.DataBaseUsers? _dataBaseUsers) => super.noSuchMethod(
-        Invocation.setter(
-          #dataBaseUsers,
-          _dataBaseUsers,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #dataBaseUsers,
+      _dataBaseUsers,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i9.AuthService get auth => (super.noSuchMethod(
-        Invocation.getter(#auth),
-        returnValue: _FakeAuthService_7(
-          this,
-          Invocation.getter(#auth),
-        ),
-        returnValueForMissingStub: _FakeAuthService_7(
-          this,
-          Invocation.getter(#auth),
-        ),
-      ) as _i9.AuthService);
+    Invocation.getter(#auth),
+    returnValue: _FakeAuthService_7(
+      this,
+      Invocation.getter(#auth),
+    ),
+    returnValueForMissingStub: _FakeAuthService_7(
+      this,
+      Invocation.getter(#auth),
+    ),
+  ) as _i9.AuthService);
 
   @override
   set auth(_i9.AuthService? _auth) => super.noSuchMethod(
-        Invocation.setter(
-          #auth,
-          _auth,
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.setter(
+      #auth,
+      _auth,
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void setAchievementsFetcher(_i7.AchievementsFetcher? af) =>
@@ -794,7 +795,7 @@ class MockAchievementVerifier extends _i1.Mock
 
   @override
   void setDataBaseUserAchievements(
-          _i8.DataBaseUserAchievements? dataBaseUserAchievements) =>
+      _i8.DataBaseUserAchievements? dataBaseUserAchievements) =>
       super.noSuchMethod(
         Invocation.method(
           #setDataBaseUserAchievements,
@@ -805,21 +806,21 @@ class MockAchievementVerifier extends _i1.Mock
 
   @override
   void setDataBaseUsers(_i6.DataBaseUsers? dbu) => super.noSuchMethod(
-        Invocation.method(
-          #setDataBaseUsers,
-          [dbu],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #setDataBaseUsers,
+      [dbu],
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   void setAuth(_i9.AuthService? authService) => super.noSuchMethod(
-        Invocation.method(
-          #setAuth,
-          [authService],
-        ),
-        returnValueForMissingStub: null,
-      );
+    Invocation.method(
+      #setAuth,
+      [authService],
+    ),
+    returnValueForMissingStub: null,
+  );
 
   @override
   _i13.Future<void> initializeAllAchievements(String? userId) =>
@@ -834,12 +835,13 @@ class MockAchievementVerifier extends _i1.Mock
 
   @override
   _i13.Future<void> updateCompletedAchievement(
-    BuildContext context,
-    String? userId,
-    int? numberRequired,
-    int? currentNumber,
-    String? achievementId,
-  ) =>
+      _i16.BuildContext? context,
+      String? userId,
+      int? numberRequired,
+      int? currentNumber,
+      String? achievementId,
+      _i17.AchievementsModel? achievementsModel,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedAchievement,
@@ -849,6 +851,7 @@ class MockAchievementVerifier extends _i1.Mock
             numberRequired,
             currentNumber,
             achievementId,
+            achievementsModel,
           ],
         ),
         returnValue: _i13.Future<void>.value(),
@@ -856,33 +859,51 @@ class MockAchievementVerifier extends _i1.Mock
       ) as _i13.Future<void>);
 
   @override
-  _i13.Future<void> updateCompletedLoginAchievements(BuildContext context, String? userId) =>
+  _i13.Future<void> updateCompletedLoginAchievements(
+      _i16.BuildContext? context,
+      String? userId,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedLoginAchievements,
-          [userId],
+          [
+            context,
+            userId,
+          ],
         ),
         returnValue: _i13.Future<void>.value(),
         returnValueForMissingStub: _i13.Future<void>.value(),
       ) as _i13.Future<void>);
 
   @override
-  _i13.Future<void> updateCompletedTripAchievements(BuildContext context, String? userId) =>
+  _i13.Future<void> updateCompletedTripAchievements(
+      _i16.BuildContext? context,
+      String? userId,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedTripAchievements,
-          [userId],
+          [
+            context,
+            userId,
+          ],
         ),
         returnValue: _i13.Future<void>.value(),
         returnValueForMissingStub: _i13.Future<void>.value(),
       ) as _i13.Future<void>);
 
   @override
-  _i13.Future<void> updateCompletedMissionAchievements(BuildContext context, String? userId) =>
+  _i13.Future<void> updateCompletedMissionAchievements(
+      _i16.BuildContext? context,
+      String? userId,
+      ) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedMissionAchievements,
-          [userId],
+          [
+            context,
+            userId,
+          ],
         ),
         returnValue: _i13.Future<void>.value(),
         returnValueForMissingStub: _i13.Future<void>.value(),
