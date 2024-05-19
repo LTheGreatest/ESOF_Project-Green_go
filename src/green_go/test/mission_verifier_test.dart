@@ -3,6 +3,7 @@ import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/controller/database/database_users.dart';
 import 'package:green_go/controller/fetchers/missions_fetcher.dart';
+import 'package:green_go/controller/verifiers/achievement_verifier.dart';
 import 'package:green_go/model/missions_model.dart';
 import 'package:green_go/controller/verifiers/mission_verifier.dart';
 import 'package:green_go/model/transport_model.dart';
@@ -14,7 +15,7 @@ import 'mission_verifier_test.mocks.dart';
 
 
 
-@GenerateNiceMocks([MockSpec<MissionsFetcher>(), MockSpec<DataBaseUserMissions>(), MockSpec<DataBaseUsers>(), MockSpec<AuthService>()])
+@GenerateNiceMocks([MockSpec<MissionsFetcher>(), MockSpec<DataBaseUserMissions>(), MockSpec<DataBaseUsers>(), MockSpec<AuthService>(),MockSpec<AchievementVerifier>()])
 
 
 Future<List<dynamic>> getMissionsInProgressMock() async{
@@ -34,6 +35,7 @@ void main(){
   late DataBaseUsers dataBaseUsers;
   late DataBaseUserMissions dataBaseUserMissions;
   late MissionsFetcher missionsFetcher;
+  late AchievementVerifier achievementVerifier;
   late MissionVerifier missionVerifier;
   
   setUp(() {
@@ -42,10 +44,12 @@ void main(){
     dataBaseUserMissions = MockDataBaseUserMissions();
     dataBaseUsers = MockDataBaseUsers();
     missionsFetcher = MockMissionsFetcher();
+    achievementVerifier = MockAchievementVerifier();
     missionVerifier.setAuth(authService);
     missionVerifier.setDataBaseUserMissions(dataBaseUserMissions);
     missionVerifier.setDataBaseUsers(dataBaseUsers);
     missionVerifier.setMissionsFetcher(missionsFetcher);
+    missionVerifier.setAchievementVerifier(achievementVerifier);
     when(authService.getCurrentUser()).thenReturn(MockUser());
   });
   group("compatibleTransports Tests", () {
