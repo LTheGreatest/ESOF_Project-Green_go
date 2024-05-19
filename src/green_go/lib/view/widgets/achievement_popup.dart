@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:green_go/model/achievements_model.dart';
 import 'package:green_go/view/pages/achievements_page.dart';
+import 'package:flutter/foundation.dart';
 
 class AchievementPopup {
 
@@ -40,15 +41,15 @@ class AchievementPopup {
                       children: [
                         Text(
                           'Achievement unlocked: ${achievement.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 8.0),
+                        const SizedBox(height: 8.0),
                         Text(
                           achievement.description,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                           ),
                         ),
@@ -64,10 +65,12 @@ class AchievementPopup {
     );
 
     try {
-      Overlay.of(context)!.insert(entry!);
-      await Future.delayed(Duration(seconds: 4));
+      Overlay.of(context).insert(entry!);
+      await Future.delayed(const Duration(seconds: 4));
     } catch (e) {
-      print('Error showing achievement popup: $e');
+      if (kDebugMode) {
+        print('Error showing achievement popup: $e');
+      }
     } finally {
       entry?.remove();
       entry = null;

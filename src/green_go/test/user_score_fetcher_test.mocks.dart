@@ -3,13 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
-import 'package:cloud_firestore/cloud_firestore.dart' as _i2;
-import 'package:firebase_auth/firebase_auth.dart' as _i7;
-import 'package:green_go/controller/authentication/auth.dart' as _i6;
-import 'package:green_go/controller/database/database_users.dart' as _i3;
-import 'package:green_go/model/user_model.dart' as _i5;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i3;
+import 'package:firebase_auth/firebase_auth.dart' as _i8;
+import 'package:green_go/controller/authentication/auth.dart' as _i7;
+import 'package:green_go/controller/database/database_users.dart' as _i4;
+import 'package:green_go/controller/verifiers/achievement_verifier.dart' as _i2;
+import 'package:green_go/model/user_model.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -25,9 +26,9 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeDocumentSnapshot_0<T extends Object?> extends _i1.SmartFake
-    implements _i2.DocumentSnapshot<T> {
-  _FakeDocumentSnapshot_0(
+class _FakeAchievementVerifier_0 extends _i1.SmartFake
+    implements _i2.AchievementVerifier {
+  _FakeAchievementVerifier_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -36,8 +37,19 @@ class _FakeDocumentSnapshot_0<T extends Object?> extends _i1.SmartFake
         );
 }
 
-class _FakeDataBaseUsers_1 extends _i1.SmartFake implements _i3.DataBaseUsers {
-  _FakeDataBaseUsers_1(
+class _FakeDocumentSnapshot_1<T extends Object?> extends _i1.SmartFake
+    implements _i3.DocumentSnapshot<T> {
+  _FakeDocumentSnapshot_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+class _FakeDataBaseUsers_2 extends _i1.SmartFake implements _i4.DataBaseUsers {
+  _FakeDataBaseUsers_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -49,19 +61,42 @@ class _FakeDataBaseUsers_1 extends _i1.SmartFake implements _i3.DataBaseUsers {
 /// A class which mocks [DataBaseUsers].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
+class MockDataBaseUsers extends _i1.Mock implements _i4.DataBaseUsers {
   @override
-  _i4.Future<dynamic> addUser(_i5.UserModel? user) => (super.noSuchMethod(
+  _i2.AchievementVerifier get achievementVerifier => (super.noSuchMethod(
+        Invocation.getter(#achievementVerifier),
+        returnValue: _FakeAchievementVerifier_0(
+          this,
+          Invocation.getter(#achievementVerifier),
+        ),
+        returnValueForMissingStub: _FakeAchievementVerifier_0(
+          this,
+          Invocation.getter(#achievementVerifier),
+        ),
+      ) as _i2.AchievementVerifier);
+
+  @override
+  set achievementVerifier(_i2.AchievementVerifier? _achievementVerifier) =>
+      super.noSuchMethod(
+        Invocation.setter(
+          #achievementVerifier,
+          _achievementVerifier,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i5.Future<dynamic> addUser(_i6.UserModel? user) => (super.noSuchMethod(
         Invocation.method(
           #addUser,
           [user],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> updateUsername(
+  _i5.Future<dynamic> updateUsername(
     String? uid,
     String? username,
   ) =>
@@ -73,12 +108,12 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
             username,
           ],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> updateUserPoints(
+  _i5.Future<dynamic> updateUserPoints(
     String? uid,
     int? points,
   ) =>
@@ -90,12 +125,12 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
             points,
           ],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> updateUserGoal(
+  _i5.Future<dynamic> updateUserGoal(
     String? uid,
     int? goal,
   ) =>
@@ -107,12 +142,12 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
             goal,
           ],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> updateUserFirstTime(
+  _i5.Future<dynamic> updateUserFirstTime(
     String? uid,
     bool? firstTime,
   ) =>
@@ -124,12 +159,12 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
             firstTime,
           ],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> updateUserProfile(
+  _i5.Future<dynamic> updateUserProfile(
     String? uid,
     String? username,
     String? nationality,
@@ -147,12 +182,12 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
             birthDate,
           ],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> updateUserPicture(
+  _i5.Future<dynamic> updateUserPicture(
     String? uid,
     String? photoUrl,
   ) =>
@@ -164,49 +199,49 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
             photoUrl,
           ],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> resetWeeklyPoints() => (super.noSuchMethod(
+  _i5.Future<dynamic> resetWeeklyPoints() => (super.noSuchMethod(
         Invocation.method(
           #resetWeeklyPoints,
           [],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> resetMonthlyPoints() => (super.noSuchMethod(
+  _i5.Future<dynamic> resetMonthlyPoints() => (super.noSuchMethod(
         Invocation.method(
           #resetMonthlyPoints,
           [],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<dynamic> getAllData() => (super.noSuchMethod(
+  _i5.Future<dynamic> getAllData() => (super.noSuchMethod(
         Invocation.method(
           #getAllData,
           [],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 
   @override
-  _i4.Future<_i2.DocumentSnapshot<Object?>> getUserData(String? uid) =>
+  _i5.Future<_i3.DocumentSnapshot<Object?>> getUserData(String? uid) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserData,
           [uid],
         ),
-        returnValue: _i4.Future<_i2.DocumentSnapshot<Object?>>.value(
-            _FakeDocumentSnapshot_0<Object?>(
+        returnValue: _i5.Future<_i3.DocumentSnapshot<Object?>>.value(
+            _FakeDocumentSnapshot_1<Object?>(
           this,
           Invocation.method(
             #getUserData,
@@ -214,15 +249,15 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.DocumentSnapshot<Object?>>.value(
-                _FakeDocumentSnapshot_0<Object?>(
+            _i5.Future<_i3.DocumentSnapshot<Object?>>.value(
+                _FakeDocumentSnapshot_1<Object?>(
           this,
           Invocation.method(
             #getUserData,
             [uid],
           ),
         )),
-      ) as _i4.Future<_i2.DocumentSnapshot<Object?>>);
+      ) as _i5.Future<_i3.DocumentSnapshot<Object?>>);
 
   @override
   void deleteUser(String? uid) => super.noSuchMethod(
@@ -237,22 +272,22 @@ class MockDataBaseUsers extends _i1.Mock implements _i3.DataBaseUsers {
 /// A class which mocks [AuthService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockAuthService extends _i1.Mock implements _i6.AuthService {
+class MockAuthService extends _i1.Mock implements _i7.AuthService {
   @override
-  _i3.DataBaseUsers get dataBaseUsers => (super.noSuchMethod(
+  _i4.DataBaseUsers get dataBaseUsers => (super.noSuchMethod(
         Invocation.getter(#dataBaseUsers),
-        returnValue: _FakeDataBaseUsers_1(
+        returnValue: _FakeDataBaseUsers_2(
           this,
           Invocation.getter(#dataBaseUsers),
         ),
-        returnValueForMissingStub: _FakeDataBaseUsers_1(
+        returnValueForMissingStub: _FakeDataBaseUsers_2(
           this,
           Invocation.getter(#dataBaseUsers),
         ),
-      ) as _i3.DataBaseUsers);
+      ) as _i4.DataBaseUsers);
 
   @override
-  set dataBaseUsers(_i3.DataBaseUsers? _dataBaseUsers) => super.noSuchMethod(
+  set dataBaseUsers(_i4.DataBaseUsers? _dataBaseUsers) => super.noSuchMethod(
         Invocation.setter(
           #dataBaseUsers,
           _dataBaseUsers,
@@ -261,7 +296,7 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       );
 
   @override
-  void setFirebaseAuth(_i7.FirebaseAuth? firebaseAuth) => super.noSuchMethod(
+  void setFirebaseAuth(_i8.FirebaseAuth? firebaseAuth) => super.noSuchMethod(
         Invocation.method(
           #setFirebaseAuth,
           [firebaseAuth],
@@ -270,7 +305,7 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       );
 
   @override
-  void setDataBaseUsers(_i3.DataBaseUsers? dataBaseUsers) => super.noSuchMethod(
+  void setDataBaseUsers(_i4.DataBaseUsers? dataBaseUsers) => super.noSuchMethod(
         Invocation.method(
           #setDataBaseUsers,
           [dataBaseUsers],
@@ -279,7 +314,7 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
       );
 
   @override
-  _i4.Future<String?> signIn(
+  _i5.Future<String?> signIn(
     String? email,
     String? password,
   ) =>
@@ -291,12 +326,12 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
             password,
           ],
         ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i5.Future<String?>.value(),
+        returnValueForMissingStub: _i5.Future<String?>.value(),
+      ) as _i5.Future<String?>);
 
   @override
-  _i4.Future<String?> signUp(
+  _i5.Future<String?> signUp(
     String? email,
     String? password,
     String? username,
@@ -310,27 +345,27 @@ class MockAuthService extends _i1.Mock implements _i6.AuthService {
             username,
           ],
         ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i5.Future<String?>.value(),
+        returnValueForMissingStub: _i5.Future<String?>.value(),
+      ) as _i5.Future<String?>);
 
   @override
-  _i4.Future<String?> signOut() => (super.noSuchMethod(
+  _i5.Future<String?> signOut() => (super.noSuchMethod(
         Invocation.method(
           #signOut,
           [],
         ),
-        returnValue: _i4.Future<String?>.value(),
-        returnValueForMissingStub: _i4.Future<String?>.value(),
-      ) as _i4.Future<String?>);
+        returnValue: _i5.Future<String?>.value(),
+        returnValueForMissingStub: _i5.Future<String?>.value(),
+      ) as _i5.Future<String?>);
 
   @override
-  _i4.Future<dynamic> deleteUser() => (super.noSuchMethod(
+  _i5.Future<dynamic> deleteUser() => (super.noSuchMethod(
         Invocation.method(
           #deleteUser,
           [],
         ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
+        returnValue: _i5.Future<dynamic>.value(),
+        returnValueForMissingStub: _i5.Future<dynamic>.value(),
+      ) as _i5.Future<dynamic>);
 }
