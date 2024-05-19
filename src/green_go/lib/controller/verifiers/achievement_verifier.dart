@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:green_go/view/widgets/achievement_popup.dart';
 import 'package:pair/pair.dart';
 
 import '../../model/achievements_model.dart';
@@ -34,15 +36,16 @@ class AchievementVerifier {
     }
   }
 
-  Future<void> updateCompletedAchievement(String userId, int numberRequired, int currentNumber, String achievementId) async{
+  Future<void> updateCompletedAchievement(BuildContext context,String userId, int numberRequired, int currentNumber, String achievementId, AchievementsModel achievementsModel) async{
     if(currentNumber >= numberRequired){
       await uadb.addCompletedAchievement(userId, achievementId);
+      AchievementPopup.show(context, achievementsModel);
       await uadb.deleteUserAchievement(userId, achievementId);
     } else {
       await uadb.addUserAchievement(userId, achievementId, currentNumber);
     }
   }
-  Future<void> updateCompletedLoginAchievements(String userId) async {
+  Future<void> updateCompletedLoginAchievements(BuildContext context,String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.achievementsId;
@@ -51,15 +54,15 @@ class AchievementVerifier {
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
         if (achievement.value.types[0] == "NumberLogins") {
-          await updateCompletedAchievement(
+          await updateCompletedAchievement(context,
               userId, achievement.value.types[1]["number"]!,
-              uncompletedAchievementsId[achievement.key]! + 1, achievement.key);
+              uncompletedAchievementsId[achievement.key]! + 1, achievement.key,achievement.value);
         }
       }
     }
   }
 
-  Future<void> updateCompletedTripAchievements(String userId) async {
+  Future<void> updateCompletedTripAchievements(BuildContext context,String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.achievementsId;
@@ -67,12 +70,12 @@ class AchievementVerifier {
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
         if (achievement.value.types[0] == "NumberTrips") {
-          await updateCompletedAchievement(userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key);
+          await updateCompletedAchievement(context,userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key,achievement.value);
         }
       }
     }
   }
-  Future<void> updateCompletedMissionAchievements(String userId) async {
+  Future<void> updateCompletedMissionAchievements(BuildContext context,String userId) async {
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.achievementsId;
@@ -80,7 +83,7 @@ class AchievementVerifier {
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
         if (achievement.value.types[0] == "NumberMissions") {
-          await updateCompletedAchievement(userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key);
+          await updateCompletedAchievement(context,userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key,achievement.value);
         }
       }
     }

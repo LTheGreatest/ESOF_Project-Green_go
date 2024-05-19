@@ -129,10 +129,10 @@ class LoginPageViewState extends State<LoginPage> {
                   emailController.text,
                   passwordController.text,
                 );
-                
+
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
-                  await achievementVerifier.updateCompletedLoginAchievements(authService.getCurrentUser()!.uid);
+                  await achievementVerifier.updateCompletedLoginAchievements(context,authService.getCurrentUser()!.uid);
                   //Verifies if the context is mounted in order to continue
                   if (!context.mounted) return;
                   Navigator.push(context,

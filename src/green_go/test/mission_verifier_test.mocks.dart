@@ -7,6 +7,7 @@ import 'dart:async' as _i13;
 
 import 'package:cloud_firestore/cloud_firestore.dart' as _i5;
 import 'package:firebase_auth/firebase_auth.dart' as _i15;
+import 'package:flutter/cupertino.dart';
 import 'package:green_go/controller/authentication/auth.dart' as _i9;
 import 'package:green_go/controller/database/database_missions.dart' as _i2;
 import 'package:green_go/controller/database/database_user_achievements.dart'
@@ -833,6 +834,7 @@ class MockAchievementVerifier extends _i1.Mock
 
   @override
   _i13.Future<void> updateCompletedAchievement(
+    BuildContext context,
     String? userId,
     int? numberRequired,
     int? currentNumber,
@@ -842,6 +844,7 @@ class MockAchievementVerifier extends _i1.Mock
         Invocation.method(
           #updateCompletedAchievement,
           [
+            context,
             userId,
             numberRequired,
             currentNumber,
@@ -853,7 +856,7 @@ class MockAchievementVerifier extends _i1.Mock
       ) as _i13.Future<void>);
 
   @override
-  _i13.Future<void> updateCompletedLoginAchievements(String? userId) =>
+  _i13.Future<void> updateCompletedLoginAchievements(BuildContext context, String? userId) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedLoginAchievements,
@@ -864,7 +867,7 @@ class MockAchievementVerifier extends _i1.Mock
       ) as _i13.Future<void>);
 
   @override
-  _i13.Future<void> updateCompletedTripAchievements(String? userId) =>
+  _i13.Future<void> updateCompletedTripAchievements(BuildContext context, String? userId) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedTripAchievements,
@@ -875,7 +878,7 @@ class MockAchievementVerifier extends _i1.Mock
       ) as _i13.Future<void>);
 
   @override
-  _i13.Future<void> updateCompletedMissionAchievements(String? userId) =>
+  _i13.Future<void> updateCompletedMissionAchievements(BuildContext context, String? userId) =>
       (super.noSuchMethod(
         Invocation.method(
           #updateCompletedMissionAchievements,

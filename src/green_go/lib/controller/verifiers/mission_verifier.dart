@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:green_go/controller/authentication/auth.dart';
 import 'package:green_go/controller/database/database_user_missions.dart';
 import 'package:green_go/controller/database/database_users.dart';
@@ -59,27 +60,27 @@ class MissionVerifier{
     }
     return res;
   }
-  Future<void> updateMissionsWithDistance(double distanceRequired, double currentDistance,Pair<String,MissionsModel> mission) async{
+  Future<void> updateMissionsWithDistance(BuildContext context,double distanceRequired, double currentDistance,Pair<String,MissionsModel> mission) async{
     if(currentDistance >= distanceRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
-      await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
+      await achievementVerifier.updateCompletedMissionAchievements(context,auth.getCurrentUser()!.uid);
     }
     else{
       await udb.addUserMission(auth.getCurrentUser()!.uid, {mission.key:currentDistance.toInt()});
     }
   }
-  Future<void> updateMissionsWithPoints(int pointsRequired, int currentPoints,Pair<String,MissionsModel> mission) async{
+  Future<void> updateMissionsWithPoints(BuildContext context,int pointsRequired, int currentPoints,Pair<String,MissionsModel> mission) async{
     if(currentPoints >= pointsRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
-      await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
+      await achievementVerifier.updateCompletedMissionAchievements(context,auth.getCurrentUser()!.uid);
     }
     else{
       await udb.addUserMission(auth.getCurrentUser()!.uid, {mission.key:currentPoints});
     }
   }
-  Future<void> updateCompletedMissions(double distance, TransportModel transport, int points) async{
+  Future<void> updateCompletedMissions(BuildContext context,double distance, TransportModel transport, int points) async{
     List<Pair<String, MissionsModel>> missions;
     List<Pair<String, MissionsModel>> missionAlreadyCompleted=[];
     await missionsFetcher.getAllMissions();
@@ -110,12 +111,12 @@ class MissionVerifier{
           if(type.key == "Distance"){
 
             await udb.deleteUserMission(auth.getCurrentUser()!.uid, missionToDelete);
-            await updateMissionsWithDistance(type.value, missionInProgressEntry.value+distance, mission);
+            await updateMissionsWithDistance(context,type.value, missionInProgressEntry.value+distance, mission);
           }
           else if(type.key =="Points"){
             await udb.deleteUserMission(auth.getCurrentUser()!.uid, missionToDelete);
             int newPoints = points+missionInProgressEntry.value as int;
-            await updateMissionsWithPoints(type.value.toInt(), newPoints, mission);
+            await updateMissionsWithPoints(context,type.value.toInt(), newPoints, mission);
           }
           missionAlreadyCompleted.add(mission);
 
@@ -135,15 +136,15 @@ class MissionVerifier{
       if(compatibleTransport(mission.value.types, transport)){
         Pair<String,double> type = getMissionType(mission.value.types);
         if(type.key == "Distance" ){
-          await updateMissionsWithDistance(type.value, distance,mission);
+          await updateMissionsWithDistance(context,type.value, distance,mission);
         }
         else if(type.key == "Points"){
-          await updateMissionsWithPoints(type.value.toInt(),points , mission);
+          await updateMissionsWithPoints(context,type.value.toInt(),points , mission);
         }
         else{
           await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
           await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
-          await achievementVerifier.updateCompletedMissionAchievements(auth.getCurrentUser()!.uid);
+          await achievementVerifier.updateCompletedMissionAchievements(context,auth.getCurrentUser()!.uid);
         }
 
       }
