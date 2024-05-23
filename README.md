@@ -96,6 +96,10 @@ The user stories can be seen in our [Github Projects board](https://github.com/o
 
 **Transport** List of transports such as metro, bus, walk and train.
 
+**Achievement** Describes an achievement/feat on the app.
+
+**UserAchievement** Describes the status of a specific achievement for a specific user (if the user completed that achievement or not).
+
 ![Domain Model](docs/images/uml/classDiagram.png)
 
 ## Architecture and Design
