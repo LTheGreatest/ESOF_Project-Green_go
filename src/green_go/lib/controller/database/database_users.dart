@@ -10,6 +10,7 @@ class DataBaseUsers {
   AchievementVerifier achievementVerifier = AchievementVerifier();
 
   Future addUser(UserModel user) async {
+    //adds a new user to the database (when a new user signup)
     await userMissionsCollection.doc(user.uid).set({
       'missions': [],
       'completedMissions': {},
@@ -34,49 +35,35 @@ class DataBaseUsers {
       'photoUrl': user.photoUrl,
     });
   }
-  Future updateUsername(String uid, String username) async {
-     return await userCollection.doc(uid).set({
-      'username': username
-     });
-  }
   Future updateUserPoints(String uid, int points) async {
+    //update de user's points in the database
     DocumentSnapshot doc = await userCollection.doc(uid).get();
     userCollection.doc(uid).update({'totalPoints': doc['totalPoints'] + points, 'weeklyPoints': doc['weeklyPoints'] + points,
                                     'monthlyPoints': doc['monthlyPoints'] + points, 'streak': doc['streak'] + points});
   }
   Future updateUserGoal(String uid, int goal) async {
+    //updates the user's point goal in the database
     return await userCollection.doc(uid).update({'goal': goal});
   }
-  Future updateUserFirstTime(String uid, bool firstTime) async {
-    return await userCollection.doc(uid).update({'firstTime': firstTime});
-  }
+
   Future updateUserProfile(String uid, String username, String nationality, String job, DateTime birthDate) async {
+    //updates the user's profile (all the important fields) in the database
     return await userCollection.doc(uid).update({'username': username,  'nationality': nationality, 'job': job, 'birthDate': birthDate});
   }
   Future updateUserPicture(String uid, String photoUrl) async {
+    //updates the user's picture in the database
     return await userCollection.doc(uid).update({'photoUrl': photoUrl});
   }
-  Future resetWeeklyPoints() async {
-    QuerySnapshot querySnapshot = await userCollection.get();
-    var allUsers = querySnapshot.docs;
-    for (var user in allUsers) {
-      user.reference.update({'weeklyPoints': 0});
-    }
-  }
-  Future resetMonthlyPoints() async {
-    QuerySnapshot querySnapshot = await userCollection.get();
-    var allUsers = querySnapshot.docs;
-    for (var user in allUsers) {
-      user.reference.update({'monthlyPoints': 0});
-    }
-  }
   Future getAllData() async {
+    //gets all the users data
     return await userCollection.get();
   }
   Future<DocumentSnapshot<Object?>> getUserData(String uid) async {
+    //gets a specific user data
     return await userCollection.doc(uid).get();
   }
   void deleteUser(String uid) {
+    //deletes a user from the system
     userMissionsCollection.doc(uid).delete();
     userCollection.doc(uid).delete();
     userAchievementsCollection.doc(uid).delete();

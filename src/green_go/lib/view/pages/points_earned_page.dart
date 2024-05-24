@@ -226,7 +226,9 @@ class PointsEarnedPageState extends State<PointsEarnedPage> {
         await updatePoints();
 
         //updates missions
+        if(!context.mounted) return;
         await missionVerifier.updateCompletedMissions(context,widget.distance, widget.transport, calculatePoints(widget.distance, widget.transport.pointsPerDist));
+        if(!context.mounted) return;
         await achievementVerifier.updateCompletedTripAchievements(context,fetcher.auth.getCurrentUser()!.uid);
         //verifies if the context is mounted. If it is not, we cannot continue
         if (!context.mounted) return;

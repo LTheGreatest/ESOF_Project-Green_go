@@ -53,6 +53,7 @@ class AchievementsFetcher {
   }
 
   Future<List<Pair<AchievementsModel, Timestamp>>> getCompleteAchievements(String userId) async {
+    //gets the achievements that the user completed
     completedAchievements.clear();
 
     await getAllAchievements();
@@ -79,6 +80,7 @@ class AchievementsFetcher {
   }
 
   Future<List<Pair<AchievementsModel, int>>> getUncompletedAchievements(String userId) async {
+    //gets the achievements that the user didn't completed
     uncompletedAchievements.clear();
 
     await getAllAchievements();
@@ -105,6 +107,7 @@ class AchievementsFetcher {
   }
 
   Future<Map<String, dynamic>> getCompletedAchievementsId(String userId) async{
+    //Gets the user's completed achievements ID
     Map<String, dynamic> completedAchievementsId={};
     await dbUser.getUserAchievements(userId).then((querySnapshot) {
       completedAchievementsId= querySnapshot['completedAchievements'];
@@ -112,6 +115,7 @@ class AchievementsFetcher {
     return completedAchievementsId;
   }
   Future<Map<String, dynamic>> getUncompletedAchievementsId(String userId) async {
+    //gets the user's uncompleted achievements ID
     Map<String, dynamic> uncompletedAchievementsId = {};
     await dbUser.getUserAchievements(userId).then((querySnapshot) {
       uncompletedAchievementsId = querySnapshot['achievements'];

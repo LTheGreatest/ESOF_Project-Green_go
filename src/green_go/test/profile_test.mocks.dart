@@ -4,7 +4,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i7;
-import 'dart:io' as _i9;
 
 import 'package:firebase_storage/firebase_storage.dart' as _i5;
 import 'package:green_go/controller/authentication/auth.dart' as _i3;
@@ -13,7 +12,7 @@ import 'package:green_go/controller/database/database_users.dart' as _i2;
 import 'package:green_go/controller/fetchers/user_fetcher.dart' as _i6;
 import 'package:green_go/model/user_model.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i10;
+import 'package:mockito/src/dummies.dart' as _i9;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -60,16 +59,6 @@ class _FakeUserModel_2 extends _i1.SmartFake implements _i4.UserModel {
 
 class _FakeReference_3 extends _i1.SmartFake implements _i5.Reference {
   _FakeReference_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeUploadTask_4 extends _i1.SmartFake implements _i5.UploadTask {
-  _FakeUploadTask_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -214,47 +203,12 @@ class MockCloudStorage extends _i1.Mock implements _i8.CloudStorage {
       ) as _i5.Reference);
 
   @override
-  _i5.UploadTask uploadFile(
-    _i9.File? file,
-    String? path,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #uploadFile,
-          [
-            file,
-            path,
-          ],
-        ),
-        returnValue: _FakeUploadTask_4(
-          this,
-          Invocation.method(
-            #uploadFile,
-            [
-              file,
-              path,
-            ],
-          ),
-        ),
-        returnValueForMissingStub: _FakeUploadTask_4(
-          this,
-          Invocation.method(
-            #uploadFile,
-            [
-              file,
-              path,
-            ],
-          ),
-        ),
-      ) as _i5.UploadTask);
-
-  @override
   _i7.Future<String> downloadFileURL(String? path) => (super.noSuchMethod(
         Invocation.method(
           #downloadFileURL,
           [path],
         ),
-        returnValue: _i7.Future<String>.value(_i10.dummyValue<String>(
+        returnValue: _i7.Future<String>.value(_i9.dummyValue<String>(
           this,
           Invocation.method(
             #downloadFileURL,
@@ -262,7 +216,7 @@ class MockCloudStorage extends _i1.Mock implements _i8.CloudStorage {
           ),
         )),
         returnValueForMissingStub:
-            _i7.Future<String>.value(_i10.dummyValue<String>(
+            _i7.Future<String>.value(_i9.dummyValue<String>(
           this,
           Invocation.method(
             #downloadFileURL,
@@ -278,7 +232,7 @@ class MockCloudStorage extends _i1.Mock implements _i8.CloudStorage {
           #uploadImageToFirebaseStorage,
           [imagePath],
         ),
-        returnValue: _i7.Future<String>.value(_i10.dummyValue<String>(
+        returnValue: _i7.Future<String>.value(_i9.dummyValue<String>(
           this,
           Invocation.method(
             #uploadImageToFirebaseStorage,
@@ -286,7 +240,7 @@ class MockCloudStorage extends _i1.Mock implements _i8.CloudStorage {
           ),
         )),
         returnValueForMissingStub:
-            _i7.Future<String>.value(_i10.dummyValue<String>(
+            _i7.Future<String>.value(_i9.dummyValue<String>(
           this,
           Invocation.method(
             #uploadImageToFirebaseStorage,

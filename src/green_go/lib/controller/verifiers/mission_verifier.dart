@@ -64,6 +64,7 @@ class MissionVerifier{
     if(currentDistance >= distanceRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+      if(!context.mounted) return;
       await achievementVerifier.updateCompletedMissionAchievements(context,auth.getCurrentUser()!.uid);
     }
     else{
@@ -74,6 +75,7 @@ class MissionVerifier{
     if(currentPoints >= pointsRequired){
       await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
       await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+      if(!context.mounted) return;
       await achievementVerifier.updateCompletedMissionAchievements(context,auth.getCurrentUser()!.uid);
     }
     else{
@@ -111,11 +113,13 @@ class MissionVerifier{
           if(type.key == "Distance"){
 
             await udb.deleteUserMission(auth.getCurrentUser()!.uid, missionToDelete);
+            if(!context.mounted) return;
             await updateMissionsWithDistance(context,type.value, missionInProgressEntry.value+distance, mission);
           }
           else if(type.key =="Points"){
             await udb.deleteUserMission(auth.getCurrentUser()!.uid, missionToDelete);
             int newPoints = points+missionInProgressEntry.value as int;
+            if(!context.mounted) return;
             await updateMissionsWithPoints(context,type.value.toInt(), newPoints, mission);
           }
           missionAlreadyCompleted.add(mission);
@@ -136,14 +140,17 @@ class MissionVerifier{
       if(compatibleTransport(mission.value.types, transport)){
         Pair<String,double> type = getMissionType(mission.value.types);
         if(type.key == "Distance" ){
+          if(!context.mounted) return;
           await updateMissionsWithDistance(context,type.value, distance,mission);
         }
         else if(type.key == "Points"){
+          if(!context.mounted) return;
           await updateMissionsWithPoints(context,type.value.toInt(),points , mission);
         }
         else{
           await udb.addCompletedMission(auth.getCurrentUser()!.uid, mission.key);
           await dataBaseUsers.updateUserPoints(auth.getCurrentUser()!.uid, mission.value.points);
+          if(!context.mounted) return;
           await achievementVerifier.updateCompletedMissionAchievements(context,auth.getCurrentUser()!.uid);
         }
 

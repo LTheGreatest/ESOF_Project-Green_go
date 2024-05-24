@@ -73,6 +73,7 @@ class MissionsFetcher {
     return completedMissions;
   }
   Future<Map<String, dynamic>> getCompletedMissionsId(String userId) async {
+    //gets the user's completed missions ID
     Map<String, dynamic> completedMissionsId = {};
     await dbUser.getUserMissions(userId).then((querySnapshot) {
       completedMissionsId= querySnapshot['completedMissions'];
@@ -81,6 +82,7 @@ class MissionsFetcher {
   }
 
   Future<List<dynamic>> getMissionsInProgress(String userId) async{
+    //gets the user's in progress missions 
     List<dynamic> missionsInProgress=[];
     await dbUser.getUserMissions(userId).then((querySnapshot) {
         missionsInProgress=querySnapshot['missions'];

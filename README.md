@@ -112,9 +112,9 @@ The GreenGo App relies on several external dependencies to enhance user experien
 
 ### Physical architecture
 
-The user accesses the GreenGo app through his smartphone. Within the app they can view the leaderboard, their profile, missions, and can even use the camera and turn on the GPS. When the user wants to see some data, like their profile, the "User Controller" queries the "User Database" on the database server to retrieve the relevant information. The same process occurs if the user wishes to view the leaderboard or the missions to complete.
+The user accesses the GreenGo app through his smartphone. Within the app they can view the leaderboard, their profile, missions, and can even use the camera and turn on the GPS. When the user wants to see some data, like their profile, the app queries the Firebase Database on the database server to retrieve the relevant information. The same process occurs if the user wishes to view the leaderboard or the missions to complete.
 
-The camera and GPS are used for validating missions. For instance, if a user is doing a mission that involves making a trip using public transport, they utilize the GPS. The "GPS Controller" then sends the GPS data to the "Backend Server" for validation. The same goes to the camera. The user takes pictures to prove the completion of the mission and then the "Camera Controller" sends it to the "Verification" sector. Both of these components are allowed to be used in the app because of the "Smatphone Controller", which enables all functions.
+The camera and GPS are used for validating missions. For instance, if a user is doing a mission that involves making a trip using public transport, they utilize the GPS. The "GPS Controller" then sends the GPS data to the verification system for validation. The same goes to the camera. The user takes pictures to prove the completion of the mission and then the "Camera Controller" sends it to the "Verification" sector.
 
 ![Physical architecture](docs/images/uml/deploymentDiagram.png)
 

@@ -32,6 +32,7 @@ class AchievementVerifier {
   }
 
   Future<void> initializeAllAchievements(String userId) async {
+    //initializes the achivements (adds all the achivements in the database to the user achievements)
     late List<Pair<String, AchievementsModel>> achievementsPair;
     await achievementsFetcher.getAllAchievements();
     achievementsPair =  achievementsFetcher.achievementsId;
@@ -41,8 +42,10 @@ class AchievementVerifier {
   }
 
   Future<void> updateCompletedAchievement(BuildContext context,String userId, int numberRequired, int currentNumber, String achievementId, AchievementsModel achievementsModel) async{
+    //updates the user's completed achievements
     if(currentNumber >= numberRequired){
       await uadb.addCompletedAchievement(userId, achievementId);
+      if(!context.mounted) return;
       popUp.show(context, achievementsModel);
       await uadb.deleteUserAchievement(userId, achievementId);
     } else {
@@ -50,6 +53,7 @@ class AchievementVerifier {
     }
   }
   Future<void> updateCompletedLoginAchievements(BuildContext context,String userId) async {
+    //updates the user's completed achievements related to login
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.getAchievementsID();
@@ -58,6 +62,7 @@ class AchievementVerifier {
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
         if (achievement.value.types[0] == "NumberLogins") {
+          if(!context.mounted) return;
           await updateCompletedAchievement(context,
               userId, achievement.value.types[1]["number"]!,
               uncompletedAchievementsId[achievement.key]! + 1, achievement.key,achievement.value);
@@ -67,6 +72,7 @@ class AchievementVerifier {
   }
 
   Future<void> updateCompletedTripAchievements(BuildContext context,String userId) async {
+    //updates the user's completed achievements related to trips
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.getAchievementsID();
@@ -74,12 +80,14 @@ class AchievementVerifier {
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
         if (achievement.value.types[0] == "NumberTrips") {
+          if(!context.mounted) return;
           await updateCompletedAchievement(context,userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key,achievement.value);
         }
       }
     }
   }
   Future<void> updateCompletedMissionAchievements(BuildContext context,String userId) async {
+    //updates the user's compleetd achievements related to missions
     List<Pair<String, AchievementsModel>> achievements;
     await achievementsFetcher.getAllAchievements();
     achievements = achievementsFetcher.getAchievementsID();
@@ -87,6 +95,7 @@ class AchievementVerifier {
     for (Pair<String, AchievementsModel> achievement in achievements) {
       if (uncompletedAchievementsId.containsKey(achievement.key)) {
         if (achievement.value.types[0] == "NumberMissions") {
+          if(!context.mounted) return;
           await updateCompletedAchievement(context,userId, achievement.value.types[1]["number"]!, uncompletedAchievementsId[achievement.key]!+1, achievement.key,achievement.value);
         }
       }

@@ -11,10 +11,12 @@ class CameraService {
   }
 
   void setCamerasList(List<CameraDescription> camList){
+    //only used to facilitate testing
     camerasList = camList;
   }
 
   Future<void> initializeDefaultCamera() async {
+    //initializes the default device camera
     camerasList = await availableCameras();
     final firstCamera = camerasList.first;
     camera = firstCamera;
@@ -23,10 +25,12 @@ class CameraService {
   }
 
   Future<void> disposeController() async {
+    //disposes the camera controller
     cameraController.dispose();
   }
 
   Future<void> toggleCameraLens() async {
+    //toggles camera lens (front/rear)
     // get current lens direction (front / rear)
     final lensDirection =  cameraController.description.lensDirection;
     CameraDescription newDescription;

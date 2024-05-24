@@ -32,7 +32,10 @@ class MockUser extends Mock implements User {
   String get uid => '123';
 }
 
-class MockBuildContext extends Mock implements BuildContext{}
+class MockBuildContext extends Mock implements BuildContext{
+  @override
+  bool get mounted => true;
+}
 
 void main(){
   late AuthService authService;

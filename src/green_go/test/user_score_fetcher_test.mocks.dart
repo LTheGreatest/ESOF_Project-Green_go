@@ -96,23 +96,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i4.DataBaseUsers {
       ) as _i5.Future<dynamic>);
 
   @override
-  _i5.Future<dynamic> updateUsername(
-    String? uid,
-    String? username,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateUsername,
-          [
-            uid,
-            username,
-          ],
-        ),
-        returnValue: _i5.Future<dynamic>.value(),
-        returnValueForMissingStub: _i5.Future<dynamic>.value(),
-      ) as _i5.Future<dynamic>);
-
-  @override
   _i5.Future<dynamic> updateUserPoints(
     String? uid,
     int? points,
@@ -140,23 +123,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i4.DataBaseUsers {
           [
             uid,
             goal,
-          ],
-        ),
-        returnValue: _i5.Future<dynamic>.value(),
-        returnValueForMissingStub: _i5.Future<dynamic>.value(),
-      ) as _i5.Future<dynamic>);
-
-  @override
-  _i5.Future<dynamic> updateUserFirstTime(
-    String? uid,
-    bool? firstTime,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateUserFirstTime,
-          [
-            uid,
-            firstTime,
           ],
         ),
         returnValue: _i5.Future<dynamic>.value(),
@@ -198,26 +164,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i4.DataBaseUsers {
             uid,
             photoUrl,
           ],
-        ),
-        returnValue: _i5.Future<dynamic>.value(),
-        returnValueForMissingStub: _i5.Future<dynamic>.value(),
-      ) as _i5.Future<dynamic>);
-
-  @override
-  _i5.Future<dynamic> resetWeeklyPoints() => (super.noSuchMethod(
-        Invocation.method(
-          #resetWeeklyPoints,
-          [],
-        ),
-        returnValue: _i5.Future<dynamic>.value(),
-        returnValueForMissingStub: _i5.Future<dynamic>.value(),
-      ) as _i5.Future<dynamic>);
-
-  @override
-  _i5.Future<dynamic> resetMonthlyPoints() => (super.noSuchMethod(
-        Invocation.method(
-          #resetMonthlyPoints,
-          [],
         ),
         returnValue: _i5.Future<dynamic>.value(),
         returnValueForMissingStub: _i5.Future<dynamic>.value(),

@@ -132,6 +132,7 @@ class LoginPageViewState extends State<LoginPage> {
 
                 //Verifies the sign in result and performs the necessary actions.
                 if (signInResult == 'Successfully logged in') {
+                  if(!context.mounted) return;
                   await achievementVerifier.updateCompletedLoginAchievements(context,authService.getCurrentUser()!.uid);
                   //Verifies if the context is mounted in order to continue
                   if (!context.mounted) return;

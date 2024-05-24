@@ -5,7 +5,7 @@ import 'package:green_go/model/user_model.dart';
 class AuthService {
   late FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   DataBaseUsers dataBaseUsers = DataBaseUsers();
-
+  
   void setFirebaseAuth(FirebaseAuth firebaseAuth) {
     _firebaseAuth = firebaseAuth;
     
@@ -17,6 +17,7 @@ class AuthService {
     return _firebaseAuth.currentUser;
   }
   Future<String?> signIn(String email, String password) async {
+    //used to signIn using the firebase authentication
     try {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return "Successfully logged in";
@@ -30,6 +31,7 @@ class AuthService {
     }
   }
   Future<String?> signUp(String email, String password, String username) async {
+    //used to signUp using the firebase authentication
     try {
       UserCredential result = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       await dataBaseUsers.addUser(UserModel(result.user!.uid, username));
@@ -46,6 +48,7 @@ class AuthService {
     return "Something went wrong, please try again";
   }
   Future<String?> signOut() async {
+    //Used to SignOut using the firebase authentication
     try {
       await _firebaseAuth.signOut();
       return "logout_success";
@@ -54,6 +57,7 @@ class AuthService {
     }
   }
   Future deleteUser() async {
+    //Deletes a user account from the firebase authentication service
     var user = _firebaseAuth.currentUser;
     try {
       dataBaseUsers.deleteUser(user!.uid);

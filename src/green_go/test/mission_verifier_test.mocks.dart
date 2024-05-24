@@ -427,23 +427,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
       ) as _i14.Future<dynamic>);
 
   @override
-  _i14.Future<dynamic> updateUsername(
-    String? uid,
-    String? username,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateUsername,
-          [
-            uid,
-            username,
-          ],
-        ),
-        returnValue: _i14.Future<dynamic>.value(),
-        returnValueForMissingStub: _i14.Future<dynamic>.value(),
-      ) as _i14.Future<dynamic>);
-
-  @override
   _i14.Future<dynamic> updateUserPoints(
     String? uid,
     int? points,
@@ -471,23 +454,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
           [
             uid,
             goal,
-          ],
-        ),
-        returnValue: _i14.Future<dynamic>.value(),
-        returnValueForMissingStub: _i14.Future<dynamic>.value(),
-      ) as _i14.Future<dynamic>);
-
-  @override
-  _i14.Future<dynamic> updateUserFirstTime(
-    String? uid,
-    bool? firstTime,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #updateUserFirstTime,
-          [
-            uid,
-            firstTime,
           ],
         ),
         returnValue: _i14.Future<dynamic>.value(),
@@ -529,26 +495,6 @@ class MockDataBaseUsers extends _i1.Mock implements _i6.DataBaseUsers {
             uid,
             photoUrl,
           ],
-        ),
-        returnValue: _i14.Future<dynamic>.value(),
-        returnValueForMissingStub: _i14.Future<dynamic>.value(),
-      ) as _i14.Future<dynamic>);
-
-  @override
-  _i14.Future<dynamic> resetWeeklyPoints() => (super.noSuchMethod(
-        Invocation.method(
-          #resetWeeklyPoints,
-          [],
-        ),
-        returnValue: _i14.Future<dynamic>.value(),
-        returnValueForMissingStub: _i14.Future<dynamic>.value(),
-      ) as _i14.Future<dynamic>);
-
-  @override
-  _i14.Future<dynamic> resetMonthlyPoints() => (super.noSuchMethod(
-        Invocation.method(
-          #resetMonthlyPoints,
-          [],
         ),
         returnValue: _i14.Future<dynamic>.value(),
         returnValueForMissingStub: _i14.Future<dynamic>.value(),

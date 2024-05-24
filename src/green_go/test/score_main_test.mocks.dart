@@ -3,17 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i8;
-import 'dart:io' as _i7;
+import 'dart:async' as _i7;
 
 import 'package:firebase_storage/firebase_storage.dart' as _i2;
 import 'package:green_go/controller/authentication/auth.dart' as _i4;
 import 'package:green_go/controller/database/cloud_storage.dart' as _i6;
 import 'package:green_go/controller/database/database_users.dart' as _i3;
-import 'package:green_go/controller/fetchers/user_fetcher.dart' as _i10;
+import 'package:green_go/controller/fetchers/user_fetcher.dart' as _i9;
 import 'package:green_go/model/user_model.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i9;
+import 'package:mockito/src/dummies.dart' as _i8;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -38,8 +37,8 @@ class _FakeReference_0 extends _i1.SmartFake implements _i2.Reference {
         );
 }
 
-class _FakeUploadTask_1 extends _i1.SmartFake implements _i2.UploadTask {
-  _FakeUploadTask_1(
+class _FakeDataBaseUsers_1 extends _i1.SmartFake implements _i3.DataBaseUsers {
+  _FakeDataBaseUsers_1(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -48,8 +47,8 @@ class _FakeUploadTask_1 extends _i1.SmartFake implements _i2.UploadTask {
         );
 }
 
-class _FakeDataBaseUsers_2 extends _i1.SmartFake implements _i3.DataBaseUsers {
-  _FakeDataBaseUsers_2(
+class _FakeAuthService_2 extends _i1.SmartFake implements _i4.AuthService {
+  _FakeAuthService_2(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -58,18 +57,8 @@ class _FakeDataBaseUsers_2 extends _i1.SmartFake implements _i3.DataBaseUsers {
         );
 }
 
-class _FakeAuthService_3 extends _i1.SmartFake implements _i4.AuthService {
-  _FakeAuthService_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeUserModel_4 extends _i1.SmartFake implements _i5.UserModel {
-  _FakeUserModel_4(
+class _FakeUserModel_3 extends _i1.SmartFake implements _i5.UserModel {
+  _FakeUserModel_3(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -96,47 +85,12 @@ class MockCloudStorage extends _i1.Mock implements _i6.CloudStorage {
       ) as _i2.Reference);
 
   @override
-  _i2.UploadTask uploadFile(
-    _i7.File? file,
-    String? path,
-  ) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #uploadFile,
-          [
-            file,
-            path,
-          ],
-        ),
-        returnValue: _FakeUploadTask_1(
-          this,
-          Invocation.method(
-            #uploadFile,
-            [
-              file,
-              path,
-            ],
-          ),
-        ),
-        returnValueForMissingStub: _FakeUploadTask_1(
-          this,
-          Invocation.method(
-            #uploadFile,
-            [
-              file,
-              path,
-            ],
-          ),
-        ),
-      ) as _i2.UploadTask);
-
-  @override
-  _i8.Future<String> downloadFileURL(String? path) => (super.noSuchMethod(
+  _i7.Future<String> downloadFileURL(String? path) => (super.noSuchMethod(
         Invocation.method(
           #downloadFileURL,
           [path],
         ),
-        returnValue: _i8.Future<String>.value(_i9.dummyValue<String>(
+        returnValue: _i7.Future<String>.value(_i8.dummyValue<String>(
           this,
           Invocation.method(
             #downloadFileURL,
@@ -144,23 +98,23 @@ class MockCloudStorage extends _i1.Mock implements _i6.CloudStorage {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<String>.value(_i9.dummyValue<String>(
+            _i7.Future<String>.value(_i8.dummyValue<String>(
           this,
           Invocation.method(
             #downloadFileURL,
             [path],
           ),
         )),
-      ) as _i8.Future<String>);
+      ) as _i7.Future<String>);
 
   @override
-  _i8.Future<String> uploadImageToFirebaseStorage(String? imagePath) =>
+  _i7.Future<String> uploadImageToFirebaseStorage(String? imagePath) =>
       (super.noSuchMethod(
         Invocation.method(
           #uploadImageToFirebaseStorage,
           [imagePath],
         ),
-        returnValue: _i8.Future<String>.value(_i9.dummyValue<String>(
+        returnValue: _i7.Future<String>.value(_i8.dummyValue<String>(
           this,
           Invocation.method(
             #uploadImageToFirebaseStorage,
@@ -168,28 +122,28 @@ class MockCloudStorage extends _i1.Mock implements _i6.CloudStorage {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<String>.value(_i9.dummyValue<String>(
+            _i7.Future<String>.value(_i8.dummyValue<String>(
           this,
           Invocation.method(
             #uploadImageToFirebaseStorage,
             [imagePath],
           ),
         )),
-      ) as _i8.Future<String>);
+      ) as _i7.Future<String>);
 }
 
 /// A class which mocks [UserFetcher].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserFetcher extends _i1.Mock implements _i10.UserFetcher {
+class MockUserFetcher extends _i1.Mock implements _i9.UserFetcher {
   @override
   _i3.DataBaseUsers get db => (super.noSuchMethod(
         Invocation.getter(#db),
-        returnValue: _FakeDataBaseUsers_2(
+        returnValue: _FakeDataBaseUsers_1(
           this,
           Invocation.getter(#db),
         ),
-        returnValueForMissingStub: _FakeDataBaseUsers_2(
+        returnValueForMissingStub: _FakeDataBaseUsers_1(
           this,
           Invocation.getter(#db),
         ),
@@ -223,11 +177,11 @@ class MockUserFetcher extends _i1.Mock implements _i10.UserFetcher {
   @override
   _i4.AuthService get auth => (super.noSuchMethod(
         Invocation.getter(#auth),
-        returnValue: _FakeAuthService_3(
+        returnValue: _FakeAuthService_2(
           this,
           Invocation.getter(#auth),
         ),
-        returnValueForMissingStub: _FakeAuthService_3(
+        returnValueForMissingStub: _FakeAuthService_2(
           this,
           Invocation.getter(#auth),
         ),
@@ -261,24 +215,24 @@ class MockUserFetcher extends _i1.Mock implements _i10.UserFetcher {
       );
 
   @override
-  _i8.Future<List<_i5.UserModel>> getDataForLeaderboard() =>
+  _i7.Future<List<_i5.UserModel>> getDataForLeaderboard() =>
       (super.noSuchMethod(
         Invocation.method(
           #getDataForLeaderboard,
           [],
         ),
-        returnValue: _i8.Future<List<_i5.UserModel>>.value(<_i5.UserModel>[]),
+        returnValue: _i7.Future<List<_i5.UserModel>>.value(<_i5.UserModel>[]),
         returnValueForMissingStub:
-            _i8.Future<List<_i5.UserModel>>.value(<_i5.UserModel>[]),
-      ) as _i8.Future<List<_i5.UserModel>>);
+            _i7.Future<List<_i5.UserModel>>.value(<_i5.UserModel>[]),
+      ) as _i7.Future<List<_i5.UserModel>>);
 
   @override
-  _i8.Future<_i5.UserModel> getCurrentUserData() => (super.noSuchMethod(
+  _i7.Future<_i5.UserModel> getCurrentUserData() => (super.noSuchMethod(
         Invocation.method(
           #getCurrentUserData,
           [],
         ),
-        returnValue: _i8.Future<_i5.UserModel>.value(_FakeUserModel_4(
+        returnValue: _i7.Future<_i5.UserModel>.value(_FakeUserModel_3(
           this,
           Invocation.method(
             #getCurrentUserData,
@@ -286,12 +240,12 @@ class MockUserFetcher extends _i1.Mock implements _i10.UserFetcher {
           ),
         )),
         returnValueForMissingStub:
-            _i8.Future<_i5.UserModel>.value(_FakeUserModel_4(
+            _i7.Future<_i5.UserModel>.value(_FakeUserModel_3(
           this,
           Invocation.method(
             #getCurrentUserData,
             [],
           ),
         )),
-      ) as _i8.Future<_i5.UserModel>);
+      ) as _i7.Future<_i5.UserModel>);
 }

@@ -18,7 +18,10 @@ import 'package:pair/pair.dart';
 import 'achievements_verifier_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<AchievementsFetcher>(), MockSpec<DataBaseUserAchievements>(), MockSpec<DataBaseUsers>(), MockSpec<AuthService>(), MockSpec<AchievementPopup>()])
-class MockBuildContext extends Mock implements BuildContext{}
+class MockBuildContext extends Mock implements BuildContext{
+  @override
+  bool get mounted => true;
+}
 
 void main(){
   late BuildContext context;
