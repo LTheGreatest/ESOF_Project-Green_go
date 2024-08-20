@@ -1,6 +1,8 @@
 # _GreenGo_ Development Report
 
 **Final Team Grade: 18.3**
+
+
 **Individual Grade: 18.8**
 
 Welcome to the documentation pages of _GreenGo_!
